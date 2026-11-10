@@ -1,0 +1,57 @@
+@import "tailwindcss";
+@import "./tokens.css";
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  background: var(--bg);
+  color: var(--fg);
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* Caret while text streams in. Steady, not blinking, when the person asked for less motion. */
+@keyframes aui-blink {
+  50% {
+    opacity: 0;
+  }
+}
+.aui-caret {
+  animation: aui-blink 1s steps(1) infinite;
+}
+
+@keyframes aui-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+.aui-spin {
+  animation: aui-spin 0.9s linear infinite;
+}
+
+@keyframes aui-pulse {
+  50% {
+    opacity: 0.45;
+  }
+}
+.aui-pulse {
+  animation: aui-pulse 1.6s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .aui-caret,
+  .aui-spin,
+  .aui-pulse {
+    animation: none;
+  }
+}
