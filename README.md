@@ -4,7 +4,7 @@ React components for products where an agent does part of the work: streaming te
 
 Every component answers one question people actually ask when software acts for them: **what is it doing, how sure is it, and where can I step in?**
 
-**Live docs:** [уточнить] link after the first Vercel deploy.
+**Live docs:** [agentic-ui-docs.vercel.app](https://agentic-ui-docs.vercel.app)
 
 ## Components
 
