@@ -1,0 +1,56 @@
+/*
+ * agentic-ui tokens. Components only read these variables, so a product can restyle the
+ * library by overriding them, without touching component code.
+ * Light by default, dark via the system preference.
+ */
+:root {
+  color-scheme: light dark;
+
+  --bg: #fafafa;
+  --surface: #ffffff;
+  --surface-2: #f2f2f5;
+  --fg: #1d1d1f;
+  --fg-muted: #6e6e73;
+  --border: rgba(0, 0, 0, 0.1);
+  --accent: #0066cc;
+
+  /* Who wrote it: the agent or a person. Every component marks authorship with these two. */
+  --agent: #6e56cf;
+  --agent-soft: rgba(110, 86, 207, 0.1);
+  --human: #0066cc;
+  --human-soft: rgba(0, 102, 204, 0.1);
+
+  /* State */
+  --ok: #1a7f37;
+  --warn: #9a6700;
+  --warn-soft: rgba(191, 135, 0, 0.12);
+  --risk: #c4314b;
+  --risk-soft: rgba(196, 49, 75, 0.1);
+
+  --radius: 12px;
+  --footer-h: 2rem;
+  --mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #111113;
+    --surface: #1c1c1e;
+    --surface-2: #2c2c2e;
+    --fg: #f5f5f7;
+    --fg-muted: #98989d;
+    --border: rgba(255, 255, 255, 0.12);
+    --accent: #4da3ff;
+
+    --agent: #a594f9;
+    --agent-soft: rgba(165, 148, 249, 0.14);
+    --human: #4da3ff;
+    --human-soft: rgba(77, 163, 255, 0.14);
+
+    --ok: #3fb950;
+    --warn: #d29922;
+    --warn-soft: rgba(210, 153, 34, 0.16);
+    --risk: #ff6b81;
+    --risk-soft: rgba(255, 107, 129, 0.14);
+  }
+}
