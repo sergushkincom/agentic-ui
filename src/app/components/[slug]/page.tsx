@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { COMPONENTS, REPO, getComponent } from "@/lib/registry";
 import { demoSource } from "@/lib/demo-source";
+import { SITE_TITLE } from "@/lib/site";
 import { CodeBlock } from "@/components/site/code-block";
 import { DemoPanel } from "../demo-panel";
 
@@ -12,7 +13,15 @@ export function generateStaticParams() {
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const c = getComponent((await params).slug);
-  return c ? { title: c.name, description: c.summary } : {};
+  if (!c) return {};
+  const title = c.name;
+  const description = c.summary;
+  return {
+    title,
+    description,
+    openGraph: { title, description, siteName: SITE_TITLE, type: "website" },
+    twitter: { card: "summary_large_image", title, description },
+  };
 }
 
 export default async function ComponentPage({ params }: { params: Promise<{ slug: string }> }) {
