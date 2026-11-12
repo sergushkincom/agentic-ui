@@ -35,21 +35,24 @@ function StreamingTextStoppable() {
   const [status, setStatus] = useState<StreamStatus>("streaming");
   const [run, setRun] = useState(0);
   const timer = useRef<ReturnType<typeof setInterval> | null>(null);
+  const stream = useRef<HTMLDivElement>(null);
+  const focusStop = useRef(false);
 
   const start = useCallback(() => {
     if (timer.current) clearInterval(timer.current);
     setChars(0);
     setStatus("streaming");
+    // About eight seconds, so Stop can be reached from the keyboard before the answer finishes.
     timer.current = setInterval(() => {
       setChars((c) => {
-        const next = Math.min(ANSWER.length, c + 2 + Math.floor(Math.random() * 5));
+        const next = Math.min(ANSWER.length, c + 2);
         if (next >= ANSWER.length) {
           if (timer.current) clearInterval(timer.current);
           setStatus("done");
         }
         return next;
       });
-    }, 45);
+    }, 60);
   }, []);
 
   useEffect(() => {
@@ -59,21 +62,39 @@ function StreamingTextStoppable() {
     };
   }, [run, start]);
 
+  // Replay reveals Stop again. Put focus there so Enter, Space, or Escape can stop the answer.
+  useEffect(() => {
+    if (!focusStop.current || status !== "streaming") return;
+    const stop = stream.current?.querySelector("button");
+    if (!(stop instanceof HTMLButtonElement)) return;
+    stop.focus();
+    focusStop.current = false;
+  }, [run, status]);
+
   return (
     <div className="flex flex-col gap-5">
       <Controls>
-        <button type="button" className={buttonClass.secondary} onClick={() => setRun((r) => r + 1)}>
+        <button
+          type="button"
+          className={buttonClass.secondary}
+          onClick={() => {
+            focusStop.current = true;
+            setRun((r) => r + 1);
+          }}
+        >
           Replay
         </button>
       </Controls>
-      <StreamingText
-        text={ANSWER.slice(0, chars)}
-        status={status}
-        onStop={() => {
-          if (timer.current) clearInterval(timer.current);
-          setStatus("stopped");
-        }}
-      />
+      <div ref={stream}>
+        <StreamingText
+          text={ANSWER.slice(0, chars)}
+          status={status}
+          onStop={() => {
+            if (timer.current) clearInterval(timer.current);
+            setStatus("stopped");
+          }}
+        />
+      </div>
     </div>
   );
 }

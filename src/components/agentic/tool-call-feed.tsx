@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { formatDuration } from "./format";
+import { nextEnabledIndex } from "./keyboard";
 import { Chevron, Spinner } from "./marks";
 
 export type ToolCall = {
@@ -26,6 +27,10 @@ export type ToolCallFeedProps = { calls: ToolCall[]; title?: string };
  */
 export function ToolCallFeed({ calls, title = "Actions" }: ToolCallFeedProps) {
   const done = calls.filter((c) => c.status === "done").length;
+  const [active, setActive] = useState(0);
+  // One tab stop for the feed. Arrows move between actions; Enter and Space still toggle.
+  const activeIndex = hasDetail(calls[active]) ? active : calls.findIndex(hasDetail);
+
   return (
     <section className="rounded-[var(--radius)] border border-[var(--border)] bg-[var(--surface)]">
       <header className="flex items-center justify-between border-b border-[var(--border)] px-3 py-2 text-xs text-[var(--fg-muted)]">
@@ -34,25 +39,48 @@ export function ToolCallFeed({ calls, title = "Actions" }: ToolCallFeedProps) {
           {done} of {calls.length} done
         </span>
       </header>
-      <ol aria-live="polite" className="divide-y divide-[var(--border)]">
-        {calls.map((c) => (
-          <Row key={c.id} call={c} />
+      <ol
+        aria-live="polite"
+        className="divide-y divide-[var(--border)]"
+        onKeyDown={(event) => {
+          const buttons = [...event.currentTarget.querySelectorAll<HTMLButtonElement>(":scope > li > button")];
+          const current = buttons.findIndex((button) => button === event.target || button.contains(event.target as Node));
+          if (current < 0) return;
+          const next = nextEnabledIndex(current, buttons.length, event.key, (index) => buttons[index]?.disabled ?? true);
+          if (next === null) return;
+          event.preventDefault();
+          buttons[next]?.focus();
+        }}
+      >
+        {calls.map((call, index) => (
+          <Row
+            key={call.id}
+            call={call}
+            tabIndex={hasDetail(call) ? (index === activeIndex ? 0 : -1) : undefined}
+            onFocus={() => setActive(index)}
+          />
         ))}
       </ol>
     </section>
   );
 }
 
-function Row({ call }: { call: ToolCall }) {
+function hasDetail(call: ToolCall | undefined) {
+  return Boolean(call && (call.input || call.output || call.error));
+}
+
+function Row({ call, tabIndex, onFocus }: { call: ToolCall; tabIndex?: number; onFocus: () => void }) {
   const [open, setOpen] = useState(false);
-  const hasDetail = Boolean(call.input || call.output || call.error);
+  const canOpen = Boolean(call.input || call.output || call.error);
   return (
     <li>
       <button
         type="button"
-        disabled={!hasDetail}
-        aria-expanded={hasDetail ? open : undefined}
+        disabled={!canOpen}
+        tabIndex={tabIndex}
+        aria-expanded={canOpen ? open : undefined}
         onClick={() => setOpen((o) => !o)}
+        onFocus={onFocus}
         className="flex w-full items-start gap-2.5 px-3 py-2.5 text-left disabled:cursor-default"
       >
         <StatusIcon status={call.status} />
@@ -68,13 +96,13 @@ function Row({ call }: { call: ToolCall }) {
               ? "running"
               : "queued"}
         </span>
-        {hasDetail && (
+        {canOpen && (
           <span className="pt-0.5 text-[var(--fg-muted)]">
             <Chevron open={open} />
           </span>
         )}
       </button>
-      {open && hasDetail && (
+      {open && canOpen && (
         <div className="mx-3 mb-3 flex flex-col gap-2 rounded-lg bg-[var(--surface-2)] p-2.5 font-[family-name:var(--mono)] text-[11px] leading-relaxed">
           {call.input && (
             <div>

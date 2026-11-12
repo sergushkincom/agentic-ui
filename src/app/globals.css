@@ -18,6 +18,9 @@ body {
 :focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 2px;
+  /* Clear the sticky header and the pinned footer when a key moves focus. */
+  scroll-margin-top: 3.5rem;
+  scroll-margin-bottom: calc(var(--footer-h) + 0.75rem);
 }
 
 /* Caret while text streams in. Steady, not blinking, when the person asked for less motion. */
