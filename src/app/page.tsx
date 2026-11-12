@@ -39,17 +39,22 @@ export default function Home() {
         </div>
       </section>
 
-      <section aria-labelledby="principles" className="grid gap-3 sm:grid-cols-3">
+      <section aria-labelledby="principles" className="flex flex-col gap-3">
         <h2 id="principles" className="sr-only">
           Principles
         </h2>
-        {PRINCIPLES.map((p, i) => (
-          <div key={p.title} className="flex flex-col gap-1.5 rounded-[var(--radius)] border border-[var(--border)] bg-[var(--surface)] p-4">
-            <span className="text-xs tabular-nums text-[var(--fg-muted)]">0{i + 1}</span>
-            <h3 className="text-[15px] font-semibold">{p.title}</h3>
-            <p className="text-[13px] leading-relaxed text-[var(--fg-muted)]">{p.body}</p>
-          </div>
-        ))}
+        <div className="grid gap-3 sm:grid-cols-3">
+          {PRINCIPLES.map((p, i) => (
+            <div key={p.title} className="flex flex-col gap-1.5 rounded-[var(--radius)] border border-[var(--border)] bg-[var(--surface)] p-4">
+              <span className="text-xs tabular-nums text-[var(--fg-muted)]">0{i + 1}</span>
+              <h3 className="text-[15px] font-semibold">{p.title}</h3>
+              <p className="text-[13px] leading-relaxed text-[var(--fg-muted)]">{p.body}</p>
+            </div>
+          ))}
+        </div>
+        <Link href="/why" className="self-start rounded-sm text-[13px] text-[var(--accent)] underline-offset-2 hover:underline">
+          Why this exists
+        </Link>
       </section>
 
       <section aria-labelledby="components" className="flex flex-col gap-5">

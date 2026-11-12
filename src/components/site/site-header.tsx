@@ -12,6 +12,10 @@ export function SiteHeader() {
           agentic-ui
         </Link>
         <nav aria-label="Main" className="flex items-center gap-4 text-[13px] text-[var(--fg-muted)]">
+          <Link href="/why" aria-label="Why this exists" className="rounded-sm hover:text-[var(--fg)]">
+            <span className="sm:hidden">Why</span>
+            <span className="hidden sm:inline">Why this exists</span>
+          </Link>
           <Link href="/components" className="rounded-sm hover:text-[var(--fg)]">
             Components
           </Link>

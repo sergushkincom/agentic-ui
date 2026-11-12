@@ -6,11 +6,16 @@ import { SITE_ORIGIN, SITEMAP_URL, sitemapUrls } from "../src/lib/site.ts";
 const origin = "https://agentic-ui-docs.vercel.app";
 
 describe("sitemap", () => {
-  it("lists home, the components index, and every registry slug", () => {
+  it("lists home, why, the components index, and every registry slug", () => {
     assert.equal(SITE_ORIGIN, origin);
     assert.deepEqual(
       sitemapUrls(COMPONENTS.map((component) => component.slug)),
-      [origin, `${origin}/components`, ...COMPONENTS.map((component) => `${origin}/components/${component.slug}`)],
+      [
+        origin,
+        `${origin}/why`,
+        `${origin}/components`,
+        ...COMPONENTS.map((component) => `${origin}/components/${component.slug}`),
+      ],
     );
   });
 
