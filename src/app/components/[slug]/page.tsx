@@ -2,9 +2,10 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { COMPONENTS, REPO, getComponent } from "@/lib/registry";
+import { demoSource } from "@/lib/demo-source";
 import { SITE_TITLE } from "@/lib/site";
 import { CodeBlock } from "@/components/site/code-block";
-import { Demo } from "../demos";
+import { DemoPanel } from "../demo-panel";
 
 export function generateStaticParams() {
   return COMPONENTS.map((c) => ({ slug: c.slug }));
@@ -30,6 +31,7 @@ export default async function ComponentPage({ params }: { params: Promise<{ slug
   const index = COMPONENTS.indexOf(c);
   const prev = COMPONENTS[index - 1];
   const next = COMPONENTS[index + 1];
+  const source = demoSource(c.slug);
 
   return (
     <div className="mx-auto grid max-w-6xl grid-cols-[minmax(0,1fr)] gap-8 px-4 py-10 md:grid-cols-[180px_minmax(0,1fr)] md:gap-12">
@@ -58,15 +60,11 @@ export default async function ComponentPage({ params }: { params: Promise<{ slug
           <p className="text-[17px] leading-relaxed text-[var(--fg-muted)]">{c.summary}</p>
         </header>
 
-        <section aria-labelledby="demo" className="flex flex-col gap-3">
+        <section aria-labelledby="demo" className="flex min-w-0 flex-col gap-3">
           <h2 id="demo" className="sr-only">
             Live demo
           </h2>
-          <div className="rounded-[var(--radius)] border border-[var(--border)] bg-[var(--bg)] p-5 sm:p-8">
-            <div className="mx-auto max-w-xl">
-              <Demo slug={c.slug} />
-            </div>
-          </div>
+          <DemoPanel slug={c.slug} filename={source.filename} code={source.code} />
           <p className="text-xs text-[var(--fg-muted)]">Live demo. Fake data: an agent matching a supplier invoice to a purchase order.</p>
         </section>
 
