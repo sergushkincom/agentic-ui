@@ -5,9 +5,21 @@
 
 export type PropRow = { name: string; type: string; note: string };
 
+/** Index groups on /components, in reading order. */
+export type MomentId = "while-it-works" | "how-sure" | "where-you-step-in" | "when-it-fails";
+
+export const MOMENTS: { id: MomentId; label: string }[] = [
+  { id: "while-it-works", label: "While it works" },
+  { id: "how-sure", label: "How sure it is" },
+  { id: "where-you-step-in", label: "Where you step in" },
+  { id: "when-it-fails", label: "When it fails" },
+];
+
 export type ComponentDoc = {
   slug: string;
   name: string;
+  /** Which agent moment this component belongs to on /components. */
+  moment: MomentId;
   file: string;
   /** One line, what it is. */
   summary: string;
@@ -25,6 +37,7 @@ export const COMPONENTS: ComponentDoc[] = [
   {
     slug: "streaming-text",
     name: "StreamingText",
+    moment: "while-it-works",
     file: "streaming-text.tsx",
     summary: "Agent text that arrives token by token, with a way to stop it.",
     question: "How do you show an answer that is still being written, without making people read a moving target?",
@@ -52,6 +65,7 @@ export const COMPONENTS: ComponentDoc[] = [
   {
     slug: "thinking-state",
     name: "ThinkingState",
+    moment: "while-it-works",
     file: "thinking-state.tsx",
     summary: "What the agent is doing while you wait, folded into one line.",
     question: "What does a person need to see to decide whether to keep waiting?",
@@ -81,6 +95,7 @@ export const COMPONENTS: ComponentDoc[] = [
   {
     slug: "confidence-bar",
     name: "ConfidenceBar",
+    moment: "how-sure",
     file: "confidence-bar.tsx",
     summary: "How sure the agent is, in words first, and where it stops acting alone.",
     question: "What does 72% mean to someone who has to act on it?",
@@ -106,6 +121,7 @@ export const COMPONENTS: ComponentDoc[] = [
   {
     slug: "human-override",
     name: "HumanOverride",
+    moment: "where-you-step-in",
     file: "human-override.tsx",
     summary: "A field the agent filled in, that a person can take over in one step.",
     question: "When a person corrects the agent, how do they know the correction will stick?",
@@ -136,6 +152,7 @@ export const COMPONENTS: ComponentDoc[] = [
   {
     slug: "tool-call-feed",
     name: "ToolCallFeed",
+    moment: "while-it-works",
     file: "tool-call-feed.tsx",
     summary: "What the agent touched, in order, readable by people and auditable by experts.",
     question: "How do you show what an agent did in other systems without dumping JSON on everyone?",
@@ -161,6 +178,7 @@ export const COMPONENTS: ComponentDoc[] = [
   {
     slug: "agent-decision-card",
     name: "AgentDecisionCard",
+    moment: "where-you-step-in",
     file: "agent-decision-card.tsx",
     summary: "A decision the agent proposes and a person signs off.",
     question: "What does a person need to read, in what order, to approve an agent's action responsibly?",
@@ -193,6 +211,7 @@ export const COMPONENTS: ComponentDoc[] = [
   {
     slug: "fallback-boundary",
     name: "FallbackBoundary",
+    moment: "when-it-fails",
     file: "fallback-boundary.tsx",
     summary: "What a person sees when the agent is slow or fails: what happened and a way to do it themselves.",
     question: "What happens to the person's task when the agent doesn't come back?",
@@ -224,6 +243,11 @@ export const COMPONENTS: ComponentDoc[] = [
 
 export function getComponent(slug: string) {
   return COMPONENTS.find((c) => c.slug === slug);
+}
+
+/** Components in one moment, in registry order. That order is the index reading order. */
+export function componentsIn(moment: MomentId) {
+  return COMPONENTS.filter((c) => c.moment === moment);
 }
 
 export const REPO = "https://github.com/sergushkincom/agentic-ui";

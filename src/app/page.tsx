@@ -23,7 +23,7 @@ export default function Home() {
         </p>
         <div className="flex flex-wrap gap-2">
           <Link
-            href="/components/streaming-text"
+            href="/components"
             className="inline-flex h-9 items-center rounded-lg bg-[var(--fg)] px-4 text-[14px] font-medium text-[var(--bg)] hover:opacity-90"
           >
             Browse components
