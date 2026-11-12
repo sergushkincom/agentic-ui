@@ -1,11 +1,23 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { COMPONENTS, MOMENTS, componentsIn } from "@/lib/registry";
+import { SITE_TITLE } from "@/lib/site";
 import { Preview } from "../previews";
 
+const title = "Components";
+const description = `All ${COMPONENTS.length} agentic-ui components, grouped by the moment they cover: ${MOMENTS.map((m) => m.label.toLowerCase()).join(", ")}.`;
+
 export const metadata: Metadata = {
-  title: "Components",
-  description: `All ${COMPONENTS.length} agentic-ui components, grouped by the moment they cover: ${MOMENTS.map((m) => m.label.toLowerCase()).join(", ")}.`,
+  title,
+  description,
+  openGraph: {
+    title,
+    description,
+    siteName: SITE_TITLE,
+    type: "website",
+    images: [{ url: "/opengraph-image", width: 1200, height: 630, alt: SITE_TITLE }],
+  },
+  twitter: { card: "summary_large_image", title, description },
 };
 
 export default function ComponentsPage() {
