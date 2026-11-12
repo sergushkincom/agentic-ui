@@ -1,10 +1,13 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { SITE_TITLE } from "@/lib/site";
+import { WHY_DESCRIPTION, WHY_TITLE } from "./meta";
 
 export const metadata: Metadata = {
-  title: "Why this exists",
-  description:
-    "The three principles in full, what this library deliberately does not build, and how that differs from a coverage-led kit.",
+  title: WHY_TITLE,
+  description: WHY_DESCRIPTION,
+  openGraph: { title: WHY_TITLE, description: WHY_DESCRIPTION, siteName: SITE_TITLE, type: "website" },
+  twitter: { card: "summary_large_image", title: WHY_TITLE, description: WHY_DESCRIPTION },
 };
 
 const PRINCIPLES = [

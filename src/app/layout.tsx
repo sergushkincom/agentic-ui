@@ -1,12 +1,24 @@
 import type { Metadata } from "next";
 import { SiteFooter } from "@/components/site/site-footer";
 import { SiteHeader } from "@/components/site/site-header";
+import { SITE_DESCRIPTION, SITE_TITLE, SITE_TITLE_TEMPLATE, SITE_URL } from "@/lib/site";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: { default: "agentic-ui", template: "%s · agentic-ui" },
-  description:
-    "React components for products where an agent does part of the work: streaming text, thinking states, confidence, human override, tool calls, decisions and fallbacks.",
+  metadataBase: new URL(SITE_URL),
+  title: { default: SITE_TITLE, template: SITE_TITLE_TEMPLATE },
+  description: SITE_DESCRIPTION,
+  openGraph: {
+    title: { default: SITE_TITLE, template: SITE_TITLE_TEMPLATE },
+    description: SITE_DESCRIPTION,
+    siteName: SITE_TITLE,
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: { default: SITE_TITLE, template: SITE_TITLE_TEMPLATE },
+    description: SITE_DESCRIPTION,
+  },
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {

@@ -16,7 +16,7 @@ export function SiteHeader() {
             <span className="sm:hidden">Why</span>
             <span className="hidden sm:inline">Why this exists</span>
           </Link>
-          <Link href="/components/streaming-text" className="rounded-sm hover:text-[var(--fg)]">
+          <Link href="/components" className="rounded-sm hover:text-[var(--fg)]">
             Components
           </Link>
           <a href={REPO} target="_blank" rel="noreferrer" className="rounded-sm hover:text-[var(--fg)]">
