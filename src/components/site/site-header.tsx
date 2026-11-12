@@ -12,7 +12,7 @@ export function SiteHeader() {
           agentic-ui
         </Link>
         <nav aria-label="Main" className="flex items-center gap-4 text-[13px] text-[var(--fg-muted)]">
-          <Link href="/components/streaming-text" className="rounded-sm hover:text-[var(--fg)]">
+          <Link href="/components" className="rounded-sm hover:text-[var(--fg)]">
             Components
           </Link>
           <a href={REPO} target="_blank" rel="noreferrer" className="rounded-sm hover:text-[var(--fg)]">
