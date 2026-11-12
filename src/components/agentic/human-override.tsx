@@ -63,6 +63,11 @@ export function HumanOverride({ label, agentValue, value, source, onChange, reas
             e.preventDefault();
             save();
           }}
+          onKeyDown={(e) => {
+            if (e.key !== "Escape" || e.repeat) return;
+            e.preventDefault();
+            cancel();
+          }}
         >
           <input
             id={inputId}
@@ -70,7 +75,6 @@ export function HumanOverride({ label, agentValue, value, source, onChange, reas
             onFocus={(e) => e.currentTarget.select()}
             value={draft}
             onChange={(e) => setDraft(e.target.value)}
-            onKeyDown={(e) => e.key === "Escape" && cancel()}
             className="h-8 min-w-0 flex-1 rounded-lg border border-[var(--border)] bg-[var(--bg)] px-2.5 text-[15px] outline-none focus:border-[var(--human)]"
           />
           <button type="submit" className={buttonClass.primary}>

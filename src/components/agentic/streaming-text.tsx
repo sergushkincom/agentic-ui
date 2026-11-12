@@ -22,7 +22,14 @@ export type StreamingTextProps = {
 export function StreamingText({ text, status, onStop, className = "" }: StreamingTextProps) {
   const streaming = status === "streaming";
   return (
-    <div className={`flex flex-col gap-2 ${className}`}>
+    <div
+      className={`flex flex-col gap-2 ${className}`}
+      onKeyDown={(event) => {
+        if (event.key !== "Escape" || event.repeat || !streaming || !onStop) return;
+        event.preventDefault();
+        onStop();
+      }}
+    >
       <div className="flex items-center justify-between gap-2">
         <AgentMark />
         {streaming && onStop && (

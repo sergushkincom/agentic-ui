@@ -3,8 +3,10 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { COMPONENTS, REPO, getComponent } from "@/lib/registry";
 import { demoSource } from "@/lib/demo-source";
+import { keyboardFor } from "@/lib/keyboard-interactions";
 import { SITE_TITLE } from "@/lib/site";
 import { CodeBlock } from "@/components/site/code-block";
+import { KeyboardTable } from "@/components/site/keyboard-table";
 import { DemoPanel } from "../demo-panel";
 
 export function generateStaticParams() {
@@ -124,28 +126,31 @@ export default async function ComponentPage({ params }: { params: Promise<{ slug
           </div>
         </section>
 
-        <div className="grid gap-8 sm:grid-cols-2">
-          <section aria-labelledby="a11y" className="flex flex-col gap-3">
-            <h2 id="a11y" className="text-[18px] font-semibold">
-              Accessibility
-            </h2>
-            <ul className="flex list-disc flex-col gap-1.5 pl-4 text-[14px] leading-relaxed text-[var(--fg-muted)]">
-              {c.a11y.map((a) => (
-                <li key={a}>{a}</li>
-              ))}
-            </ul>
-          </section>
-          <section aria-labelledby="not-built" className="flex flex-col gap-3">
-            <h2 id="not-built" className="text-[18px] font-semibold">
-              Deliberately not built
-            </h2>
-            <ul className="flex list-disc flex-col gap-1.5 pl-4 text-[14px] leading-relaxed text-[var(--fg-muted)]">
-              {c.notBuilt.map((n) => (
-                <li key={n}>{n}</li>
-              ))}
-            </ul>
-          </section>
-        </div>
+        <section aria-labelledby="a11y" className="flex flex-col gap-3">
+          <h2 id="a11y" className="text-[18px] font-semibold">
+            Accessibility
+          </h2>
+          <ul className="flex list-disc flex-col gap-1.5 pl-4 text-[14px] leading-relaxed text-[var(--fg-muted)]">
+            {c.a11y.map((a) => (
+              <li key={a}>{a}</li>
+            ))}
+          </ul>
+          <h3 id="keyboard" className="pt-3 text-[15px] font-semibold">
+            Keyboard interactions
+          </h3>
+          <KeyboardTable rows={keyboardFor(c.slug)} />
+        </section>
+
+        <section aria-labelledby="not-built" className="flex flex-col gap-3">
+          <h2 id="not-built" className="text-[18px] font-semibold">
+            Deliberately not built
+          </h2>
+          <ul className="flex list-disc flex-col gap-1.5 pl-4 text-[14px] leading-relaxed text-[var(--fg-muted)]">
+            {c.notBuilt.map((n) => (
+              <li key={n}>{n}</li>
+            ))}
+          </ul>
+        </section>
 
         <nav aria-label="Previous and next" className="flex justify-between gap-4 border-t border-[var(--border)] pt-6 text-[13px]">
           {prev ? (
