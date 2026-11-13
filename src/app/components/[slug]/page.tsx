@@ -3,9 +3,11 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { COMPONENTS, REPO, getComponent } from "@/lib/registry";
 import { demoSource } from "@/lib/demo-source";
+import { filesToCopy } from "@/lib/copy-files";
 import { keyboardFor } from "@/lib/keyboard-interactions";
 import { SITE_TITLE } from "@/lib/site";
 import { CodeBlock } from "@/components/site/code-block";
+import { FilesToCopy } from "@/components/site/files-to-copy";
 import { KeyboardTable } from "@/components/site/keyboard-table";
 import { DemoPanel } from "../demo-panel";
 
@@ -34,6 +36,7 @@ export default async function ComponentPage({ params }: { params: Promise<{ slug
   const prev = COMPONENTS[index - 1];
   const next = COMPONENTS[index + 1];
   const source = demoSource(c.slug);
+  const copy = filesToCopy(c.file, c.name);
 
   return (
     <div className="mx-auto grid max-w-6xl grid-cols-[minmax(0,1fr)] gap-8 px-4 py-10 md:grid-cols-[180px_minmax(0,1fr)] md:gap-12">
@@ -99,6 +102,8 @@ export default async function ComponentPage({ params }: { params: Promise<{ slug
             Source: {c.file} ↗
           </a>
         </section>
+
+        <FilesToCopy manifest={copy} />
 
         <section aria-labelledby="props" className="flex flex-col gap-3">
           <h2 id="props" className="text-[18px] font-semibold">
