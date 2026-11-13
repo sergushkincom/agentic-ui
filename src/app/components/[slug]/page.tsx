@@ -7,6 +7,7 @@ import { keyboardFor } from "@/lib/keyboard-interactions";
 import { SITE_TITLE } from "@/lib/site";
 import { CodeBlock } from "@/components/site/code-block";
 import { KeyboardTable } from "@/components/site/keyboard-table";
+import { WhenToUse } from "@/components/site/when-to-use";
 import { DemoPanel } from "../demo-panel";
 
 export function generateStaticParams() {
@@ -84,6 +85,8 @@ export default async function ComponentPage({ params }: { params: Promise<{ slug
             ))}
           </ul>
         </section>
+
+        <WhenToUse slug={c.slug} />
 
         <section aria-labelledby="usage" className="flex flex-col gap-3">
           <h2 id="usage" className="text-[18px] font-semibold">
