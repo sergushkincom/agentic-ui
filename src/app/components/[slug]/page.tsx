@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { COMPONENTS, REPO, getComponent } from "@/lib/registry";
+import { isNewComponent, utcToday } from "@/lib/changelog";
 import { demoSource } from "@/lib/demo-source";
 import { filesToCopy } from "@/lib/copy-files";
 import { keyboardFor } from "@/lib/keyboard-interactions";
@@ -38,21 +39,24 @@ export default async function ComponentPage({ params }: { params: Promise<{ slug
   const next = COMPONENTS[index + 1];
   const source = demoSource(c.slug);
   const copy = filesToCopy(c.file, c.name);
+  const today = utcToday();
 
   return (
-    <div className="mx-auto grid max-w-6xl grid-cols-[minmax(0,1fr)] gap-8 px-4 py-10 md:grid-cols-[180px_minmax(0,1fr)] md:gap-12">
+    <div className="mx-auto grid max-w-6xl grid-cols-[minmax(0,1fr)] gap-8 px-4 py-10 md:grid-cols-[220px_minmax(0,1fr)] md:gap-12">
       <nav aria-label="Components" className="min-w-0 md:sticky md:top-20 md:self-start">
         <ul className="flex gap-1 overflow-x-auto [scrollbar-width:none] md:flex-col md:overflow-visible md:pb-0">
           {COMPONENTS.map((item) => {
             const on = item.slug === slug;
+            const showNew = isNewComponent(item.slug, today);
             return (
               <li key={item.slug} className="shrink-0">
                 <Link
                   href={`/components/${item.slug}`}
                   aria-current={on ? "page" : undefined}
-                  className={`block rounded-md px-2.5 py-1.5 font-[family-name:var(--mono)] text-[12.5px] ${on ? "bg-[var(--surface-2)] text-[var(--fg)]" : "text-[var(--fg-muted)] hover:text-[var(--fg)]"}`}
+                  className={`flex items-center gap-1.5 rounded-md px-2.5 py-1.5 font-[family-name:var(--mono)] text-[12.5px] ${on ? "bg-[var(--surface-2)] text-[var(--fg)]" : "text-[var(--fg-muted)] hover:text-[var(--fg)]"}`}
                 >
-                  {item.name}
+                  <span>{item.name}</span>
+                  {showNew ? <NewBadge /> : null}
                 </Link>
               </li>
             );
@@ -178,5 +182,14 @@ export default async function ComponentPage({ params }: { params: Promise<{ slug
         </nav>
       </main>
     </div>
+  );
+}
+
+/** Shown for 30 days after the component's library source changes. */
+function NewBadge() {
+  return (
+    <span className="shrink-0 rounded-full bg-[var(--accent)] px-1.5 text-[10px] leading-4 font-medium text-[var(--bg)]">
+      New
+    </span>
   );
 }
