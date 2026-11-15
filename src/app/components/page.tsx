@@ -2,10 +2,11 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { COMPONENTS, MOMENTS, componentsIn } from "@/lib/registry";
 import { SITE_TITLE } from "@/lib/site";
+import { componentsIndexDescription } from "@/lib/site-pages";
 import { Preview } from "../previews";
 
 const title = "Components";
-const description = `All ${COMPONENTS.length} agentic-ui components, grouped by the moment they cover: ${MOMENTS.map((m) => m.label.toLowerCase()).join(", ")}.`;
+const description = componentsIndexDescription();
 
 export const metadata: Metadata = {
   title,

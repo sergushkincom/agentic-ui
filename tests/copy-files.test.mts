@@ -261,7 +261,7 @@ describe("component page", () => {
   it("renders the computed manifest between usage and props", () => {
     const page = read("src/app/components/[slug]/page.tsx");
     const usage = page.indexOf('id="usage"');
-    const files = page.indexOf("<FilesToCopy manifest={copy} />");
+    const files = page.indexOf("<FilesToCopy manifest={copy} installCommand={shadcnInstallCommand(c.slug)} />");
     const props = page.indexOf('id="props"');
     assert.ok(usage > -1 && files > usage && props > files);
     assert.match(page, /const copy = filesToCopy\(c\.file, c\.name\);/);
