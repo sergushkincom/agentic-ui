@@ -4,3 +4,5 @@ next-env.d.ts
 *.tsbuildinfo
 .vercel
 .DS_Store
+playwright-report
+test-results

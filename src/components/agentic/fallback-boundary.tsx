@@ -41,6 +41,7 @@ export class FallbackBoundary extends Component<FallbackBoundaryProps, BoundaryS
   render() {
     const { status, children, manual, onRetry, reason, task } = this.props;
     const failed = status === "failed" || this.state.crashed;
+    const detailTone = status === "slow" && !failed ? "text-[var(--fg)]" : "text-[var(--fg-muted)]";
 
     if (status === "ok" && !failed) return children;
 
@@ -67,7 +68,7 @@ export class FallbackBoundary extends Component<FallbackBoundaryProps, BoundaryS
                   ? `Still working on it. This is taking longer than usual.`
                   : `The agent is working on it.`}
             </p>
-            <p className="text-[13px] text-[var(--fg-muted)]">
+            <p className={`text-[13px] ${detailTone}`}>
               {failed
                 ? (reason ?? (this.state.crashed ? "Its answer couldn't be shown." : "Something went wrong on its side.")) +
                   " Nothing was changed."
