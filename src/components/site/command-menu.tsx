@@ -115,7 +115,7 @@ export function CommandMenu() {
     <>
       <button
         type="button"
-        aria-label="Search"
+        aria-label="Search ⌘K"
         aria-keyshortcuts="Control+K Meta+K"
         aria-expanded={open}
         aria-controls={open ? listId : undefined}

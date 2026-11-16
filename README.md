@@ -1,10 +1,16 @@
 # agentic-ui
 
+[![CI](https://github.com/sergushkincom/agentic-ui/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/sergushkincom/agentic-ui/actions/workflows/ci.yml)
+[![MIT License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![Live docs](https://img.shields.io/badge/Live-agentic--ui--docs.vercel.app-000000?logo=vercel)](https://agentic-ui-docs.vercel.app)
+
 React components for products where an agent does part of the work: streaming text, thinking states, confidence, human override, tool calls, decisions and fallbacks.
 
 Every component answers one question people actually ask when software acts for them: **what is it doing, how sure is it, and where can I step in?**
 
 **Live docs:** [agentic-ui-docs.vercel.app](https://agentic-ui-docs.vercel.app)
+
+![Agentic UI live docs homepage with component cards and implementation guidance](docs/agentic-ui-home.png)
 
 ## Components
 

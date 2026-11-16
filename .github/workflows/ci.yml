@@ -48,3 +48,9 @@ jobs:
 
       - name: Production build
         run: npm run build
+
+      - name: Install Chromium
+        run: npx playwright install --with-deps chromium
+
+      - name: E2E accessibility tests
+        run: npm run test:e2e
