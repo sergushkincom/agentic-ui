@@ -73,6 +73,7 @@ export const COMPONENTS: ComponentDoc[] = [
       "The summary line names the current step and the elapsed time. \"Thinking…\" alone gives no reason to wait.",
       "The full step list is folded: most people need the line, auditors need the list.",
       "When it finishes, the line becomes a receipt: how long, how many steps.",
+      "The spinner draws itself into a check, or into a warning if the work stopped. Reduced motion swaps the icon.",
     ],
     usage: `<ThinkingState
   state="thinking"
@@ -89,7 +90,12 @@ export const COMPONENTS: ComponentDoc[] = [
       { name: "elapsedMs", type: "number", note: "Time since the agent started." },
       { name: "defaultOpen", type: "boolean", note: "Show the steps unfolded. Default false." },
     ],
-    a11y: ["The toggle is a button with aria-expanded.", "Each step's status is spoken, not only shown as an icon.", "Completion is announced once through a polite live region."],
+    a11y: [
+      "The toggle is a button with aria-expanded.",
+      "Each step's status is spoken, not only shown as an icon.",
+      "Completion is announced once through a polite live region.",
+      "The status icon is decorative. Reduced motion swaps it instead of morphing.",
+    ],
     notBuilt: ["Streaming the model's raw reasoning text. Steps are the agent's plan, written for people."],
   },
   {
@@ -160,6 +166,7 @@ export const COMPONENTS: ComponentDoc[] = [
       "Each row leads with a human summary. The tool name sits under it in small mono.",
       "Raw input and output are folded per row, for the person who has to audit it.",
       "Failures say what went wrong in plain words, in the row where it happened.",
+      "A running action's spinner draws itself into a check, or into a warning if the call failed.",
     ],
     usage: `<ToolCallFeed calls={[
   { id: "1", tool: "erp.find_purchase_order",
@@ -172,7 +179,10 @@ export const COMPONENTS: ComponentDoc[] = [
       { name: "calls", type: "ToolCall[]", note: "id, tool, summary, status, durationMs, input, output, error." },
       { name: "title", type: "string", note: "Header. Default \"Actions\"." },
     ],
-    a11y: ["The list is a polite live region: new calls and status changes are announced.", "Status icons carry spoken labels."],
+    a11y: [
+      "The list is a polite live region: new calls and status changes are announced.",
+      "Status icons carry spoken labels. The icon itself is decorative, and reduced motion swaps it instead of morphing.",
+    ],
     notBuilt: ["Cancelling a single call.", "Virtualisation for very long feeds."],
   },
   {

@@ -15,6 +15,27 @@ describe("demo scenario controls", () => {
     }
   });
 
+  it("thinking state reaches the spinner, the check and the warning from the scenario switch", () => {
+    const source = read("src/app/components/demos/thinking-state.tsx");
+    assert.match(source, /<Segmented/);
+    for (const scenario of ["live", "done", "failed"]) {
+      assert.match(source, new RegExp(`value: "${scenario}"`), scenario);
+    }
+    const component = read("src/components/agentic/thinking-state.tsx");
+    assert.match(component, /glyph=\{state === "thinking" \? "spinner" : state === "failed" \? "alert" : "check"\}/);
+    assert.match(component, /<StatusMorph glyph=\{glyph\}/);
+  });
+
+  it("tool call feed reaches the spinner, the check and the warning from its scenario switch", () => {
+    const source = read("src/app/components/demos/tool-call-feed.tsx");
+    assert.match(source, /<Segmented/);
+    assert.match(source, /value: "ok"/);
+    assert.match(source, /value: "fail"/);
+    const component = read("src/components/agentic/tool-call-feed.tsx");
+    assert.match(component, /status === "running" \? "spinner" : status === "done" \? "check" : status === "failed" \? "alert"/);
+    assert.match(component, /<StatusMorph glyph=\{glyph\}/);
+  });
+
   it("human override can show both authorships from a scenario switch", () => {
     const source = read("src/app/components/demos/human-override.tsx");
     assert.match(source, /<Segmented/);

@@ -1,7 +1,7 @@
 /**
  * Anatomy of the composed components. Names are identifiers in the component source:
  * a function, a rendered mark, or a field. Children are drawn inside their parent.
- * ToolCallFeed nests Row, and Row's status icon nests Spinner, matching the source.
+ * ToolCallFeed nests Row, and Row's status icon nests StatusMorph, matching the source.
  * AgentDecisionCard keeps the disclosure and the decision footer as nested regions.
  */
 
@@ -26,7 +26,7 @@ export const ANATOMY: Record<string, readonly AnatomyNode[]> = {
             {
               name: "StatusIcon",
               answers: "Did this action succeed, fail, sit in the queue, or is it still running?",
-              children: [{ name: "Spinner", answers: "Is this action running right now?" }],
+              children: [{ name: "StatusMorph", answers: "Does the running mark turn into a check or a warning?" }],
             },
             { name: "summary", answers: "What did the agent do, in words a person can read?" },
             { name: "tool", answers: "Which system call was that?" },
