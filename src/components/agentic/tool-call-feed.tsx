@@ -3,7 +3,8 @@
 import { useState } from "react";
 import { formatDuration } from "./format";
 import { nextEnabledIndex } from "./keyboard";
-import { Chevron, Spinner } from "./marks";
+import { Chevron } from "./marks";
+import { StatusMorph } from "./status-morph";
 
 export type ToolCall = {
   id: string;
@@ -124,21 +125,12 @@ function Row({ call, tabIndex, onFocus }: { call: ToolCall; tabIndex?: number; o
 
 function StatusIcon({ status }: { status: ToolCall["status"] }) {
   const label = { queued: "Queued", running: "Running", done: "Done", failed: "Failed" }[status];
+  const glyph = status === "running" ? "spinner" : status === "done" ? "check" : status === "failed" ? "alert" : null;
   return (
     <span className="flex size-4 shrink-0 items-center justify-center pt-0.5">
       <span className="sr-only">{label}: </span>
-      {status === "running" ? (
-        <span className="text-[var(--agent)]">
-          <Spinner className="size-3.5" />
-        </span>
-      ) : status === "done" ? (
-        <svg viewBox="0 0 16 16" aria-hidden="true" className="size-3.5 text-[var(--ok)]" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-          <path d="m3.5 8.5 3 3 6-7" />
-        </svg>
-      ) : status === "failed" ? (
-        <svg viewBox="0 0 16 16" aria-hidden="true" className="size-3.5 text-[var(--risk)]" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
-          <path d="m4.5 4.5 7 7m0-7-7 7" />
-        </svg>
+      {glyph ? (
+        <StatusMorph glyph={glyph} />
       ) : (
         <span aria-hidden="true" className="size-3 rounded-full border border-dashed border-[var(--fg-muted)]" />
       )}

@@ -57,6 +57,9 @@ export function ThinkingStateDemo() {
           ]}
         />
       </Controls>
+      <p className="text-xs text-[var(--fg-muted)]">
+        Live keeps working. Done and Failed finish it: the spinner draws itself into a check, or into a warning.
+      </p>
       <ThinkingState state={state} steps={steps} elapsedMs={elapsed} defaultOpen />
     </div>
   );

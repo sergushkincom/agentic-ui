@@ -58,6 +58,9 @@ export function ToolCallFeedDemo() {
           Replay
         </button>
       </Controls>
+      <p className="text-xs text-[var(--fg-muted)]">
+        Replay, or switch to One fails. A running spinner draws itself into a check, or into a warning.
+      </p>
       <ToolCallFeed calls={calls} />
     </div>
   );

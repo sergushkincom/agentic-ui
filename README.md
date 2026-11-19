@@ -52,10 +52,14 @@ Next.js 15 (App Router), React 19, TypeScript strict, Tailwind CSS 4. Fake data 
 
 ## Layout
 
-- `src/components/agentic/` — the library. One file per component, `format.ts` for pure logic, `marks.tsx` for shared marks and buttons.
+- `src/components/agentic/` — the library. One file per component, `format.ts` for pure logic, `marks.tsx` for shared marks and buttons, `stroke-morph.ts` for the working-status stroke morph.
 - `src/lib/registry.ts` — every docs page renders from this list.
 - `src/app/components/demos.tsx` — the live demos.
 - `COMPONENTS.md` — the component list.
+
+## Credits
+
+The spinner on `ThinkingState` and `ToolCallFeed` draws itself into a check or a warning. That stroke morph is adapted from [morphicons](https://github.com/guillermolg00/morphicons) by [Guillermo](https://guillermolg.com) (MIT): resample the stroke, align it with a closed-form rotation and scale, then interpolate. People who prefer reduced motion get an instant swap.
 
 ## License
 
