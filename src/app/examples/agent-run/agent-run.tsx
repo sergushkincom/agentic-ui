@@ -74,36 +74,7 @@ export function AgentRun() {
         {view.announcement}
       </p>
 
-      <ol aria-label="Where this run is" className="flex flex-wrap items-center gap-x-2 gap-y-1 text-[13px]">
-        {view.progress.map((step, i) => (
-          <li key={step.id} className="flex items-center gap-2">
-            {i > 0 && (
-              <span aria-hidden="true" className="text-[var(--fg-muted)]">
-                /
-              </span>
-            )}
-            <span
-              aria-current={step.state === "current" ? "step" : undefined}
-              className={
-                step.state === "current"
-                  ? "font-medium"
-                  : step.state === "failed"
-                    ? "font-medium text-[var(--risk)]"
-                    : step.state === "done"
-                      ? "text-[var(--fg)]"
-                      : "text-[var(--fg-muted)]"
-              }
-            >
-              {step.label}
-              {step.state === "failed" ? (
-                <span> · failed</span>
-              ) : (
-                <span className="sr-only"> ({PROGRESS_WORD[step.state]})</span>
-              )}
-            </span>
-          </li>
-        ))}
-      </ol>
+      <RunProgress steps={view.progress} />
 
       <div
         key={state.runId}
@@ -195,4 +166,61 @@ export function AgentRun() {
       </div>
     </div>
   );
+}
+
+type ProgressStep = { id: string; label: string; state: ProgressState };
+
+/**
+ * Steps of the run, with the current one marked and earlier ones left lit.
+ * The line between two steps fills once the run has moved past the earlier step.
+ */
+function RunProgress({ steps }: { steps: ProgressStep[] }) {
+  return (
+    <ol aria-label="Where this run is" className="flex w-full text-[13px]">
+      {steps.map((step, i) => {
+        const previous = steps[i - 1];
+        const filled = previous?.state === "done" || previous?.state === "failed";
+        return (
+          <li key={step.id} className="relative flex min-w-0 flex-1 flex-col items-center gap-2 text-center">
+            {previous && (
+              <span aria-hidden="true" className="absolute top-[3px] right-1/2 h-0.5 w-full">
+                <span className="absolute inset-0 rounded-full bg-[var(--fg-muted)] opacity-30" />
+                <span
+                  className={`aui-track-fill absolute inset-y-0 left-0 rounded-full ${
+                    previous.state === "failed" ? "bg-[var(--risk)]" : "bg-[var(--fg)]"
+                  }`}
+                  style={{ width: filled ? "100%" : "0%" }}
+                />
+              </span>
+            )}
+            <span aria-hidden="true" className={stepDotClass(step.state)} />
+            <span aria-current={step.state === "current" ? "step" : undefined} className={stepLabelClass(step.state)}>
+              {step.label}
+              {step.state === "failed" ? (
+                <span> · failed</span>
+              ) : (
+                <span className="sr-only"> ({PROGRESS_WORD[step.state]})</span>
+              )}
+            </span>
+          </li>
+        );
+      })}
+    </ol>
+  );
+}
+
+function stepLabelClass(state: ProgressState): string {
+  const base = "block w-full px-1 leading-snug";
+  if (state === "current") return `${base} font-medium`;
+  if (state === "failed") return `${base} font-medium text-[var(--risk)]`;
+  if (state === "done") return `${base} text-[var(--fg)]`;
+  return `${base} text-[var(--fg-muted)]`;
+}
+
+function stepDotClass(state: ProgressState): string {
+  const base = "relative z-10 size-2 shrink-0 rounded-full";
+  if (state === "current") return `${base} bg-[var(--agent)] shadow-[0_0_0_3px_var(--agent-soft)]`;
+  if (state === "done") return `${base} bg-[var(--fg)]`;
+  if (state === "failed") return `${base} bg-[var(--risk)] shadow-[0_0_0_3px_var(--risk-soft)]`;
+  return `${base} border border-[var(--fg-muted)] bg-[var(--bg)]`;
 }
