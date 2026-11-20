@@ -55,6 +55,7 @@ export const COMPONENTS: ComponentDoc[] = [
       { name: "text", type: "string", note: "Text received so far." },
       { name: "status", type: '"streaming" | "done" | "stopped"', note: "Drives the caret, Stop button and the stopped note." },
       { name: "onStop", type: "() => void", note: "Optional. Shows Stop while streaming." },
+      { name: "className", type: "string", note: "Optional. Extra class names on the root." },
     ],
     a11y: [
       "aria-busy while streaming, so screen readers read the answer once it is complete, not every token.",
@@ -212,7 +213,8 @@ export const COMPONENTS: ComponentDoc[] = [
     props: [
       { name: "decision", type: "AgentDecision", note: "title, effect, confidence, reasons, evidence, alternatives, reversible." },
       { name: "status", type: '"proposed" | "approved" | "rejected"', note: "Replaces the buttons with who decided." },
-      { name: "onApprove / onReject", type: "() => void", note: "Required." },
+      { name: "onApprove", type: "() => void", note: "Required." },
+      { name: "onReject", type: "() => void", note: "Required." },
       { name: "decidedBy", type: "string", note: "Name shown after a decision. Default \"You\"." },
     ],
     a11y: ["The outcome is announced through a polite live region.", "The fold is a button with aria-expanded."],
@@ -241,6 +243,7 @@ export const COMPONENTS: ComponentDoc[] = [
 </FallbackBoundary>`,
     props: [
       { name: "status", type: '"running" | "slow" | "ok" | "failed"', note: "The parent decides when running becomes slow." },
+      { name: "children", type: "ReactNode", note: "Agent output, shown when status is \"ok\"." },
       { name: "task", type: "string", note: "What the agent was asked to do, as a verb phrase." },
       { name: "manual", type: "{ label, onClick }", note: "The path without the agent." },
       { name: "onRetry", type: "() => void", note: "Shown on failure." },
