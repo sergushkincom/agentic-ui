@@ -58,3 +58,14 @@ body {
     animation: none;
   }
 }
+
+/* Agent-run progress track. Kept out of the caret/spinner/pulse paste above. */
+.aui-track-fill {
+  transition: width 500ms ease-out;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .aui-track-fill {
+    transition: none;
+  }
+}
