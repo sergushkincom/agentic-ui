@@ -38,6 +38,20 @@ export function formatDuration(ms: number): string {
   return `${m}m ${String(s % 60).padStart(2, "0")}s`;
 }
 
+/**
+ * "180ms", "1.5s", "6.2s", "1m 05s".
+ * A log keeps the milliseconds. From ten seconds up it uses the same words as formatDuration.
+ */
+export function formatLogTime(ms: number): string {
+  const safe = Math.max(0, ms);
+  if (safe < 1000) return `${Math.round(safe)}ms`;
+  if (safe < 10_000) {
+    const tenths = Math.round(safe / 100);
+    return `${(tenths / 10).toFixed(1)}s`;
+  }
+  return formatDuration(safe);
+}
+
 export function countWords(text: string): number {
   const t = text.trim();
   return t ? t.split(/\s+/).length : 0;

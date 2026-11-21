@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import { describe, it } from "node:test";
-import { clamp01, confidenceBand, countWords, formatDuration, formatPercent } from "../src/components/agentic/format.ts";
+import { clamp01, confidenceBand, countWords, formatDuration, formatLogTime, formatPercent } from "../src/components/agentic/format.ts";
 
 describe("confidenceBand", () => {
   it("asks a person below the threshold", () => {
@@ -32,6 +32,15 @@ describe("formatters", () => {
     assert.equal(formatDuration(-5), "0.0s");
     assert.equal(formatDuration(6200), "6s");
     assert.equal(formatDuration(65_000), "1m 05s");
+  });
+  it("formats log times with milliseconds", () => {
+    assert.equal(formatLogTime(0), "0ms");
+    assert.equal(formatLogTime(180), "180ms");
+    assert.equal(formatLogTime(420.4), "420ms");
+    assert.equal(formatLogTime(-5), "0ms");
+    assert.equal(formatLogTime(1450), "1.5s");
+    assert.equal(formatLogTime(6200), "6.2s");
+    assert.equal(formatLogTime(65_000), "1m 05s");
   });
   it("counts words", () => {
     assert.equal(countWords("  "), 0);

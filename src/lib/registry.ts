@@ -297,6 +297,122 @@ export const COMPONENTS: ComponentDoc[] = [
     notBuilt: ["Inventing a new kind of step. You pick from the list the product gives you.", "Dragging a step onto the chain."],
   },
   {
+    slug: "run-log",
+    name: "RunLog",
+    moment: "while-it-works",
+    file: "run-log.tsx",
+    summary: "A dock under a run: the steps and their durations, and the open step's data as a table or as JSON.",
+    question: "How do you inspect one step's data without turning the whole run into a dump?",
+    decisions: [
+      "The steps sit in a tree, each with how long it took. The open step's data sits beside them.",
+      "Input and Output are a switch. Most people want what came out. The input is there when the output looks wrong.",
+      "The same payload is a table or JSON. The table is for reading. JSON is the exact value.",
+      "A row that failed the check says Wrong. Colour is not the only mark.",
+      "Clear forgets the log. An empty log says there is nothing to inspect.",
+      "A running step's spinner draws itself into a check, or into a warning if that step failed. Reduced motion swaps the icon.",
+    ],
+    usage: `<RunLog
+  steps={[{
+    id: "compare",
+    label: "Compare line items",
+    status: "error",
+    durationMs: 610,
+    output: {
+      columns: ["Item", "Order", "Invoice"],
+      rows: [["Delivery", "—", "€38.00"]],
+      marked: [0],
+    },
+  }]}
+  onClear={clearLog}
+/>`,
+    props: [
+      { name: "steps", type: "RunLogStep[]", note: "id, label, status, durationMs, children, input, output. A side has columns, rows, marked and json." },
+      { name: "title", type: "string", note: "Dock title. Default \"Log\"." },
+      { name: "onClear", type: "() => void", note: "Optional. Clears the log. The parent owns the data." },
+    ],
+    a11y: [
+      "The steps are a tree. Arrows, Home and End move between them. The open step is selected.",
+      "Status is written as well as drawn. The icon is decorative, and reduced motion swaps it instead of morphing.",
+      "Input, Output, Table and JSON are toggle buttons.",
+      "The table has a caption. A row that doesn't match says Wrong, not only by colour.",
+    ],
+    notBuilt: ["Editing a cell.", "Retrying a step from the dock. That is StepError.", "Virtualisation for very long logs."],
+  },
+  {
+    slug: "run-history",
+    name: "RunHistory",
+    moment: "while-it-works",
+    file: "run-history.tsx",
+    summary: "Past runs: which succeeded, which errored, which were canceled, and which one is open.",
+    question: "Which past run is this, and did it finish?",
+    decisions: [
+      "Each run is one row: what it was for, when it started, how it ended, and how long it took.",
+      "Success, error and canceled are written. The mark repeats the word, it does not replace it.",
+      "The selected run is highlighted. Selection belongs to the parent, so the rest of the screen can show that run.",
+    ],
+    usage: `<RunHistory
+  runs={[
+    { id: "r2", status: "error", at: "14 Nov, 11:02",
+      durationMs: 610, label: "Match INV-2041" },
+  ]}
+  selectedId={selectedId}
+  onSelect={setSelectedId}
+/>`,
+    props: [
+      { name: "runs", type: "RunHistoryRun[]", note: "id, status (success, error, canceled), at, durationMs, label." },
+      { name: "selectedId", type: "string", note: "The run that is highlighted." },
+      { name: "onSelect", type: "(id: string) => void", note: "Called when a run is chosen." },
+    ],
+    a11y: [
+      "The list is a listbox. The highlighted run is selected.",
+      "Arrows, Home and End move the highlight.",
+      "Success, error and canceled are written, not only coloured.",
+      "The icon is decorative. Reduced motion swaps it instead of morphing.",
+    ],
+    notBuilt: ["Deleting a run.", "Comparing two runs side by side."],
+  },
+  {
+    slug: "run-chat",
+    name: "RunChat",
+    moment: "while-it-works",
+    file: "run-chat.tsx",
+    summary: "A message starts the run. The thread is on one side, the live steps on the other.",
+    question: "How does a person start a run and watch it work, in the same place they asked?",
+    decisions: [
+      "Sending a message is what starts the run. Until then, the other side says so.",
+      "The answer can stream in the thread while the steps advance beside it. Waiting has a reason.",
+      "Authorship stays marked: the person asked, the agent answers.",
+      "A running step's spinner draws itself into a check, or into a warning if the step failed. Reduced motion swaps the icon.",
+    ],
+    usage: `<RunChat
+  title="Match this invoice"
+  messages={messages}
+  steps={steps}
+  draft={draft}
+  onDraftChange={setDraft}
+  onSend={startRun}
+/>`,
+    props: [
+      { name: "title", type: "string", note: "Names the thread. The task, not a product name." },
+      { name: "messages", type: "RunChatMessage[]", note: "id, role (human or agent), text." },
+      { name: "steps", type: "RunChatStep[]", note: "id, label, status (pending, running, done, failed), durationMs." },
+      { name: "draft", type: "string", note: "The message being written." },
+      { name: "onDraftChange", type: "(draft: string) => void", note: "Keeps the field." },
+      { name: "onSend", type: "() => void", note: "Sends the draft and starts the run." },
+      { name: "stream", type: "ReactNode", note: "Optional. The answer still being written. The demo passes StreamingText." },
+      { name: "plan", type: "ReactNode", note: "Optional. A one-line plan above the steps. The demo passes ThinkingState." },
+      { name: "busy", type: "boolean", note: "Optional. While a run is in flight, Send waits." },
+      { name: "placeholder", type: "string", note: "Optional field hint. Default \"Message the agent\"." },
+    ],
+    a11y: [
+      "The message field has a label. Enter sends. Send is a button.",
+      "Human and agent messages carry a mark with text, not only colour.",
+      "Each step's status is written. The icon is decorative, and reduced motion swaps it instead of morphing.",
+      "The step list is a polite live region.",
+    ],
+    notBuilt: ["Several threads.", "Attachments.", "Stopping a single step. Stop on a stream belongs to StreamingText."],
+  },
+  {
     slug: "agent-decision-card",
     name: "AgentDecisionCard",
     moment: "where-you-step-in",
@@ -361,6 +477,41 @@ export const COMPONENTS: ComponentDoc[] = [
     ],
     a11y: ["role=\"alert\" on failure, role=\"status\" while waiting."],
     notBuilt: ["Timers. When \"running\" becomes \"slow\" depends on the task; the parent decides."],
+  },
+  {
+    slug: "step-error",
+    name: "StepError",
+    moment: "when-it-fails",
+    file: "step-error.tsx",
+    summary: "One step failed: what broke, which value was wrong, and a retry for that step.",
+    question: "When one step fails, what exactly was wrong with the data?",
+    decisions: [
+      "The step name, a plain-words reason, and the values that were involved are the whole message.",
+      "The wrong value is labelled Wrong, and the neighbouring values stay so the mismatch can be read.",
+      "Retry runs that step again. It does not offer another way to do the whole task.",
+      "Nothing after this step ran. That is said in words.",
+    ],
+    usage: `<StepError
+  step="Compare line items"
+  message="The invoice total doesn't match the purchase order."
+  facts={[
+    { label: "Purchase order PO-7718", value: "€12,480.00" },
+    { label: "Invoice INV-2041", value: "€12,518.00", wrong: true },
+  ]}
+  onRetry={retryStep}
+/>`,
+    props: [
+      { name: "step", type: "string", note: "The step that failed, in words." },
+      { name: "message", type: "string", note: "What broke, in plain words." },
+      { name: "facts", type: "StepErrorFact[]", note: "label, value, and wrong on the value that failed the check." },
+      { name: "onRetry", type: "() => void", note: "Runs this step again." },
+    ],
+    a11y: [
+      "role=\"alert\", so the failure is announced.",
+      "The wrong value says Wrong, not only by colour.",
+      "Retry this step is a button.",
+    ],
+    notBuilt: ["A manual path for the whole task. That is FallbackBoundary.", "Editing the bad value in place. That is HumanOverride."],
   },
 ];
 

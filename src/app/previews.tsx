@@ -5,9 +5,13 @@ import {
   AgentDecisionCard,
   ConfidenceBar,
   FallbackBoundary,
+  StepError,
   HumanOverride,
   StreamingText,
   ThinkingState,
+  RunLog,
+  RunHistory,
+  RunChat,
   ToolCallFeed,
   RunNode,
   RunGraph,
@@ -30,6 +34,47 @@ const PREVIEWS: Record<string, React.ReactNode> = {
         { label: "Read invoice INV-2041", status: "done" },
         { label: "Find the purchase order", status: "active" },
         { label: "Compare line items", status: "pending" },
+      ]}
+    />
+  ),
+  "run-log": (
+    <RunLog
+      steps={[
+        { id: "1", label: "Read invoice INV-2041", status: "success", durationMs: 180 },
+        { id: "2", label: "Find the purchase order", status: "success", durationMs: 420 },
+        {
+          id: "3",
+          label: "Compare line items",
+          status: "error",
+          durationMs: 610,
+          output: { columns: ["Item", "Invoice"], rows: [["Delivery", "€38.00"]], marked: [0] },
+        },
+      ]}
+      onClear={noop}
+    />
+  ),
+  "run-history": (
+    <RunHistory
+      selectedId="r2"
+      onSelect={noop}
+      runs={[
+        { id: "r1", status: "success", at: "14:16", durationMs: 1450, label: "Match INV-2041" },
+        { id: "r2", status: "error", at: "11:02", durationMs: 610, label: "Match INV-2041" },
+        { id: "r3", status: "canceled", at: "18:41", durationMs: 3200, label: "Match INV-1988" },
+      ]}
+    />
+  ),
+  "run-chat": (
+    <RunChat
+      title="Match this invoice"
+      draft=""
+      onDraftChange={noop}
+      onSend={noop}
+      messages={[{ id: "1", role: "human", text: "Match INV-2041 to the open purchase order." }]}
+      steps={[
+        { id: "1", label: "Read invoice INV-2041", status: "done", durationMs: 180 },
+        { id: "2", label: "Find the purchase order", status: "running" },
+        { id: "3", label: "Compare line items", status: "pending" },
       ]}
     />
   ),
@@ -92,6 +137,17 @@ const PREVIEWS: Record<string, React.ReactNode> = {
     <FallbackBoundary status="slow" task="match this invoice" manual={{ label: "Match it myself", onClick: noop }} onRetry={noop}>
       {null}
     </FallbackBoundary>
+  ),
+  "step-error": (
+    <StepError
+      step="Compare line items"
+      message="The invoice total doesn't match the purchase order."
+      facts={[
+        { label: "Purchase order PO-7718", value: "€12,480.00" },
+        { label: "Invoice INV-2041", value: "€12,518.00", wrong: true },
+      ]}
+      onRetry={noop}
+    />
   ),
 };
 

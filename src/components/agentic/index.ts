@@ -1,5 +1,8 @@
 export { StreamingText, type StreamingTextProps, type StreamStatus } from "./streaming-text";
 export { ThinkingState, type ThinkingStateProps, type ThinkingStep } from "./thinking-state";
+export { RunLog, type RunLogProps, type RunLogStep, type RunLogSide } from "./run-log";
+export { RunHistory, type RunHistoryProps, type RunHistoryRun } from "./run-history";
+export { RunChat, type RunChatProps, type RunChatMessage, type RunChatStep } from "./run-chat";
 export { ConfidenceBar, type ConfidenceBarProps } from "./confidence-bar";
 export { HumanOverride, type HumanOverrideProps } from "./human-override";
 export { ToolCallFeed, type ToolCallFeedProps, type ToolCall } from "./tool-call-feed";
@@ -8,4 +11,5 @@ export { RunGraph, type RunGraphProps, type RunGraphStep, type RunGraphPhase } f
 export { StepPicker, type StepPickerProps, type StepChoice } from "./step-picker";
 export { AgentDecisionCard, type AgentDecisionCardProps, type AgentDecision } from "./agent-decision-card";
 export { FallbackBoundary, type FallbackBoundaryProps, type AgentRunStatus } from "./fallback-boundary";
+export { StepError, type StepErrorProps, type StepErrorFact } from "./step-error";
 export { AgentMark, HumanMark } from "./marks";
