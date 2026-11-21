@@ -49,6 +49,28 @@ export const KEYBOARD: Record<string, KeyboardRow[]> = {
   "confidence-bar": [
     { key: "None", action: "No keys. The bar is a meter, not a control, so it is not in the tab order." },
   ],
+  "step-inspector": [
+    { key: "Enter", action: "Activates the focused control: Run this step, Parameters, or Settings." },
+    { key: "Space", action: "Activates the focused control: Run this step, Parameters, or Settings." },
+    { key: "Arrow Down", action: "Moves from Parameters to Settings. From Settings, moves to Parameters." },
+    { key: "Arrow Up", action: "Moves from Settings to Parameters. From Parameters, moves to Settings." },
+    { key: "Home", action: "Moves to Parameters." },
+    { key: "End", action: "Moves to Settings." },
+  ],
+  "expression-field": [
+    { key: "Enter", action: "Activates the focused control: Fixed, Expression, Change, or a field in the list." },
+    { key: "Space", action: "Activates the focused control. In the fixed value, types a space." },
+    { key: "Escape", action: "While the field list is open, closes it and moves focus back to the value." },
+    { key: "Arrow Down", action: "Moves from Fixed to Expression. In the field list, moves to the next field." },
+    { key: "Arrow Up", action: "Moves from Expression to Fixed. In the field list, moves to the previous field." },
+    { key: "Home", action: "Moves to Fixed. In the field list, moves to the first field." },
+    { key: "End", action: "Moves to Expression. In the field list, moves to the last field." },
+  ],
+  "pinned-output": [
+    { key: "Enter", action: "Activates the focused button. In the mock field, saves the mock and moves focus back to Supply mock." },
+    { key: "Space", action: "Activates the focused button. In the mock field, types a space." },
+    { key: "Escape", action: "While supplying a mock, cancels and moves focus back to Supply mock." },
+  ],
   "human-override": [
     { key: "Enter", action: "Activates the focused button. In the field, saves the edit and moves focus back to Change." },
     { key: "Space", action: "Activates the focused button. In the field, types a space." },

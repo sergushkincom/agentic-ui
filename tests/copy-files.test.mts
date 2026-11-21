@@ -90,6 +90,30 @@ const EXPECTED: Record<string, { files: string[]; packages: string[] }> = {
     files: [TOKENS, "src/components/agentic/confidence-bar.tsx", "src/components/agentic/format.ts"],
     packages: [],
   },
+  "step-inspector": {
+    files: [
+      TOKENS,
+      "src/components/agentic/keyboard.ts",
+      "src/components/agentic/marks.tsx",
+      "src/components/agentic/status-morph.tsx",
+      "src/components/agentic/step-inspector.tsx",
+      "src/components/agentic/stroke-morph.ts",
+    ],
+    packages: ["react"],
+  },
+  "expression-field": {
+    files: [
+      TOKENS,
+      "src/components/agentic/expression-field.tsx",
+      "src/components/agentic/keyboard.ts",
+      "src/components/agentic/marks.tsx",
+    ],
+    packages: ["react"],
+  },
+  "pinned-output": {
+    files: [TOKENS, "src/components/agentic/marks.tsx", "src/components/agentic/pinned-output.tsx"],
+    packages: ["react"],
+  },
   "human-override": {
     files: [TOKENS, "src/components/agentic/human-override.tsx", "src/components/agentic/marks.tsx"],
     packages: ["react"],

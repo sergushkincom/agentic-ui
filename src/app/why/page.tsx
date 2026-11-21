@@ -49,6 +49,21 @@ const NOT_BUILT: { slug: string; name: string; note: string }[] = [
     note: "does not calibrate the number. It shows one; making the number honest is the model team's job.",
   },
   {
+    slug: "step-inspector",
+    name: "StepInspector",
+    note: "does not edit the raw payload, and it does not run the steps around this one.",
+  },
+  {
+    slug: "expression-field",
+    name: "ExpressionField",
+    note: "does not open a code editor, and it does not write the reference as brace syntax.",
+  },
+  {
+    slug: "pinned-output",
+    name: "PinnedOutput",
+    note: "does not pin several items, and it does not run the step again.",
+  },
+  {
     slug: "human-override",
     name: "HumanOverride",
     note: "does not tell the agent to learn from a correction. That is a product decision, not a field's.",

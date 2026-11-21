@@ -5,6 +5,9 @@ import { AgentDecisionCardDemo } from "./demos/agent-decision-card";
 import { AgentHarnessDemo } from "./demos/agent-harness";
 import { ConfidenceBarDemo } from "./demos/confidence-bar";
 import { ConnectionPickerDemo } from "./demos/connection-picker";
+import { ExpressionFieldDemo } from "./demos/expression-field";
+import { PinnedOutputDemo } from "./demos/pinned-output";
+import { StepInspectorDemo } from "./demos/step-inspector";
 import { FallbackBoundaryDemo } from "./demos/fallback-boundary";
 import { StepErrorDemo } from "./demos/step-error";
 import { HumanOverrideDemo } from "./demos/human-override";
@@ -27,6 +30,9 @@ export const DEMOS: Record<string, () => ReactNode> = {
   "run-history": RunHistoryDemo,
   "run-chat": RunChatDemo,
   "confidence-bar": ConfidenceBarDemo,
+  "step-inspector": StepInspectorDemo,
+  "expression-field": ExpressionFieldDemo,
+  "pinned-output": PinnedOutputDemo,
   "human-override": HumanOverrideDemo,
   "tool-call-feed": ToolCallFeedDemo,
   "run-node": RunNodeDemo,

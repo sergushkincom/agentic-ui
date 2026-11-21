@@ -138,6 +138,58 @@ export const WHEN_TO_USE: Record<string, WhenToUse> = {
       },
     ],
   },
+  "step-inspector": {
+    useWhen: [
+      "You are looking at one step: what came in from earlier steps, what it is set to, and what it produced.",
+      "The output may be empty. The pane says to run the step or pin mock data, instead of showing a result that is not there.",
+    ],
+    instead: [
+      {
+        slug: "tool-call-feed",
+        when: "you want the whole run as a list of actions, each as a sentence, and not one step open in three panes.",
+      },
+      {
+        slug: "pinned-output",
+        when: "you only need to freeze this step's output so later steps can run. You do not need the input or the parameters.",
+      },
+      {
+        slug: "expression-field",
+        when: "you are setting one value to a field from a previous step, not inspecting the whole step.",
+      },
+    ],
+  },
+  "expression-field": {
+    useWhen: [
+      "A parameter is either a value someone types, or a field from a previous step.",
+      "The link should be readable as the step's name and the field. It is not a correction, and it is not code syntax.",
+    ],
+    instead: [
+      {
+        slug: "human-override",
+        when: "the person is correcting a value the agent filled in, and that correction has to stick. An expression says where a value comes from. It does not say the agent was wrong.",
+      },
+      {
+        slug: "step-inspector",
+        when: "you need the step's input, parameters and output together, not a single value.",
+      },
+    ],
+  },
+  "pinned-output": {
+    useWhen: [
+      "Later steps should keep moving without running this step again.",
+      "A person may pin the last output, or supply mock data. The badge says pinned or live, so it is clear which one later steps will read.",
+    ],
+    instead: [
+      {
+        slug: "step-inspector",
+        when: "you need to see what came in and what the step is set to, not only the output you are freezing.",
+      },
+      {
+        slug: "tool-call-feed",
+        when: "the output belongs in the log of the run, in order with the other actions, rather than as a pin on one step.",
+      },
+    ],
+  },
   "human-override": {
     useWhen: [
       "The agent filled in one field, and a person may take it over in a single step.",
@@ -151,6 +203,10 @@ export const WHEN_TO_USE: Record<string, WhenToUse> = {
       {
         slug: "confidence-bar",
         when: "you are showing how sure the agent is, in words and a percentage, not offering a value to change.",
+      },
+      {
+        slug: "expression-field",
+        when: "the value should point at a field from a previous step, not replace something the agent filled in.",
       },
     ],
   },
@@ -167,6 +223,10 @@ export const WHEN_TO_USE: Record<string, WhenToUse> = {
       {
         slug: "streaming-text",
         when: "the output is prose the person reads as it arrives, not a log of actions.",
+      },
+      {
+        slug: "step-inspector",
+        when: "you are opening one step to see its input, parameters and output, not the whole run as a list.",
       },
     ],
   },

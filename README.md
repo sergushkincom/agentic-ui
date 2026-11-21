@@ -4,7 +4,7 @@
 [![MIT License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Live docs](https://img.shields.io/badge/Live-agentic--ui--docs.vercel.app-000000?logo=vercel)](https://agentic-ui-docs.vercel.app)
 
-React components for products where an agent does part of the work: streaming text, thinking states, confidence, human override, tool calls, decisions and fallbacks.
+React components for products where an agent does part of the work: streaming text, thinking states, confidence, step inspection, expressions, pinned output, human override, tool calls, decisions and fallbacks.
 
 Every component answers one question people actually ask when software acts for them: **what is it doing, how sure is it, and where can I step in?**
 
@@ -19,6 +19,9 @@ Every component answers one question people actually ask when software acts for 
 | `StreamingText` | How do you show an answer that is still being written, without making people read a moving target? |
 | `ThinkingState` | What does a person need to see to decide whether to keep waiting? |
 | `ConfidenceBar` | What does 72% mean to someone who has to act on it? |
+| `StepInspector` | When a step in the agent's work is wrong, where do you look? |
+| `ExpressionField` | How do you point a step at an earlier field without hiding the link in syntax? |
+| `PinnedOutput` | How do later steps keep moving when you do not want to run this step again? |
 | `HumanOverride` | When a person corrects the agent, how do they know the correction will stick? |
 | `ToolCallFeed` | How do you show what an agent did in other systems without dumping JSON on everyone? |
 | `RunNode` | What does a person need on a single step to see whether it is waiting, working, finished, or stuck? |

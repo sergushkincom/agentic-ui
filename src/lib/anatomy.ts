@@ -4,6 +4,7 @@
  * ToolCallFeed nests Row, and Row's status icon nests StatusMorph, matching the source.
  * RunGraph nests the phase pill, each RunNode, the edge between them, and AddStep.
  * AgentDecisionCard keeps the disclosure and the decision footer as nested regions.
+ * StepInspector nests InputPane, ParameterPane and OutputPane.
  */
 
 export type AnatomyNode = {
@@ -14,6 +15,43 @@ export type AnatomyNode = {
 };
 
 export const ANATOMY: Record<string, readonly AnatomyNode[]> = {
+  "step-inspector": [
+    {
+      name: "StepInspector",
+      answers: "What is this step, and where does its data sit?",
+      children: [
+        { name: "AgentMark", answers: "Who is running this step?" },
+        { name: "title", answers: "What is this step called?" },
+        { name: "step", answers: "Which call is it?" },
+        { name: "onRun", answers: "Can you run this step now?" },
+        {
+          name: "InputPane",
+          answers: "What came in from earlier steps?",
+          children: [{ name: "input", answers: "Which items and fields arrived?" }],
+        },
+        {
+          name: "ParameterPane",
+          answers: "What is the step set to, and how does it behave?",
+          children: [
+            { name: "tab", answers: "Are parameters or settings open?" },
+            { name: "parameters", answers: "What values does the step use?" },
+            { name: "settings", answers: "How should the step behave when it runs?" },
+          ],
+        },
+        {
+          name: "OutputPane",
+          answers: "What will the next step see?",
+          children: [
+            { name: "status", answers: "Has the step run, or is it still going?" },
+            { name: "StatusMorph", answers: "Does the running mark turn into a check or a warning?" },
+            { name: "output", answers: "What did the step produce?" },
+            { name: "source", answers: "Is this output from the run, or pinned by you?" },
+            { name: "HumanMark", answers: "Who pinned the mock data?" },
+          ],
+        },
+      ],
+    },
+  ],
   "run-log": [
     {
       name: "RunLog",

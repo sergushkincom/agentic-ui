@@ -6,8 +6,11 @@ import {
   AgentHarness,
   ConfidenceBar,
   ConnectionPicker,
+  ExpressionField,
   FallbackBoundary,
+  PinnedOutput,
   StepError,
+  StepInspector,
   HumanOverride,
   StreamingText,
   ThinkingState,
@@ -93,6 +96,53 @@ const PREVIEWS: Record<string, React.ReactNode> = {
     />
   ),
   "confidence-bar": <ConfidenceBar value={0.78} basis="3 of 4 fields match" />,
+  "step-inspector": (
+    <div className="origin-top-left scale-[0.55] w-[182%]">
+      <StepInspector
+        title="Compare line items"
+        step="erp.compare_lines"
+        input={[
+          { id: "invoice", label: "Read invoice", fields: [{ name: "amount", value: "€12,518.00" }] },
+          { id: "order", label: "Find the purchase order", fields: [{ name: "amount", value: "€12,480.00" }] },
+        ]}
+        parameters={[{ name: "Tolerance", value: "€38.00 delivery" }]}
+        settings={[{ name: "On mismatch", value: "Stop and ask" }]}
+        tab="parameters"
+        onTab={noop}
+        output={{
+          summary: "Amounts differ by the €38.00 delivery.",
+          fields: [{ name: "difference", value: "€38.00" }],
+        }}
+        status="done"
+        source="live"
+        onRun={noop}
+      />
+    </div>
+  ),
+  "expression-field": (
+    <ExpressionField
+      label="Supplier"
+      mode="expression"
+      fixedValue="Acme Fasteners"
+      reference={{ step: "Read invoice", field: "supplier" }}
+      fields={[{ step: "Read invoice", field: "supplier" }]}
+      onMode={noop}
+      onFixedValue={noop}
+      onReference={noop}
+      choosing={false}
+      onChoosing={noop}
+    />
+  ),
+  "pinned-output": (
+    <PinnedOutput
+      step="Compare line items"
+      summary="Treat as a match. Delivery of €38.00 is agreed."
+      source="pinned"
+      onPin={noop}
+      onUseLive={noop}
+      onSupplyMock={noop}
+    />
+  ),
   "human-override": (
     <HumanOverride label="Cost centre" agentValue="4100 · Production" value="4200 · Assembly" source="human" onChange={noop} />
   ),

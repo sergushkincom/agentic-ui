@@ -5,6 +5,16 @@ export { RunLog, type RunLogProps, type RunLogStep, type RunLogSide } from "./ru
 export { RunHistory, type RunHistoryProps, type RunHistoryRun } from "./run-history";
 export { RunChat, type RunChatProps, type RunChatMessage, type RunChatStep } from "./run-chat";
 export { ConfidenceBar, type ConfidenceBarProps } from "./confidence-bar";
+export {
+  StepInspector,
+  type StepInspectorProps,
+  type StepItem,
+  type StepParameter,
+  type StepSetting,
+  type StepOutput,
+} from "./step-inspector";
+export { ExpressionField, type ExpressionFieldProps, type FieldReference } from "./expression-field";
+export { PinnedOutput, type PinnedOutputProps } from "./pinned-output";
 export { HumanOverride, type HumanOverrideProps } from "./human-override";
 export { ToolCallFeed, type ToolCallFeedProps, type ToolCall } from "./tool-call-feed";
 export { RunNode, type RunNodeProps, type RunNodeStatus } from "./run-node";
