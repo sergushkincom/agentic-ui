@@ -187,6 +187,143 @@ export const COMPONENTS: ComponentDoc[] = [
     notBuilt: ["Cancelling a single call.", "Virtualisation for very long feeds."],
   },
   {
+    slug: "step-inspector",
+    name: "StepInspector",
+    moment: "while-it-works",
+    file: "step-inspector.tsx",
+    summary: "One step, open: what came in, what it is set to, and what came out.",
+    question: "When a step in the agent's work is wrong, where do you look?",
+    decisions: [
+      "Three panes in reading order: input, then parameters, then output. The output is what the next step will see.",
+      "Parameters and settings are tabs. Parameters are the work. Settings are how the step behaves.",
+      "An empty output says to run the step or pin mock data. It does not pretend there is a result.",
+      "Pinned output is marked as yours. Live output is the step's own, from the last run.",
+    ],
+    usage: `<StepInspector
+  title="Compare line items"
+  step="erp.compare_lines"
+  input={[{ id: "invoice", label: "Read invoice", fields: [{ name: "amount", value: "€12,518.00" }] }]}
+  parameters={[{ name: "Tolerance", value: "€38.00 delivery" }]}
+  settings={[{ name: "On mismatch", value: "Stop and ask" }]}
+  tab="parameters"
+  onTab={setTab}
+  output={null}
+  status="idle"
+  onRun={runStep}
+/>`,
+    props: [
+      { name: "title", type: "string", note: "What this step does, for people." },
+      { name: "step", type: "string", note: "Machine name, shown small." },
+      { name: "input", type: "StepItem[]", note: "Items from earlier steps: id, label, fields." },
+      { name: "parameters", type: "StepParameter[]", note: "name, value, optional hint." },
+      { name: "settings", type: "StepSetting[]", note: "name, value, optional hint. The Settings tab." },
+      { name: "tab", type: '"parameters" | "settings"', note: "Which configuration tab is open." },
+      { name: "onTab", type: "(tab) => void", note: "Switch tabs." },
+      { name: "output", type: "StepOutput | null", note: "summary and fields. Null when there is nothing to show yet." },
+      { name: "status", type: '"idle" | "running" | "done" | "failed"', note: "Drives the mark in the output pane." },
+      { name: "source", type: '"pinned" | "live"', note: "Optional. Pinned: a person supplied this. Live: the step produced it." },
+      { name: "error", type: "string", note: "Optional. Plain-words reason when status is failed." },
+      { name: "onRun", type: "() => void", note: "Optional. Shows Run this step." },
+    ],
+    a11y: [
+      "Parameters and Settings are tabs: arrow keys move between them, Home and End jump to the ends.",
+      "The output mark is decorative. Running, done and failed are written, and a pinned output says pinned.",
+      "When the step finishes or fails, the outcome is announced through a polite live region.",
+    ],
+    notBuilt: [
+      "Editing the raw payload. The panes are for reading the step, not a JSON editor.",
+      "Running the steps around this one. Run here runs this step. The parent decides what that calls.",
+    ],
+  },
+  {
+    slug: "expression-field",
+    name: "ExpressionField",
+    moment: "while-it-works",
+    file: "expression-field.tsx",
+    summary: "A value that is either typed, or taken from a field on a previous step.",
+    question: "How do you point a step at an earlier field without hiding the link in syntax?",
+    decisions: [
+      "Fixed is a value you type. Expression is a field from a previous step, written as that step's name and the field.",
+      "The reference is ordinary type. You can read it out loud. It is not a code token.",
+      "It is not an override. Nothing here says the agent was wrong. It says where the value comes from.",
+    ],
+    usage: `<ExpressionField
+  label="Supplier"
+  mode="expression"
+  fixedValue="Acme Fasteners"
+  reference={{ step: "Read invoice", field: "supplier" }}
+  fields={[
+    { step: "Read invoice", field: "supplier" },
+    { step: "Read invoice", field: "amount" },
+  ]}
+  onMode={setMode}
+  onFixedValue={setFixedValue}
+  onReference={setReference}
+  choosing={choosing}
+  onChoosing={setChoosing}
+/>`,
+    props: [
+      { name: "label", type: "string", note: "Field name." },
+      { name: "mode", type: '"fixed" | "expression"', note: "Typed value, or a reference to a previous step." },
+      { name: "fixedValue", type: "string", note: "What you typed. Used while mode is fixed." },
+      { name: "reference", type: "FieldReference | null", note: "step and field. Null until one is chosen." },
+      { name: "fields", type: "FieldReference[]", note: "Previous-step fields a person can insert, in list order." },
+      { name: "onMode", type: "(mode) => void", note: "Switch Fixed and Expression." },
+      { name: "onFixedValue", type: "(value) => void", note: "Edit the typed value." },
+      { name: "onReference", type: "(reference) => void", note: "Insert a previous step's field." },
+      { name: "choosing", type: "boolean", note: "The list of previous fields is open." },
+      { name: "onChoosing", type: "(choosing) => void", note: "Open or close that list." },
+    ],
+    a11y: [
+      "Fixed and Expression are a radio group. Arrow keys move between them.",
+      "The field list is a listbox. Arrows move, Home and End jump, Escape closes it and returns focus.",
+      "A reference is spoken as the step's name and the field. Colour is not the only signal.",
+    ],
+    notBuilt: [
+      "A code editor for arbitrary expressions. The field inserts one earlier field, which is the case a person can check.",
+      "Brace syntax. A reference is the step's name and the field, in ordinary type.",
+    ],
+  },
+  {
+    slug: "pinned-output",
+    name: "PinnedOutput",
+    moment: "while-it-works",
+    file: "pinned-output.tsx",
+    summary: "Freeze a step's output so later steps can run without running this one again.",
+    question: "How do later steps keep moving when you do not want to run this step again?",
+    decisions: [
+      "Pinned means a person supplied the output. Live means the step produced it. The badge says which.",
+      "Later steps read the pinned output as if the step had just run.",
+      "Using the live output drops the pin. The mock stays available to supply again.",
+    ],
+    usage: `<PinnedOutput
+  step="Compare line items"
+  summary="Amounts differ by the €38.00 delivery."
+  source="live"
+  onPin={pin}
+  onUseLive={useLive}
+  onSupplyMock={setMock}
+/>`,
+    props: [
+      { name: "step", type: "string", note: "The step this output belongs to, for people." },
+      { name: "summary", type: "string", note: "What later steps will read." },
+      { name: "source", type: '"pinned" | "live"', note: "Who the output belongs to." },
+      { name: "onPin", type: "() => void", note: "Keep the current summary and stop re-running this step." },
+      { name: "onUseLive", type: "() => void", note: "Drop the pin and read the last run again." },
+      { name: "onSupplyMock", type: "(summary) => void", note: "Replace the output with mock data, and pin that." },
+      { name: "defaultEditing", type: "boolean", note: "Open the mock field on first render. Default false." },
+    ],
+    a11y: [
+      "The badge is the word pinned or live, with the person or agent mark. Colour is not the only signal.",
+      "Escape while supplying a mock cancels and returns focus to Supply mock.",
+      "Enter in the mock field saves it. A change of source is announced through a polite live region.",
+    ],
+    notBuilt: [
+      "Pinning several items. One step, one output.",
+      "Re-running the step. Use live output reads the last run. Running again belongs to the step.",
+    ],
+  },
+  {
     slug: "agent-decision-card",
     name: "AgentDecisionCard",
     moment: "where-you-step-in",

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { COMPONENTS } from "@/lib/registry";
 import { SITE_TITLE } from "@/lib/site";
 import { WHY_DESCRIPTION, WHY_TITLE } from "./meta";
 
@@ -46,6 +47,21 @@ const NOT_BUILT: { slug: string; name: string; note: string }[] = [
     slug: "confidence-bar",
     name: "ConfidenceBar",
     note: "does not calibrate the number. It shows one; making the number honest is the model team's job.",
+  },
+  {
+    slug: "step-inspector",
+    name: "StepInspector",
+    note: "does not edit the raw payload, and it does not run the steps around this one.",
+  },
+  {
+    slug: "expression-field",
+    name: "ExpressionField",
+    note: "does not open a code editor, and it does not write the reference as brace syntax.",
+  },
+  {
+    slug: "pinned-output",
+    name: "PinnedOutput",
+    note: "does not pin several items, and it does not run the step again.",
   },
   {
     slug: "human-override",
@@ -136,7 +152,7 @@ export default function WhyPage() {
           </h2>
           <p className="text-[15px] leading-relaxed text-[var(--fg-muted)]">
             A coverage-led kit wins by having a component for every pattern. Pieces with these names already exist
-            elsewhere. This library has seven, and it does not compete on that count.
+            elsewhere. This library has {COMPONENTS.length}, and it does not compete on that count.
           </p>
           <p className="text-[15px] leading-relaxed text-[var(--fg-muted)]">
             The difference is that the reasoning is part of the component. Each page opens with the design question,

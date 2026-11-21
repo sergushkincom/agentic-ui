@@ -9,11 +9,14 @@ const PAIRS = [
   ["thinking-state", "streaming-text"],
   ["agent-decision-card", "human-override"],
   ["tool-call-feed", "thinking-state"],
+  ["tool-call-feed", "step-inspector"],
+  ["step-inspector", "pinned-output"],
+  ["expression-field", "human-override"],
 ] as const;
 
 describe("when to use", () => {
   it("covers every component page and no extra slugs", () => {
-    assert.equal(COMPONENTS.length, 7);
+    assert.equal(COMPONENTS.length, 10);
     assert.deepEqual(Object.keys(WHEN_TO_USE).sort(), COMPONENTS.map((component) => component.slug).sort());
   });
 
