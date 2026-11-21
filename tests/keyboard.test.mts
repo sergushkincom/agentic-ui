@@ -54,11 +54,14 @@ const KEYS = new Set(["Enter", "Space", "Escape", "Arrow Up", "Arrow Down", "Hom
 /** Keys the demo actually performs. A listed key that is not here is a docs bug. */
 const HANDLED: Record<string, string[]> = {
   "streaming-text": ["Enter", "Space", "Escape"],
+  "agent-harness": ["None"],
   "thinking-state": ["Enter", "Space"],
   "confidence-bar": ["None"],
   "human-override": ["Enter", "Space", "Escape"],
   "tool-call-feed": ["Enter", "Space", "Arrow Down", "Arrow Up", "Home", "End", "Tab", "Shift + Tab"],
   "agent-decision-card": ["Enter", "Space"],
+  "wait-for-person": ["Enter", "Space", "Escape"],
+  "connection-picker": ["Enter", "Space", "Escape", "Arrow Down", "Arrow Up", "Home", "End", "Tab", "Shift + Tab"],
   "fallback-boundary": ["Enter", "Space"],
 };
 

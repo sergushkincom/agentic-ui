@@ -86,7 +86,7 @@ export default function Home() {
                 href={`/components/${c.slug}`}
                 className="group flex h-full flex-col overflow-hidden rounded-[var(--radius)] border border-[var(--border)] bg-[var(--surface)] hover:border-[var(--fg-muted)]"
               >
-                <div aria-hidden="true" inert className={`pointer-events-none flex h-44 overflow-hidden bg-[var(--bg)] p-4 ${c.slug === "agent-decision-card" ? "items-start" : "items-center"}`}>
+                <div aria-hidden="true" inert className={`pointer-events-none flex h-44 overflow-hidden bg-[var(--bg)] p-4 ${c.slug === "agent-decision-card" || c.slug === "agent-harness" || c.slug === "wait-for-person" || c.slug === "connection-picker" ? "items-start" : "items-center"}`}>
                   <div className="w-full">
                     <Preview slug={c.slug} />
                   </div>

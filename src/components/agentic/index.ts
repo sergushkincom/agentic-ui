@@ -1,8 +1,11 @@
 export { StreamingText, type StreamingTextProps, type StreamStatus } from "./streaming-text";
+export { AgentHarness, type AgentHarnessProps, type HarnessSocket } from "./agent-harness";
 export { ThinkingState, type ThinkingStateProps, type ThinkingStep } from "./thinking-state";
 export { ConfidenceBar, type ConfidenceBarProps } from "./confidence-bar";
 export { HumanOverride, type HumanOverrideProps } from "./human-override";
 export { ToolCallFeed, type ToolCallFeedProps, type ToolCall } from "./tool-call-feed";
 export { AgentDecisionCard, type AgentDecisionCardProps, type AgentDecision } from "./agent-decision-card";
+export { WaitForPerson, type WaitForPersonProps, type WaitMode } from "./wait-for-person";
+export { ConnectionPicker, type ConnectionPickerProps, type ConnectionAccount, type ConnectionMode } from "./connection-picker";
 export { FallbackBoundary, type FallbackBoundaryProps, type AgentRunStatus } from "./fallback-boundary";
 export { AgentMark, HumanMark } from "./marks";

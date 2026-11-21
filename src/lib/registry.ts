@@ -64,6 +64,42 @@ export const COMPONENTS: ComponentDoc[] = [
     notBuilt: ["Markdown rendering: bring your own and pass the result as children of your own wrapper.", "Token-level animation or fade-in per word."],
   },
   {
+    slug: "agent-harness",
+    name: "AgentHarness",
+    moment: "while-it-works",
+    file: "agent-harness.tsx",
+    summary: "An agent step with sockets for a model, memory and tools. A missing required socket is a warning.",
+    question: "What does this step need before it can run, and what is still unplugged?",
+    decisions: [
+      "The step is a harness: one socket for the model, one for memory, and one for each tool. What is plugged in is written in words.",
+      "An empty required socket is a warning, and the step says it will not run. An empty optional socket stays quiet.",
+      "A connected socket settles on a check. Filling the socket that was blocking the step draws that warning into the check.",
+    ],
+    usage: `<AgentHarness
+  title="Match the invoice"
+  task="Match INV-2041 to PO-7718 before anyone is paid."
+  sockets={[
+    { id: "model", kind: "model", required: true },
+    { id: "memory", kind: "memory", value: "Last 6 invoices from Acme Fasteners" },
+    { id: "invoice", kind: "tool", value: "Read invoice INV-2041" },
+  ]}
+/>`,
+    props: [
+      { name: "title", type: "string", note: "Name of the step." },
+      { name: "task", type: "string", note: "What the step is trying to do." },
+      { name: "sockets", type: "HarnessSocket[]", note: "id, kind (model, memory or tool), value, required. An empty value means the socket is open." },
+    ],
+    a11y: [
+      "Each socket reads as text: the kind, what is connected or Not connected, and Required or Optional.",
+      "The warning is a status, so a change is announced. Colour is not the only signal.",
+      "The status icon is decorative. Reduced motion swaps it instead of morphing.",
+    ],
+    notBuilt: [
+      "Picking a model or a tool from a catalogue. The parent passes what is already connected.",
+      "Running the step. This is the harness, not the run.",
+    ],
+  },
+  {
     slug: "thinking-state",
     name: "ThinkingState",
     moment: "while-it-works",
@@ -219,6 +255,87 @@ export const COMPONENTS: ComponentDoc[] = [
     ],
     a11y: ["The outcome is announced through a polite live region.", "The fold is a button with aria-expanded."],
     notBuilt: ["Editing the decision before approving. Combine with HumanOverride for that."],
+  },
+  {
+    slug: "wait-for-person",
+    name: "WaitForPerson",
+    moment: "where-you-step-in",
+    file: "wait-for-person.tsx",
+    summary: "A paused run that is waiting for you: the question, then a reply or an approval that lets it continue.",
+    question: "When a run stops for a person, what do they need in front of them to let it continue?",
+    decisions: [
+      "The run is paused, and it says so. The agent is not still working, and this is not a scored proposal.",
+      "The question comes first. A reply sends the words back. An approval is Approve or Send back. Either answer resumes the run.",
+      "Until you answer, nothing continues. After you answer, the card is a receipt: what you said, and that the run continues.",
+    ],
+    usage: `<WaitForPerson
+  task="The agent stopped while matching this invoice to PO-7718."
+  prompt="Which cost centre takes the €38.00 delivery on INV-2041?"
+  mode="reply"
+  status={status}
+  answer={answer}
+  onRespond={(next) => { setAnswer(next); setStatus("resumed") }}
+/>`,
+    props: [
+      { name: "task", type: "string", note: "What the run was doing when it stopped." },
+      { name: "prompt", type: "string", note: "The question, in one sentence. Labels the reply field." },
+      { name: "mode", type: '"reply" | "approval"', note: "A written reply, or Approve and Send back." },
+      { name: "status", type: '"waiting" | "resumed"', note: "Waiting holds the run. Resumed shows the receipt." },
+      { name: "answer", type: "string", note: "What the person sent. Shown once the run resumes." },
+      { name: "onRespond", type: "(answer: string) => void", note: "The reply text, or \"Approved\", or \"Sent back\"." },
+    ],
+    a11y: [
+      "The question labels the reply field.",
+      "Pause and resume are announced through a polite live region.",
+      "Escape clears an unsent reply and leaves focus in the field. The run stays paused.",
+      "The waiting mark pulses, and holds still when reduced motion is on. The resume check morphs, or swaps.",
+    ],
+    notBuilt: [
+      "A timer or a reminder. The run waits. It does not nag.",
+      "Editing a value the agent already filled in. That is HumanOverride. Signing off a scored action is AgentDecisionCard.",
+    ],
+  },
+  {
+    slug: "connection-picker",
+    name: "ConnectionPicker",
+    moment: "where-you-step-in",
+    file: "connection-picker.tsx",
+    summary: "Pick a connected account, or sign in, or set one up by hand. A key is never shown.",
+    question: "How does a person give the agent an account without the secret ever sitting on screen?",
+    decisions: [
+      "Existing accounts are a choice of name and who it belongs to. The key is not part of the account.",
+      "The other path is written out: Sign in or set up manually. Sign-in never hands this component a token.",
+      "A manual key is typed into a concealed field, passed on once, and dropped. Nothing here can reveal it.",
+    ],
+    usage: `<ConnectionPicker
+  purpose="The agent needs the ERP to read INV-2041."
+  accounts={accounts}
+  selectedId={selectedId}
+  mode={mode}
+  onSelect={setSelectedId}
+  onSignIn={signIn}
+  onModeChange={setMode}
+  onManual={({ name }) => saveAccount(name)}
+/>`,
+    props: [
+      { name: "purpose", type: "string", note: "Why the agent needs an account." },
+      { name: "accounts", type: "ConnectionAccount[]", note: "id, name, holder. Names and holders only. Never a key." },
+      { name: "selectedId", type: "string", note: "The account chosen for this step, if one is connected." },
+      { name: "onSelect", type: "(id: string) => void", note: "Chooses an existing account." },
+      { name: "onSignIn", type: "() => void", note: "Starts sign-in. The component never receives a token." },
+      { name: "mode", type: '"pick" | "manual"', note: "The account list, or the manual setup form." },
+      { name: "onModeChange", type: "(mode) => void", note: "Switches between the list and manual setup." },
+      { name: "onManual", type: "({ name, secret }) => void", note: "The key is passed once, then the field is cleared. Do not render secret." },
+    ],
+    a11y: [
+      "Accounts are a radio group. Arrows move the selection. One account is in the tab order.",
+      "The key field is labelled and concealed. Escape closes manual setup, drops the unsent key, and returns focus to Set up manually.",
+      "Connected is a word and a check, not only a colour.",
+    ],
+    notBuilt: [
+      "A control that reveals the key.",
+      "Remembering the key, or testing that it works. The parent does that where the value is not rendered.",
+    ],
   },
   {
     slug: "fallback-boundary",

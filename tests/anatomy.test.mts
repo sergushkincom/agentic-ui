@@ -91,7 +91,7 @@ function walk(nodes: readonly AnatomyNode[], ancestors: string[], visit: (node: 
 
 describe("anatomy", () => {
   it("covers the two composed components and nothing else", () => {
-    assert.deepEqual(Object.keys(ANATOMY).sort(), ["agent-decision-card", "tool-call-feed"]);
+    assert.deepEqual(Object.keys(ANATOMY).sort(), ["agent-decision-card", "agent-harness", "tool-call-feed"]);
     for (const slug of Object.keys(ANATOMY)) {
       assert.ok(COMPONENTS.some((component) => component.slug === slug));
     }

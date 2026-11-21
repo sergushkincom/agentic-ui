@@ -8,11 +8,14 @@ import { join } from "node:path";
  */
 export const DEMO_SOURCE_FILES: Record<string, { file: string; exportName: string }> = {
   "streaming-text": { file: "src/app/components/demos/streaming-text.tsx", exportName: "StreamingTextStoppable" },
+  "agent-harness": { file: "src/app/components/demos/agent-harness.tsx", exportName: "AgentHarnessDemo" },
   "thinking-state": { file: "src/app/components/demos/thinking-state.tsx", exportName: "ThinkingStateDemo" },
   "confidence-bar": { file: "src/app/components/demos/confidence-bar.tsx", exportName: "ConfidenceBarDemo" },
   "human-override": { file: "src/app/components/demos/human-override.tsx", exportName: "HumanOverrideDemo" },
   "tool-call-feed": { file: "src/app/components/demos/tool-call-feed.tsx", exportName: "ToolCallFeedDemo" },
   "agent-decision-card": { file: "src/app/components/demos/agent-decision-card.tsx", exportName: "AgentDecisionCardDemo" },
+  "wait-for-person": { file: "src/app/components/demos/wait-for-person.tsx", exportName: "WaitForPersonDemo" },
+  "connection-picker": { file: "src/app/components/demos/connection-picker.tsx", exportName: "ConnectionPickerDemo" },
   "fallback-boundary": { file: "src/app/components/demos/fallback-boundary.tsx", exportName: "FallbackBoundaryDemo" },
 };
 

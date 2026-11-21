@@ -31,6 +31,16 @@ const EXPECTED: Record<string, { files: string[]; packages: string[] }> = {
     ],
     packages: [],
   },
+  "agent-harness": {
+    files: [
+      TOKENS,
+      "src/components/agentic/agent-harness.tsx",
+      "src/components/agentic/marks.tsx",
+      "src/components/agentic/status-morph.tsx",
+      "src/components/agentic/stroke-morph.ts",
+    ],
+    packages: ["react"],
+  },
   "thinking-state": {
     files: [
       TOKENS,
@@ -69,6 +79,27 @@ const EXPECTED: Record<string, { files: string[]; packages: string[] }> = {
       "src/components/agentic/confidence-bar.tsx",
       "src/components/agentic/format.ts",
       "src/components/agentic/marks.tsx",
+    ],
+    packages: ["react"],
+  },
+  "wait-for-person": {
+    files: [
+      TOKENS,
+      "src/components/agentic/marks.tsx",
+      "src/components/agentic/status-morph.tsx",
+      "src/components/agentic/stroke-morph.ts",
+      "src/components/agentic/wait-for-person.tsx",
+    ],
+    packages: ["react"],
+  },
+  "connection-picker": {
+    files: [
+      TOKENS,
+      "src/components/agentic/connection-picker.tsx",
+      "src/components/agentic/keyboard.ts",
+      "src/components/agentic/marks.tsx",
+      "src/components/agentic/status-morph.tsx",
+      "src/components/agentic/stroke-morph.ts",
     ],
     packages: ["react"],
   },

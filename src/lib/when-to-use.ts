@@ -38,6 +38,22 @@ export const WHEN_TO_USE: Record<string, WhenToUse> = {
       },
     ],
   },
+  "agent-harness": {
+    useWhen: [
+      "You are showing one agent step as a harness: which model, which memory, and which tools are plugged in.",
+      "A required socket can be missing. That should read as a warning that the step will not run, not as a failed call.",
+    ],
+    instead: [
+      {
+        slug: "thinking-state",
+        when: "the person is waiting on the current step and a folded plan. You do not need to show what the step is plugged into.",
+      },
+      {
+        slug: "tool-call-feed",
+        when: "the agent has already called other systems, and you are showing those calls in order, with what went out and what came back.",
+      },
+    ],
+  },
   "thinking-state": {
     useWhen: [
       "The person is waiting and needs a reason to keep waiting: the current step and how long it has taken. If a step fails, the line names where it stopped. When it finishes, the line is a receipt: how long, and how many steps.",
@@ -115,6 +131,38 @@ export const WHEN_TO_USE: Record<string, WhenToUse> = {
       {
         slug: "confidence-bar",
         when: "you only need how sure the agent is, without approve and reject.",
+      },
+    ],
+  },
+  "wait-for-person": {
+    useWhen: [
+      "A run has stopped and will not continue until a person replies or approves. The screen should say it is waiting for you, and show the question.",
+      "After the answer, the same place should become a receipt: what was said, and that the run continues.",
+    ],
+    instead: [
+      {
+        slug: "agent-decision-card",
+        when: "the person is signing off one proposed action, with what happens, whether it can be undone, how sure the agent is, and why. This pause does not score a decision.",
+      },
+      {
+        slug: "human-override",
+        when: "the person is correcting a single field the agent already filled in. The run is not paused on a question.",
+      },
+    ],
+  },
+  "connection-picker": {
+    useWhen: [
+      "The agent needs an account before it can act, and the person should pick one that is already connected, sign in, or set one up manually.",
+      "A key or token must not be rendered. Manual setup takes the secret once, and then the screen only knows the account name.",
+    ],
+    instead: [
+      {
+        slug: "human-override",
+        when: "the person is changing a value the agent filled in, such as a cost centre, not choosing which account the agent may use.",
+      },
+      {
+        slug: "wait-for-person",
+        when: "the run is paused on a question or an approval, and an account is not what it is waiting for.",
       },
     ],
   },

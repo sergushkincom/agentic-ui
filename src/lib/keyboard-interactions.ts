@@ -15,6 +15,9 @@ export const KEYBOARD: Record<string, KeyboardRow[]> = {
     { key: "Space", action: "While Stop is focused, stops the answer and keeps what arrived." },
     { key: "Escape", action: "While Stop is focused, stops the answer and keeps what arrived." },
   ],
+  "agent-harness": [
+    { key: "None", action: "No keys. The harness is a status, not a control, so it is not in the tab order." },
+  ],
   "thinking-state": [
     { key: "Enter", action: "Expands or collapses the steps when the summary line is focused." },
     { key: "Space", action: "Expands or collapses the steps when the summary line is focused." },
@@ -40,6 +43,22 @@ export const KEYBOARD: Record<string, KeyboardRow[]> = {
   "agent-decision-card": [
     { key: "Enter", action: "Activates the focused control: Approve, Reject, or the evidence disclosure." },
     { key: "Space", action: "Activates the focused control: Approve, Reject, or the evidence disclosure." },
+  ],
+  "wait-for-person": [
+    { key: "Enter", action: "Sends a reply that is not empty. Activates Approve or Send back when that button is focused." },
+    { key: "Space", action: "Activates the focused button. In the reply field, types a space." },
+    { key: "Escape", action: "While a reply is unsent, clears it and keeps the run paused." },
+  ],
+  "connection-picker": [
+    { key: "Enter", action: "Selects the focused account. Activates Sign in, Set up manually, Save, or Cancel. In a manual field, saves the setup." },
+    { key: "Space", action: "Selects the focused account, or activates the focused button. In a manual field, types a space." },
+    { key: "Escape", action: "Closes manual setup, drops the unsent key, and moves focus back to Set up manually." },
+    { key: "Arrow Down", action: "Moves to the next account and selects it. From the last, moves to the first." },
+    { key: "Arrow Up", action: "Moves to the previous account and selects it. From the first, moves to the last." },
+    { key: "Home", action: "Moves to the first account and selects it." },
+    { key: "End", action: "Moves to the last account and selects it." },
+    { key: "Tab", action: "Moves into the accounts onto the current one, then on to Sign in. It does not stop on every account." },
+    { key: "Shift + Tab", action: "Moves back to the current account, then out of the list." },
   ],
   "fallback-boundary": [
     { key: "Enter", action: "Activates the focused action: the manual path when the agent is slow or has failed, and Try again after a failure." },
