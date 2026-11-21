@@ -69,3 +69,124 @@ body {
     transition: none;
   }
 }
+
+/* Home hero handoff. Kept out of the caret/spinner/pulse paste above. */
+.aui-hero-in {
+  animation: aui-hero-in 720ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes aui-hero-in {
+  from {
+    transform: translateY(10px);
+  }
+  to {
+    transform: none;
+  }
+}
+
+.aui-beam {
+  --aui-beam-lead: var(--agent);
+  --aui-beam-follow: var(--human);
+}
+
+.aui-beam[data-handoff="human"] {
+  --aui-beam-lead: var(--human);
+  --aui-beam-follow: var(--agent);
+}
+
+.aui-beam-rotor {
+  position: absolute;
+  inset: -130%;
+  background: conic-gradient(
+    from 0deg,
+    transparent 0deg 262deg,
+    var(--aui-beam-lead) 312deg,
+    var(--aui-beam-follow) 342deg,
+    transparent 360deg
+  );
+  animation: aui-beam-spin 8s linear infinite;
+  pointer-events: none;
+}
+
+@keyframes aui-beam-spin {
+  to {
+    transform: rotate(1turn);
+  }
+}
+
+/* The bar width is driven by script, so a CSS transition would lag the number. */
+.aui-hero-meter [role="meter"] > div:first-child {
+  transition: none;
+}
+
+.aui-seam {
+  position: relative;
+  height: 18px;
+}
+
+.aui-seam-line {
+  position: absolute;
+  top: 50%;
+  right: 0;
+  left: 0;
+  height: 1px;
+  background: linear-gradient(90deg, var(--agent), var(--human));
+  transform: scaleX(0);
+  transform-origin: left center;
+  animation: aui-seam-draw 900ms cubic-bezier(0.16, 1, 0.3, 1) 180ms forwards;
+}
+
+.aui-seam-bead {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 9px;
+  height: 9px;
+  margin-top: -4.5px;
+  border: 2px solid var(--agent);
+  border-radius: 999px;
+  background: var(--surface);
+  animation: aui-seam-bead 1.15s cubic-bezier(0.16, 1, 0.3, 1) 180ms forwards;
+}
+
+@keyframes aui-seam-draw {
+  to {
+    transform: scaleX(1);
+  }
+}
+
+@keyframes aui-seam-bead {
+  to {
+    left: calc(100% - 9px);
+    border-color: var(--human);
+  }
+}
+
+.aui-nudge {
+  transition: transform 180ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.group:hover .aui-nudge,
+.group:focus-visible .aui-nudge {
+  transform: translateX(3px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .aui-hero-in,
+  .aui-beam-rotor,
+  .aui-seam-line,
+  .aui-seam-bead,
+  .aui-nudge {
+    animation: none;
+    transition: none;
+  }
+
+  .aui-seam-line {
+    transform: none;
+  }
+
+  .aui-seam-bead {
+    left: calc(100% - 9px);
+    border-color: var(--human);
+  }
+}
