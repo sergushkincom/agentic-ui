@@ -1,9 +1,16 @@
 /** Small shared marks. Authorship is always shown the same way across the library. */
 
-export function AgentMark({ label = "Agent" }: { label?: string }) {
+const CHIP = {
+  sm: "gap-1 px-1.5 py-px text-[11px] [&_svg]:size-2.5",
+  md: "gap-1.5 px-2 py-0.5 text-[13px] [&_svg]:size-3",
+} as const;
+
+type MarkProps = { label?: string; size?: keyof typeof CHIP };
+
+export function AgentMark({ label = "Agent", size = "sm" }: MarkProps) {
   return (
-    <span className="inline-flex items-center gap-1 rounded-full bg-[var(--agent-soft)] px-1.5 py-px text-[11px] font-medium text-[var(--agent)]">
-      <svg viewBox="0 0 12 12" aria-hidden="true" className="size-2.5" fill="currentColor">
+    <span className={`inline-flex items-center rounded-full bg-[var(--agent-soft)] font-medium text-[var(--agent)] ${CHIP[size]}`}>
+      <svg viewBox="0 0 12 12" aria-hidden="true" fill="currentColor">
         <path d="M6 0l1.4 4.6L12 6l-4.6 1.4L6 12 4.6 7.4 0 6l4.6-1.4z" />
       </svg>
       {label}
@@ -11,10 +18,10 @@ export function AgentMark({ label = "Agent" }: { label?: string }) {
   );
 }
 
-export function HumanMark({ label = "You" }: { label?: string }) {
+export function HumanMark({ label = "You", size = "sm" }: MarkProps) {
   return (
-    <span className="inline-flex items-center gap-1 rounded-full bg-[var(--human-soft)] px-1.5 py-px text-[11px] font-medium text-[var(--human)]">
-      <svg viewBox="0 0 12 12" aria-hidden="true" className="size-2.5" fill="currentColor">
+    <span className={`inline-flex items-center rounded-full bg-[var(--human-soft)] font-medium text-[var(--human)] ${CHIP[size]}`}>
+      <svg viewBox="0 0 12 12" aria-hidden="true" fill="currentColor">
         <circle cx="6" cy="3.5" r="2.5" />
         <path d="M1 12a5 5 0 0 1 10 0z" />
       </svg>
