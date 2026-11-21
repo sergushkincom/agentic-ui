@@ -141,7 +141,7 @@ function Composer({
 function Log({ plan, steps }: { plan?: ReactNode; steps: RunChatStep[] }) {
   const waiting = steps.length === 0 && !plan;
   return (
-    <aside className="flex min-h-48 flex-col border-t border-[var(--border)] bg-[var(--bg)] @md:border-t-0 @md:border-l" aria-label="This run">
+    <div role="region" className="flex min-h-48 flex-col border-t border-[var(--border)] bg-[var(--bg)] @md:border-t-0 @md:border-l" aria-label="This run">
       <h3 className="border-b border-[var(--border)] px-3 py-2 font-[family-name:var(--mono)] text-[11px] font-medium tracking-wide uppercase">
         This run
       </h3>
@@ -153,7 +153,7 @@ function Log({ plan, steps }: { plan?: ReactNode; steps: RunChatStep[] }) {
           <StepList steps={steps} />
         )}
       </div>
-    </aside>
+    </div>
   );
 }
 
