@@ -2,6 +2,7 @@
  * Anatomy of the composed components. Names are identifiers in the component source:
  * a function, a rendered mark, or a field. Children are drawn inside their parent.
  * ToolCallFeed nests Row, and Row's status icon nests StatusMorph, matching the source.
+ * RunGraph nests the phase pill, each RunNode, the edge between them, and AddStep.
  * AgentDecisionCard keeps the disclosure and the decision footer as nested regions.
  */
 
@@ -37,6 +38,30 @@ export const ANATOMY: Record<string, readonly AnatomyNode[]> = {
             { name: "output", answers: "What came back?" },
           ],
         },
+      ],
+    },
+  ],
+  "run-graph": [
+    {
+      name: "RunGraph",
+      answers: "What is this piece of the run doing, and how do the steps connect?",
+      children: [
+        {
+          name: "PhasePill",
+          answers: "Can you start this run, is it moving, or is a person holding it?",
+          children: [
+            { name: "phase", answers: "Is the pill on Execute, Waiting, or Running?" },
+            { name: "StatusMorph", answers: "Is the run still moving?" },
+            { name: "HumanMark", answers: "Is a person the one holding it up?" },
+          ],
+        },
+        { name: "RunNode", answers: "What is this step, and did it finish?" },
+        {
+          name: "Edge",
+          answers: "How many items moved to the next step?",
+          children: [{ name: "items", answers: "Was it one item, or more?" }],
+        },
+        { name: "AddStep", answers: "Where do you add the next step?" },
       ],
     },
   ],

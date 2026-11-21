@@ -3,6 +3,9 @@ export { ThinkingState, type ThinkingStateProps, type ThinkingStep } from "./thi
 export { ConfidenceBar, type ConfidenceBarProps } from "./confidence-bar";
 export { HumanOverride, type HumanOverrideProps } from "./human-override";
 export { ToolCallFeed, type ToolCallFeedProps, type ToolCall } from "./tool-call-feed";
+export { RunNode, type RunNodeProps, type RunNodeStatus } from "./run-node";
+export { RunGraph, type RunGraphProps, type RunGraphStep, type RunGraphPhase } from "./run-graph";
+export { StepPicker, type StepPickerProps, type StepChoice } from "./step-picker";
 export { AgentDecisionCard, type AgentDecisionCardProps, type AgentDecision } from "./agent-decision-card";
 export { FallbackBoundary, type FallbackBoundaryProps, type AgentRunStatus } from "./fallback-boundary";
 export { AgentMark, HumanMark } from "./marks";

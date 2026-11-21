@@ -37,6 +37,21 @@ export const KEYBOARD: Record<string, KeyboardRow[]> = {
     { key: "Tab", action: "Moves into the feed onto the current action, then onward. It does not stop on every action." },
     { key: "Shift + Tab", action: "Moves back to the current action, then out of the feed." },
   ],
+  "run-node": [
+    { key: "None", action: "No keys. The step is a card, not a control, so it is not in the tab order." },
+  ],
+  "run-graph": [
+    { key: "Enter", action: "Activates the focused control: Execute, when the run has not started, or Add the next step." },
+    { key: "Space", action: "Activates the focused control: Execute, when the run has not started, or Add the next step." },
+  ],
+  "step-picker": [
+    { key: "Arrow Down", action: "Moves to the next matching step. From the last, moves to the first." },
+    { key: "Arrow Up", action: "Moves to the previous matching step. From the first, moves to the last." },
+    { key: "Home", action: "Moves to the first matching step." },
+    { key: "End", action: "Moves to the last matching step." },
+    { key: "Enter", action: "Chooses the highlighted step." },
+    { key: "Escape", action: "Clears the search and shows every step again." },
+  ],
   "agent-decision-card": [
     { key: "Enter", action: "Activates the focused control: Approve, Reject, or the evidence disclosure." },
     { key: "Space", action: "Activates the focused control: Approve, Reject, or the evidence disclosure." },

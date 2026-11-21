@@ -102,6 +102,54 @@ export const WHEN_TO_USE: Record<string, WhenToUse> = {
       },
     ],
   },
+  "run-node": {
+    useWhen: [
+      "You are showing one step of a run: its name, what it is doing now, and whether it is pending, running, done or failed.",
+      "The number of items that left the step matters, and it belongs on the output port, as \"1 item\" or \"5 items\".",
+    ],
+    instead: [
+      {
+        slug: "run-graph",
+        when: "those steps are a chain, and the person needs the edges between them plus a way to start the run or add the next step.",
+      },
+      {
+        slug: "tool-call-feed",
+        when: "the record is calls into other systems, with a tool name and raw input and output folded under each sentence.",
+      },
+    ],
+  },
+  "run-graph": {
+    useWhen: [
+      "A person should see a short chain of steps, how many items moved along each edge, and whether the run can start, is running, or is waiting on them.",
+      "You want the shape of the run without an editor. Adding the next step is one button at the end of the chain.",
+    ],
+    instead: [
+      {
+        slug: "run-node",
+        when: "one step is the whole story, and a chain, an edge label, or a start pill would be extra.",
+      },
+      {
+        slug: "step-picker",
+        when: "the person is choosing what comes next. The graph shows the chain they already have.",
+      },
+    ],
+  },
+  "step-picker": {
+    useWhen: [
+      "The person is adding a step and needs to search a grouped list, including a group of steps only a person can do.",
+      "Human in the loop has to stay visible as its own group, not turn up as one more row among the agent's calls.",
+    ],
+    instead: [
+      {
+        slug: "run-graph",
+        when: "the chain is already chosen and you are showing the run: the steps, the items that moved, and whether it is waiting.",
+      },
+      {
+        slug: "human-override",
+        when: "the person should correct one field the agent filled in, not choose the next step in a run.",
+      },
+    ],
+  },
   "agent-decision-card": {
     useWhen: [
       "The agent proposes one action and a person has to approve or reject it.",
