@@ -2,7 +2,7 @@
 
 import { useEffect, useId, useRef } from "react";
 import { nextEnabledIndex } from "./keyboard";
-import { AgentMark, buttonClass } from "./marks";
+import { AgentMark } from "./marks";
 
 /** A field on a previous step. Written as that step's name and the field, not as code. */
 export type FieldReference = {
@@ -117,7 +117,7 @@ export function ExpressionField({
                 aria-checked={selected}
                 tabIndex={selected ? 0 : -1}
                 onClick={() => onMode(item.id)}
-                className={`h-7 rounded-md px-2.5 text-xs font-medium ${selected ? (item.id === "expression" ? "bg-[var(--agent-soft)] text-[var(--agent)] shadow-sm" : "bg-[var(--surface)] text-[var(--fg)] shadow-sm") : "text-[var(--fg-muted)] hover:text-[var(--fg)]"}`}
+                className={`h-7 rounded-md px-2.5 text-xs font-medium ${selected ? (item.id === "expression" ? "bg-[var(--agent)] text-[var(--bg)] shadow-sm" : "bg-[var(--surface)] text-[var(--fg)] shadow-sm") : "text-[var(--fg-muted)] hover:text-[var(--fg)]"}`}
               >
                 {item.label}
               </button>
@@ -156,7 +156,7 @@ export function ExpressionField({
             type="button"
             aria-describedby={hintId}
             onClick={() => onChoosing(true)}
-            className={buttonClass.ghost}
+            className="inline-flex h-8 shrink-0 items-center justify-center rounded-lg px-2 text-[13px] font-medium text-[var(--fg)] hover:bg-[var(--bg)]"
           >
             Change
             <span className="sr-only">
@@ -224,7 +224,7 @@ export function ExpressionField({
                       onReference(item);
                       onChoosing(false);
                     }}
-                    className={`flex w-full items-baseline gap-2 px-3 py-1.5 text-left text-[13px] ${selected ? "bg-[var(--agent-soft)] text-[var(--agent)]" : "hover:bg-[var(--surface-2)]"}`}
+                    className={`flex w-full items-baseline gap-2 px-3 py-1.5 text-left text-[13px] ${selected ? "bg-[var(--agent)] text-[var(--bg)]" : "hover:bg-[var(--surface-2)]"}`}
                   >
                     <span className="font-medium">{item.field}</span>
                     <span className="sr-only">from {item.step}</span>
