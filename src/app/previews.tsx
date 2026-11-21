@@ -13,6 +13,9 @@ import {
   RunHistory,
   RunChat,
   ToolCallFeed,
+  RunNode,
+  RunGraph,
+  StepPicker,
 } from "@/components/agentic";
 
 /** Static states for the home grid. The live versions are on each component's page. */
@@ -84,6 +87,33 @@ const PREVIEWS: Record<string, React.ReactNode> = {
       calls={[
         { id: "1", tool: "erp.get_invoice", summary: "Read invoice INV-2041", status: "done", durationMs: 180 },
         { id: "2", tool: "erp.find_purchase_order", summary: "Find the purchase order", status: "running" },
+      ]}
+    />
+  ),
+  "run-node": (
+    <RunNode name="Compare the line items" subtitle="3 of 3 lines agree with PO-7718" status="ok" items={1} />
+  ),
+  "run-graph": (
+    <div className="origin-top-left scale-[0.82] w-[122%]">
+      <RunGraph
+        phase="running"
+        steps={[
+          { id: "read", name: "Read INV-2041", subtitle: "1 invoice", status: "ok", items: 1 },
+          { id: "match", name: "Match orders", subtitle: "PO-7718", status: "running", items: 0 },
+        ]}
+        onExecute={noop}
+        onAdd={noop}
+      />
+    </div>
+  ),
+  "step-picker": (
+    <StepPicker
+      query=""
+      onQueryChange={noop}
+      onSelect={noop}
+      steps={[
+        { id: "invoice", name: "Read the invoice", detail: "INV-2041 · Acme Fasteners", group: "Read the books", actor: "agent" },
+        { id: "centre", name: "Confirm the cost centre", detail: "4100 · Production", group: "Human in the loop", actor: "human" },
       ]}
     />
   ),

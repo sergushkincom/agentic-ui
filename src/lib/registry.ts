@@ -187,6 +187,116 @@ export const COMPONENTS: ComponentDoc[] = [
     notBuilt: ["Cancelling a single call.", "Virtualisation for very long feeds."],
   },
   {
+    slug: "run-node",
+    name: "RunNode",
+    moment: "while-it-works",
+    file: "run-node.tsx",
+    summary: "One step in a run: its name, what it is doing now, and how many items left it.",
+    question: "What does a person need on a single step to see whether it is waiting, working, finished, or stuck?",
+    decisions: [
+      "The name is the step. The subtitle says what is happening now, in one line a person can read.",
+      "Pending has not moved anything: a dashed port, and no count. A running step's spinner draws itself into a check, or into a warning if the step stops.",
+      "The item count sits on the output port, in words: \"1 item\", \"5 items\". It lands there when items leave the step.",
+      "A step a person carries wears the human mark. Every other step wears the agent mark.",
+    ],
+    usage: `<RunNode
+  name="Compare the line items"
+  subtitle="3 of 3 lines agree with PO-7718"
+  status="ok"
+  items={1}
+/>`,
+    props: [
+      { name: "name", type: "string", note: "The step, short: \"Read INV-2041\"." },
+      { name: "subtitle", type: "string", note: "What is happening now, in one line." },
+      { name: "status", type: '"pending" | "running" | "ok" | "error"', note: "Pending, running, done or failed." },
+      { name: "items", type: "number", note: "How many items left this step. Shown on the port once any have." },
+      { name: "actor", type: '"agent" | "human"', note: "Who carries the step. Default \"agent\"." },
+    ],
+    a11y: [
+      "The status is spoken: Pending, Running, Done or Failed. The icon is decorative, and reduced motion swaps it instead of morphing.",
+      "The count on the port is text: \"1 item\" or \"5 items\".",
+      "A step a person carries says You. Colour is not the only signal.",
+    ],
+    notBuilt: ["Opening the items. The count says how many left; reading them is another view.", "Dragging the step. It is a card, not something you place."],
+  },
+  {
+    slug: "run-graph",
+    name: "RunGraph",
+    moment: "while-it-works",
+    file: "run-graph.tsx",
+    summary: "A short piece of a run: the steps, how many items moved between them, and whether you can start it.",
+    question: "How do you show a few connected steps without pretending to be an editor?",
+    decisions: [
+      "It is a fragment. A dotted grid says these steps are connected. Nothing here is a canvas you build on.",
+      "Each edge says how many items moved, in words: \"1 item\", \"5 items\". An edge with nothing on it stays dashed.",
+      "One pill is the run. Execute starts it. Waiting means a person has the next move. Running means a step is in progress.",
+      "The next step is added at the end of the chain, one button, not a palette living on the grid.",
+    ],
+    usage: `<RunGraph
+  phase="waiting"
+  steps={[
+    { id: "read", name: "Read INV-2041", subtitle: "1 invoice",
+      status: "ok", items: 1 },
+    { id: "match", name: "Match open orders", subtitle: "5 open orders",
+      status: "ok", items: 5 },
+    { id: "confirm", name: "Confirm cost centre", subtitle: "Waiting for you",
+      status: "pending", items: 0, actor: "human" },
+  ]}
+  onExecute={start}
+  onAdd={addStep}
+/>`,
+    props: [
+      { name: "steps", type: "RunGraphStep[]", note: "id, name, subtitle, status, items, actor. One chain, in order." },
+      { name: "phase", type: '"execute" | "waiting" | "running"', note: "The pill. Execute can be pressed. Waiting and Running are status." },
+      { name: "onExecute", type: "() => void", note: "Starts the run. Execute is disabled without it." },
+      { name: "onAdd", type: "() => void", note: "Adds the next step. The add button is disabled without it." },
+    ],
+    a11y: [
+      "The dotted grid is decorative.",
+      "Execute and Add the next step are buttons. Waiting and Running are status, so a screen reader hears the run change.",
+      "Each edge's label is text. A running edge draws itself; reduced motion shows the line in place and does not send a bead along it.",
+    ],
+    notBuilt: ["An editor: panning, zooming, wiring by hand, deleting a step.", "Branching. This fragment is one chain."],
+  },
+  {
+    slug: "step-picker",
+    name: "StepPicker",
+    moment: "while-it-works",
+    file: "step-picker.tsx",
+    summary: "Search the steps that can come next, with the ones a person has to do kept in their own group.",
+    question: "When someone adds a step, how do they find the one a person has to do, not only the ones the agent can run?",
+    decisions: [
+      "Search matches the name, the one-line detail, and the group. Groups that still have a match stay grouped.",
+      "Human in the loop is its own group, in the human colour, with the human mark on each step. It is not buried under the ERP calls.",
+      "A search that matches nothing says so. The list does not fill up with disabled rows.",
+    ],
+    usage: `<StepPicker
+  steps={[
+    { id: "po", name: "Find the purchase order",
+      detail: "Open orders from this supplier",
+      group: "Read the books", actor: "agent" },
+    { id: "approve", name: "Approve the payment",
+      detail: "€12,480.00 to Acme Fasteners",
+      group: "Human in the loop", actor: "human" },
+  ]}
+  query={query}
+  onQueryChange={setQuery}
+  onSelect={addStep}
+/>`,
+    props: [
+      { name: "steps", type: "StepChoice[]", note: "id, name, detail, group, actor." },
+      { name: "query", type: "string", note: "The search text. The parent owns it." },
+      { name: "onQueryChange", type: "(query: string) => void", note: "Called as the person types, and when Escape clears the field." },
+      { name: "onSelect", type: "(id: string) => void", note: "The step the person chose." },
+    ],
+    a11y: [
+      "The search field is a combobox. Arrows, Home and End move through the matching steps. Enter chooses the highlighted step. Escape clears the search.",
+      "Steps a person has to do sit in their own group, and each one says You.",
+      "The highlight follows the keyboard and the pointer. It is not colour alone: the row is selected in the listbox.",
+    ],
+    notBuilt: ["Inventing a new kind of step. You pick from the list the product gives you.", "Dragging a step onto the chain."],
+  },
+  {
     slug: "run-log",
     name: "RunLog",
     moment: "while-it-works",

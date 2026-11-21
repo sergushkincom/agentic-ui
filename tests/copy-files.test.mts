@@ -96,6 +96,36 @@ const EXPECTED: Record<string, { files: string[]; packages: string[] }> = {
     ],
     packages: ["react"],
   },
+  "run-node": {
+    files: [
+      TOKENS,
+      "src/components/agentic/marks.tsx",
+      "src/components/agentic/run-node.tsx",
+      "src/components/agentic/status-morph.tsx",
+      "src/components/agentic/stroke-morph.ts",
+    ],
+    packages: ["react"],
+  },
+  "run-graph": {
+    files: [
+      TOKENS,
+      "src/components/agentic/marks.tsx",
+      "src/components/agentic/run-graph.tsx",
+      "src/components/agentic/run-node.tsx",
+      "src/components/agentic/status-morph.tsx",
+      "src/components/agentic/stroke-morph.ts",
+    ],
+    packages: ["react"],
+  },
+  "step-picker": {
+    files: [
+      TOKENS,
+      "src/components/agentic/keyboard.ts",
+      "src/components/agentic/marks.tsx",
+      "src/components/agentic/step-picker.tsx",
+    ],
+    packages: ["react"],
+  },
   "agent-decision-card": {
     files: [
       TOKENS,
