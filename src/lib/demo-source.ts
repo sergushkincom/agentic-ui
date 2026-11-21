@@ -8,15 +8,25 @@ import { join } from "node:path";
  */
 export const DEMO_SOURCE_FILES: Record<string, { file: string; exportName: string }> = {
   "streaming-text": { file: "src/app/components/demos/streaming-text.tsx", exportName: "StreamingTextStoppable" },
+  "agent-harness": { file: "src/app/components/demos/agent-harness.tsx", exportName: "AgentHarnessDemo" },
   "thinking-state": { file: "src/app/components/demos/thinking-state.tsx", exportName: "ThinkingStateDemo" },
+  "run-log": { file: "src/app/components/demos/run-log.tsx", exportName: "RunLogDemo" },
+  "run-history": { file: "src/app/components/demos/run-history.tsx", exportName: "RunHistoryDemo" },
+  "run-chat": { file: "src/app/components/demos/run-chat.tsx", exportName: "RunChatDemo" },
   "confidence-bar": { file: "src/app/components/demos/confidence-bar.tsx", exportName: "ConfidenceBarDemo" },
   "step-inspector": { file: "src/app/components/demos/step-inspector.tsx", exportName: "StepInspectorDemo" },
   "expression-field": { file: "src/app/components/demos/expression-field.tsx", exportName: "ExpressionFieldDemo" },
   "pinned-output": { file: "src/app/components/demos/pinned-output.tsx", exportName: "PinnedOutputDemo" },
   "human-override": { file: "src/app/components/demos/human-override.tsx", exportName: "HumanOverrideDemo" },
   "tool-call-feed": { file: "src/app/components/demos/tool-call-feed.tsx", exportName: "ToolCallFeedDemo" },
+  "run-node": { file: "src/app/components/demos/run-node.tsx", exportName: "RunNodeDemo" },
+  "run-graph": { file: "src/app/components/demos/run-graph.tsx", exportName: "RunGraphDemo" },
+  "step-picker": { file: "src/app/components/demos/step-picker.tsx", exportName: "StepPickerDemo" },
   "agent-decision-card": { file: "src/app/components/demos/agent-decision-card.tsx", exportName: "AgentDecisionCardDemo" },
+  "wait-for-person": { file: "src/app/components/demos/wait-for-person.tsx", exportName: "WaitForPersonDemo" },
+  "connection-picker": { file: "src/app/components/demos/connection-picker.tsx", exportName: "ConnectionPickerDemo" },
   "fallback-boundary": { file: "src/app/components/demos/fallback-boundary.tsx", exportName: "FallbackBoundaryDemo" },
+  "step-error": { file: "src/app/components/demos/step-error.tsx", exportName: "StepErrorDemo" },
 };
 
 /** File name shown above the code, relative to `src/app/components`. */

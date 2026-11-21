@@ -10,15 +10,25 @@ const read = (rel: string) => readFileSync(join(root, rel), "utf8");
 
 const MARKER: Record<string, string> = {
   "streaming-text": "<StreamingText",
+  "agent-harness": "<AgentHarness",
   "thinking-state": "<ThinkingState",
+  "run-log": "<RunLog",
+  "run-history": "<RunHistory",
+  "run-chat": "<RunChat",
   "confidence-bar": "<ConfidenceBar",
   "step-inspector": "<StepInspector",
   "expression-field": "<ExpressionField",
   "pinned-output": "<PinnedOutput",
   "human-override": "<HumanOverride",
   "tool-call-feed": "<ToolCallFeed",
+  "run-node": "<RunNode",
+  "run-graph": "<RunGraph",
+  "step-picker": "<StepPicker",
   "agent-decision-card": "<AgentDecisionCard",
+  "wait-for-person": "<WaitForPerson",
+  "connection-picker": "<ConnectionPicker",
   "fallback-boundary": "<FallbackBoundary",
+  "step-error": "<StepError",
 };
 
 describe("demo source", () => {

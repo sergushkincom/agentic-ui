@@ -21,7 +21,7 @@ export default function Home() {
             Components for products where an agent does part of the work.
           </h1>
           <p className="text-[17px] leading-relaxed text-[var(--fg-muted)]">
-            Seven pieces of UI for the moments people actually worry about: what is the agent doing, how sure is it,
+            {COMPONENTS.length} pieces of UI for the moments people actually worry about: what is the agent doing, how sure is it,
             and where can I step in. Every one is live on this site. Copy them into your project.
           </p>
           <div className="flex flex-wrap gap-2">
@@ -86,7 +86,7 @@ export default function Home() {
                 href={`/components/${c.slug}`}
                 className="group flex h-full flex-col overflow-hidden rounded-[var(--radius)] border border-[var(--border)] bg-[var(--surface)] hover:border-[var(--fg-muted)]"
               >
-                <div aria-hidden="true" inert className={`pointer-events-none flex h-44 overflow-hidden bg-[var(--bg)] p-4 ${c.slug === "agent-decision-card" || c.slug === "step-inspector" ? "items-start" : "items-center"}`}>
+                <div aria-hidden="true" inert className={`pointer-events-none flex h-44 overflow-hidden bg-[var(--bg)] p-4 ${c.slug === "agent-decision-card" || c.slug === "agent-harness" || c.slug === "wait-for-person" || c.slug === "connection-picker" || c.slug === "step-inspector" ? "items-start" : "items-center"}`}>
                   <div className="w-full">
                     <Preview slug={c.slug} />
                   </div>

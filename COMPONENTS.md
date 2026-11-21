@@ -10,5 +10,15 @@ Live docs for each: `/components/<slug>` on the docs site.
 - PinnedOutput — `pinned-output`
 - HumanOverride — `human-override`
 - ToolCallFeed — `tool-call-feed`
+- RunNode — `run-node`
+- RunGraph — `run-graph`
+- StepPicker — `step-picker`
+- RunLog — `run-log`
+- RunHistory — `run-history`
+- RunChat — `run-chat`
+- AgentHarness — `agent-harness`
 - AgentDecisionCard — `agent-decision-card`
+- WaitForPerson — `wait-for-person`
+- ConnectionPicker — `connection-picker`
 - FallbackBoundary — `fallback-boundary`
+- StepError — `step-error`

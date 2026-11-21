@@ -74,6 +74,21 @@ const NOT_BUILT: { slug: string; name: string; note: string }[] = [
     note: "does not cancel a single call, and it does not virtualise a very long feed.",
   },
   {
+    slug: "run-node",
+    name: "RunNode",
+    note: "does not open the items that left a step, and it does not drag that step around.",
+  },
+  {
+    slug: "run-graph",
+    name: "RunGraph",
+    note: "is not an editor. It does not pan, zoom, rewire, delete a step, or branch.",
+  },
+  {
+    slug: "step-picker",
+    name: "StepPicker",
+    note: "does not invent a new kind of step, and it does not drag one onto the chain.",
+  },
+  {
     slug: "agent-decision-card",
     name: "AgentDecisionCard",
     note: "does not edit the decision before approval. Combine it with HumanOverride for that.",
@@ -94,7 +109,7 @@ export default function WhyPage() {
         <header className="flex flex-col gap-4">
           <h1 className="text-[32px] leading-tight font-semibold tracking-tight">Why this exists</h1>
           <p className="text-[17px] leading-relaxed text-[var(--fg-muted)]">
-            The library&apos;s edge is its design reasoning. Seven components, for the moments people actually worry
+            The library&apos;s edge is its design reasoning. {COMPONENTS.length} components, for the moments people actually worry
             about when software acts for them: what is it doing, how sure is it, and where can I step in.
           </p>
         </header>

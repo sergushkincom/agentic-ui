@@ -50,7 +50,7 @@ export default function ComponentsPage() {
                     <div
                       aria-hidden="true"
                       inert
-                      className={`pointer-events-none flex h-44 overflow-hidden bg-[var(--bg)] p-4 ${c.slug === "agent-decision-card" || c.slug === "step-inspector" ? "items-start" : "items-center"}`}
+                      className={`pointer-events-none flex h-44 overflow-hidden bg-[var(--bg)] p-4 ${c.slug === "agent-decision-card" || c.slug === "agent-harness" || c.slug === "wait-for-person" || c.slug === "connection-picker" || c.slug === "step-inspector" ? "items-start" : "items-center"}`}
                     >
                       <div className="w-full min-w-0">
                         <Preview slug={c.slug} />

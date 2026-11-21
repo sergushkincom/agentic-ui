@@ -24,6 +24,9 @@ Every component answers one question people actually ask when software acts for 
 | `PinnedOutput` | How do later steps keep moving when you do not want to run this step again? |
 | `HumanOverride` | When a person corrects the agent, how do they know the correction will stick? |
 | `ToolCallFeed` | How do you show what an agent did in other systems without dumping JSON on everyone? |
+| `RunNode` | What does a person need on a single step to see whether it is waiting, working, finished, or stuck? |
+| `RunGraph` | How do you show a few connected steps without pretending to be an editor? |
+| `StepPicker` | When someone adds a step, how do they find the one a person has to do, not only the ones the agent can run? |
 | `AgentDecisionCard` | What does a person need to read, in what order, to approve an agent's action responsibly? |
 | `FallbackBoundary` | What happens to the person's task when the agent doesn't come back? |
 

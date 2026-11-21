@@ -16,7 +16,7 @@ const PAIRS = [
 
 describe("when to use", () => {
   it("covers every component page and no extra slugs", () => {
-    assert.equal(COMPONENTS.length, 10);
+    assert.equal(COMPONENTS.length, 20);
     assert.deepEqual(Object.keys(WHEN_TO_USE).sort(), COMPONENTS.map((component) => component.slug).sort());
   });
 
