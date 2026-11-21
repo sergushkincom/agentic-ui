@@ -31,6 +31,34 @@ const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "
 
 export const CHANGELOG: readonly ChangelogEntry[] = [
   {
+    id: "2026-11-21",
+    date: "2026-11-21",
+    title: "Steps in a run",
+    summary:
+      "Thirteen components for a run that is still going: the step and its chain, the next step, the log, past runs, chat beside the steps, a failed step, a wait, a connection, the harness, the inspector, an expression and a pinned output.",
+    pulls: [
+      { number: 57, title: "Add step inspector, expression field, and pinned output" },
+      { number: 56, title: "Add wait, connection, and harness components" },
+      { number: 55, title: "Add a run log, past runs, a chat beside the steps, and a failed step" },
+      { number: 54, title: "Add RunNode, RunGraph and StepPicker" },
+    ],
+    components: [
+      "run-node",
+      "run-graph",
+      "step-picker",
+      "run-log",
+      "run-history",
+      "run-chat",
+      "agent-harness",
+      "step-inspector",
+      "expression-field",
+      "pinned-output",
+      "wait-for-person",
+      "connection-picker",
+      "step-error",
+    ],
+  },
+  {
     id: "2026-11-13",
     date: "2026-11-13",
     title: "When to use, and files to copy",

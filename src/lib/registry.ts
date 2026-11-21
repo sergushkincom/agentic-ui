@@ -55,6 +55,7 @@ export const COMPONENTS: ComponentDoc[] = [
       { name: "text", type: "string", note: "Text received so far." },
       { name: "status", type: '"streaming" | "done" | "stopped"', note: "Drives the caret, Stop button and the stopped note." },
       { name: "onStop", type: "() => void", note: "Optional. Shows Stop while streaming." },
+      { name: "className", type: "string", note: "Optional. Extra class names on the root." },
     ],
     a11y: [
       "aria-busy while streaming, so screen readers read the answer once it is complete, not every token.",
@@ -73,6 +74,7 @@ export const COMPONENTS: ComponentDoc[] = [
       "The summary line names the current step and the elapsed time. \"Thinking…\" alone gives no reason to wait.",
       "The full step list is folded: most people need the line, auditors need the list.",
       "When it finishes, the line becomes a receipt: how long, how many steps.",
+      "The spinner draws itself into a check, or into a warning if the work stopped. Reduced motion swaps the icon.",
     ],
     usage: `<ThinkingState
   state="thinking"
@@ -89,7 +91,12 @@ export const COMPONENTS: ComponentDoc[] = [
       { name: "elapsedMs", type: "number", note: "Time since the agent started." },
       { name: "defaultOpen", type: "boolean", note: "Show the steps unfolded. Default false." },
     ],
-    a11y: ["The toggle is a button with aria-expanded.", "Each step's status is spoken, not only shown as an icon.", "Completion is announced once through a polite live region."],
+    a11y: [
+      "The toggle is a button with aria-expanded.",
+      "Each step's status is spoken, not only shown as an icon.",
+      "Completion is announced once through a polite live region.",
+      "The status icon is decorative. Reduced motion swaps it instead of morphing.",
+    ],
     notBuilt: ["Streaming the model's raw reasoning text. Steps are the agent's plan, written for people."],
   },
   {
@@ -160,6 +167,7 @@ export const COMPONENTS: ComponentDoc[] = [
       "Each row leads with a human summary. The tool name sits under it in small mono.",
       "Raw input and output are folded per row, for the person who has to audit it.",
       "Failures say what went wrong in plain words, in the row where it happened.",
+      "A running action's spinner draws itself into a check, or into a warning if the call failed.",
     ],
     usage: `<ToolCallFeed calls={[
   { id: "1", tool: "erp.find_purchase_order",
@@ -172,8 +180,410 @@ export const COMPONENTS: ComponentDoc[] = [
       { name: "calls", type: "ToolCall[]", note: "id, tool, summary, status, durationMs, input, output, error." },
       { name: "title", type: "string", note: "Header. Default \"Actions\"." },
     ],
-    a11y: ["The list is a polite live region: new calls and status changes are announced.", "Status icons carry spoken labels."],
+    a11y: [
+      "The list is a polite live region: new calls and status changes are announced.",
+      "Status icons carry spoken labels. The icon itself is decorative, and reduced motion swaps it instead of morphing.",
+    ],
     notBuilt: ["Cancelling a single call.", "Virtualisation for very long feeds."],
+  },
+  {
+    slug: "run-node",
+    name: "RunNode",
+    moment: "while-it-works",
+    file: "run-node.tsx",
+    summary: "One step in a run: its name, what it is doing now, and how many items left it.",
+    question: "What does a person need on a single step to see whether it is waiting, working, finished, or stuck?",
+    decisions: [
+      "The name is the step. The subtitle says what is happening now, in one line a person can read.",
+      "Pending has not moved anything: a dashed port, and no count. A running step's spinner draws itself into a check, or into a warning if the step stops.",
+      "The item count sits on the output port, in words: \"1 item\", \"5 items\". It lands there when items leave the step.",
+      "A step a person carries wears the human mark. Every other step wears the agent mark.",
+    ],
+    usage: `<RunNode
+  name="Compare the line items"
+  subtitle="3 of 3 lines agree with PO-7718"
+  status="ok"
+  items={1}
+/>`,
+    props: [
+      { name: "name", type: "string", note: "The step, short: \"Read INV-2041\"." },
+      { name: "subtitle", type: "string", note: "What is happening now, in one line." },
+      { name: "status", type: '"pending" | "running" | "ok" | "error"', note: "Pending, running, done or failed." },
+      { name: "items", type: "number", note: "How many items left this step. Shown on the port once any have." },
+      { name: "actor", type: '"agent" | "human"', note: "Who carries the step. Default \"agent\"." },
+    ],
+    a11y: [
+      "The status is spoken: Pending, Running, Done or Failed. The icon is decorative, and reduced motion swaps it instead of morphing.",
+      "The count on the port is text: \"1 item\" or \"5 items\".",
+      "A step a person carries says You. Colour is not the only signal.",
+    ],
+    notBuilt: ["Opening the items. The count says how many left; reading them is another view.", "Dragging the step. It is a card, not something you place."],
+  },
+  {
+    slug: "run-graph",
+    name: "RunGraph",
+    moment: "while-it-works",
+    file: "run-graph.tsx",
+    summary: "A short piece of a run: the steps, how many items moved between them, and whether you can start it.",
+    question: "How do you show a few connected steps without pretending to be an editor?",
+    decisions: [
+      "It is a fragment. A dotted grid says these steps are connected. Nothing here is a canvas you build on.",
+      "Each edge says how many items moved, in words: \"1 item\", \"5 items\". An edge with nothing on it stays dashed.",
+      "One pill is the run. Execute starts it. Waiting means a person has the next move. Running means a step is in progress.",
+      "The next step is added at the end of the chain, one button, not a palette living on the grid.",
+    ],
+    usage: `<RunGraph
+  phase="waiting"
+  steps={[
+    { id: "read", name: "Read INV-2041", subtitle: "1 invoice",
+      status: "ok", items: 1 },
+    { id: "match", name: "Match open orders", subtitle: "5 open orders",
+      status: "ok", items: 5 },
+    { id: "confirm", name: "Confirm cost centre", subtitle: "Waiting for you",
+      status: "pending", items: 0, actor: "human" },
+  ]}
+  onExecute={start}
+  onAdd={addStep}
+/>`,
+    props: [
+      { name: "steps", type: "RunGraphStep[]", note: "id, name, subtitle, status, items, actor. One chain, in order." },
+      { name: "phase", type: '"execute" | "waiting" | "running"', note: "The pill. Execute can be pressed. Waiting and Running are status." },
+      { name: "onExecute", type: "() => void", note: "Starts the run. Execute is disabled without it." },
+      { name: "onAdd", type: "() => void", note: "Adds the next step. The add button is disabled without it." },
+    ],
+    a11y: [
+      "The dotted grid is decorative.",
+      "Execute and Add the next step are buttons. Waiting and Running are status, so a screen reader hears the run change.",
+      "Each edge's label is text. A running edge draws itself; reduced motion shows the line in place and does not send a bead along it.",
+    ],
+    notBuilt: ["An editor: panning, zooming, wiring by hand, deleting a step.", "Branching. This fragment is one chain."],
+  },
+  {
+    slug: "step-picker",
+    name: "StepPicker",
+    moment: "while-it-works",
+    file: "step-picker.tsx",
+    summary: "Search the steps that can come next, with the ones a person has to do kept in their own group.",
+    question: "When someone adds a step, how do they find the one a person has to do, not only the ones the agent can run?",
+    decisions: [
+      "Search matches the name, the one-line detail, and the group. Groups that still have a match stay grouped.",
+      "Human in the loop is its own group, in the human colour, with the human mark on each step. It is not buried under the ERP calls.",
+      "A search that matches nothing says so. The list does not fill up with disabled rows.",
+    ],
+    usage: `<StepPicker
+  steps={[
+    { id: "po", name: "Find the purchase order",
+      detail: "Open orders from this supplier",
+      group: "Read the books", actor: "agent" },
+    { id: "approve", name: "Approve the payment",
+      detail: "€12,480.00 to Acme Fasteners",
+      group: "Human in the loop", actor: "human" },
+  ]}
+  query={query}
+  onQueryChange={setQuery}
+  onSelect={addStep}
+/>`,
+    props: [
+      { name: "steps", type: "StepChoice[]", note: "id, name, detail, group, actor." },
+      { name: "query", type: "string", note: "The search text. The parent owns it." },
+      { name: "onQueryChange", type: "(query: string) => void", note: "Called as the person types, and when Escape clears the field." },
+      { name: "onSelect", type: "(id: string) => void", note: "The step the person chose." },
+    ],
+    a11y: [
+      "The search field is a combobox. Arrows, Home and End move through the matching steps. Enter chooses the highlighted step. Escape clears the search.",
+      "Steps a person has to do sit in their own group, and each one says You.",
+      "The highlight follows the keyboard and the pointer. It is not colour alone: the row is selected in the listbox.",
+    ],
+    notBuilt: ["Inventing a new kind of step. You pick from the list the product gives you.", "Dragging a step onto the chain."],
+  },
+  {
+    slug: "run-log",
+    name: "RunLog",
+    moment: "while-it-works",
+    file: "run-log.tsx",
+    summary: "A dock under a run: the steps and their durations, and the open step's data as a table or as JSON.",
+    question: "How do you inspect one step's data without turning the whole run into a dump?",
+    decisions: [
+      "The steps sit in a tree, each with how long it took. The open step's data sits beside them.",
+      "Input and Output are a switch. Most people want what came out. The input is there when the output looks wrong.",
+      "The same payload is a table or JSON. The table is for reading. JSON is the exact value.",
+      "A row that failed the check says Wrong. Colour is not the only mark.",
+      "Clear forgets the log. An empty log says there is nothing to inspect.",
+      "A running step's spinner draws itself into a check, or into a warning if that step failed. Reduced motion swaps the icon.",
+    ],
+    usage: `<RunLog
+  steps={[{
+    id: "compare",
+    label: "Compare line items",
+    status: "error",
+    durationMs: 610,
+    output: {
+      columns: ["Item", "Order", "Invoice"],
+      rows: [["Delivery", "—", "€38.00"]],
+      marked: [0],
+    },
+  }]}
+  onClear={clearLog}
+/>`,
+    props: [
+      { name: "steps", type: "RunLogStep[]", note: "id, label, status, durationMs, children, input, output. A side has columns, rows, marked and json." },
+      { name: "title", type: "string", note: "Dock title. Default \"Log\"." },
+      { name: "onClear", type: "() => void", note: "Optional. Clears the log. The parent owns the data." },
+    ],
+    a11y: [
+      "The steps are a tree. Arrows, Home and End move between them. The open step is selected.",
+      "Status is written as well as drawn. The icon is decorative, and reduced motion swaps it instead of morphing.",
+      "Input, Output, Table and JSON are toggle buttons.",
+      "The table has a caption. A row that doesn't match says Wrong, not only by colour.",
+    ],
+    notBuilt: ["Editing a cell.", "Retrying a step from the dock. That is StepError.", "Virtualisation for very long logs."],
+  },
+  {
+    slug: "run-history",
+    name: "RunHistory",
+    moment: "while-it-works",
+    file: "run-history.tsx",
+    summary: "Past runs: which succeeded, which errored, which were canceled, and which one is open.",
+    question: "Which past run is this, and did it finish?",
+    decisions: [
+      "Each run is one row: what it was for, when it started, how it ended, and how long it took.",
+      "Success, error and canceled are written. The mark repeats the word, it does not replace it.",
+      "The selected run is highlighted. Selection belongs to the parent, so the rest of the screen can show that run.",
+    ],
+    usage: `<RunHistory
+  runs={[
+    { id: "r2", status: "error", at: "14 Nov, 11:02",
+      durationMs: 610, label: "Match INV-2041" },
+  ]}
+  selectedId={selectedId}
+  onSelect={setSelectedId}
+/>`,
+    props: [
+      { name: "runs", type: "RunHistoryRun[]", note: "id, status (success, error, canceled), at, durationMs, label." },
+      { name: "selectedId", type: "string", note: "The run that is highlighted." },
+      { name: "onSelect", type: "(id: string) => void", note: "Called when a run is chosen." },
+    ],
+    a11y: [
+      "The list is a listbox. The highlighted run is selected.",
+      "Arrows, Home and End move the highlight.",
+      "Success, error and canceled are written, not only coloured.",
+      "The icon is decorative. Reduced motion swaps it instead of morphing.",
+    ],
+    notBuilt: ["Deleting a run.", "Comparing two runs side by side."],
+  },
+  {
+    slug: "run-chat",
+    name: "RunChat",
+    moment: "while-it-works",
+    file: "run-chat.tsx",
+    summary: "A message starts the run. The thread is on one side, the live steps on the other.",
+    question: "How does a person start a run and watch it work, in the same place they asked?",
+    decisions: [
+      "Sending a message is what starts the run. Until then, the other side says so.",
+      "The answer can stream in the thread while the steps advance beside it. Waiting has a reason.",
+      "Authorship stays marked: the person asked, the agent answers.",
+      "A running step's spinner draws itself into a check, or into a warning if the step failed. Reduced motion swaps the icon.",
+    ],
+    usage: `<RunChat
+  title="Match this invoice"
+  messages={messages}
+  steps={steps}
+  draft={draft}
+  onDraftChange={setDraft}
+  onSend={startRun}
+/>`,
+    props: [
+      { name: "title", type: "string", note: "Names the thread. The task, not a product name." },
+      { name: "messages", type: "RunChatMessage[]", note: "id, role (human or agent), text." },
+      { name: "steps", type: "RunChatStep[]", note: "id, label, status (pending, running, done, failed), durationMs." },
+      { name: "draft", type: "string", note: "The message being written." },
+      { name: "onDraftChange", type: "(draft: string) => void", note: "Keeps the field." },
+      { name: "onSend", type: "() => void", note: "Sends the draft and starts the run." },
+      { name: "stream", type: "ReactNode", note: "Optional. The answer still being written. The demo passes StreamingText." },
+      { name: "plan", type: "ReactNode", note: "Optional. A one-line plan above the steps. The demo passes ThinkingState." },
+      { name: "busy", type: "boolean", note: "Optional. While a run is in flight, Send waits." },
+      { name: "placeholder", type: "string", note: "Optional field hint. Default \"Message the agent\"." },
+    ],
+    a11y: [
+      "The message field has a label. Enter sends. Send is a button.",
+      "Human and agent messages carry a mark with text, not only colour.",
+      "Each step's status is written. The icon is decorative, and reduced motion swaps it instead of morphing.",
+      "The step list is a polite live region.",
+    ],
+    notBuilt: ["Several threads.", "Attachments.", "Stopping a single step. Stop on a stream belongs to StreamingText."],
+  },
+  {
+    slug: "agent-harness",
+    name: "AgentHarness",
+    moment: "while-it-works",
+    file: "agent-harness.tsx",
+    summary: "An agent step with sockets for a model, memory and tools. A missing required socket is a warning.",
+    question: "What does this step need before it can run, and what is still unplugged?",
+    decisions: [
+      "The step is a harness: one socket for the model, one for memory, and one for each tool. What is plugged in is written in words.",
+      "An empty required socket is a warning, and the step says it will not run. An empty optional socket stays quiet.",
+      "A connected socket settles on a check. Filling the socket that was blocking the step draws that warning into the check.",
+    ],
+    usage: `<AgentHarness
+  title="Match the invoice"
+  task="Match INV-2041 to PO-7718 before anyone is paid."
+  sockets={[
+    { id: "model", kind: "model", required: true },
+    { id: "memory", kind: "memory", value: "Last 6 invoices from Acme Fasteners" },
+    { id: "invoice", kind: "tool", value: "Read invoice INV-2041" },
+  ]}
+/>`,
+    props: [
+      { name: "title", type: "string", note: "Name of the step." },
+      { name: "task", type: "string", note: "What the step is trying to do." },
+      { name: "sockets", type: "HarnessSocket[]", note: "id, kind (model, memory or tool), value, required. An empty value means the socket is open." },
+    ],
+    a11y: [
+      "Each socket reads as text: the kind, what is connected or Not connected, and Required or Optional.",
+      "The warning is a status, so a change is announced. Colour is not the only signal.",
+      "The status icon is decorative. Reduced motion swaps it instead of morphing.",
+    ],
+    notBuilt: [
+      "Picking a model or a tool from a catalogue. The parent passes what is already connected.",
+      "Running the step. This is the harness, not the run.",
+    ],
+  },
+  {
+    slug: "step-inspector",
+    name: "StepInspector",
+    moment: "while-it-works",
+    file: "step-inspector.tsx",
+    summary: "One step, open: what came in, what it is set to, and what came out.",
+    question: "When a step in the agent's work is wrong, where do you look?",
+    decisions: [
+      "Three panes in reading order: input, then parameters, then output. The output is what the next step will see.",
+      "Parameters and settings are tabs. Parameters are the work. Settings are how the step behaves.",
+      "An empty output says to run the step or pin mock data. It does not pretend there is a result.",
+      "Pinned output is marked as yours. Live output is the step's own, from the last run.",
+    ],
+    usage: `<StepInspector
+  title="Compare line items"
+  step="erp.compare_lines"
+  input={[{ id: "invoice", label: "Read invoice", fields: [{ name: "amount", value: "€12,518.00" }] }]}
+  parameters={[{ name: "Tolerance", value: "€38.00 delivery" }]}
+  settings={[{ name: "On mismatch", value: "Stop and ask" }]}
+  tab="parameters"
+  onTab={setTab}
+  output={null}
+  status="idle"
+  onRun={runStep}
+/>`,
+    props: [
+      { name: "title", type: "string", note: "What this step does, for people." },
+      { name: "step", type: "string", note: "Machine name, shown small." },
+      { name: "input", type: "StepItem[]", note: "Items from earlier steps: id, label, fields." },
+      { name: "parameters", type: "StepParameter[]", note: "name, value, optional hint." },
+      { name: "settings", type: "StepSetting[]", note: "name, value, optional hint. The Settings tab." },
+      { name: "tab", type: '"parameters" | "settings"', note: "Which configuration tab is open." },
+      { name: "onTab", type: "(tab) => void", note: "Switch tabs." },
+      { name: "output", type: "StepOutput | null", note: "summary and fields. Null when there is nothing to show yet." },
+      { name: "status", type: '"idle" | "running" | "done" | "failed"', note: "Drives the mark in the output pane." },
+      { name: "source", type: '"pinned" | "live"', note: "Optional. Pinned: a person supplied this. Live: the step produced it." },
+      { name: "error", type: "string", note: "Optional. Plain-words reason when status is failed." },
+      { name: "onRun", type: "() => void", note: "Optional. Shows Run this step." },
+    ],
+    a11y: [
+      "Parameters and Settings are tabs: arrow keys move between them, Home and End jump to the ends.",
+      "The output mark is decorative. Running, done and failed are written, and a pinned output says pinned.",
+      "When the step finishes or fails, the outcome is announced through a polite live region.",
+    ],
+    notBuilt: [
+      "Editing the raw payload. The panes are for reading the step, not a JSON editor.",
+      "Running the steps around this one. Run here runs this step. The parent decides what that calls.",
+    ],
+  },
+  {
+    slug: "expression-field",
+    name: "ExpressionField",
+    moment: "while-it-works",
+    file: "expression-field.tsx",
+    summary: "A value that is either typed, or taken from a field on a previous step.",
+    question: "How do you point a step at an earlier field without hiding the link in syntax?",
+    decisions: [
+      "Fixed is a value you type. Expression is a field from a previous step, written as that step's name and the field.",
+      "The reference is ordinary type. You can read it out loud. It is not a code token.",
+      "It is not an override. Nothing here says the agent was wrong. It says where the value comes from.",
+    ],
+    usage: `<ExpressionField
+  label="Supplier"
+  mode="expression"
+  fixedValue="Acme Fasteners"
+  reference={{ step: "Read invoice", field: "supplier" }}
+  fields={[
+    { step: "Read invoice", field: "supplier" },
+    { step: "Read invoice", field: "amount" },
+  ]}
+  onMode={setMode}
+  onFixedValue={setFixedValue}
+  onReference={setReference}
+  choosing={choosing}
+  onChoosing={setChoosing}
+/>`,
+    props: [
+      { name: "label", type: "string", note: "Field name." },
+      { name: "mode", type: '"fixed" | "expression"', note: "Typed value, or a reference to a previous step." },
+      { name: "fixedValue", type: "string", note: "What you typed. Used while mode is fixed." },
+      { name: "reference", type: "FieldReference | null", note: "step and field. Null until one is chosen." },
+      { name: "fields", type: "FieldReference[]", note: "Previous-step fields a person can insert, in list order." },
+      { name: "onMode", type: "(mode) => void", note: "Switch Fixed and Expression." },
+      { name: "onFixedValue", type: "(value) => void", note: "Edit the typed value." },
+      { name: "onReference", type: "(reference) => void", note: "Insert a previous step's field." },
+      { name: "choosing", type: "boolean", note: "The list of previous fields is open." },
+      { name: "onChoosing", type: "(choosing) => void", note: "Open or close that list." },
+    ],
+    a11y: [
+      "Fixed and Expression are a radio group. Arrow keys move between them.",
+      "The field list is a listbox. Arrows move, Home and End jump, Escape closes it and returns focus.",
+      "A reference is spoken as the step's name and the field. Colour is not the only signal.",
+    ],
+    notBuilt: [
+      "A code editor for arbitrary expressions. The field inserts one earlier field, which is the case a person can check.",
+      "Brace syntax. A reference is the step's name and the field, in ordinary type.",
+    ],
+  },
+  {
+    slug: "pinned-output",
+    name: "PinnedOutput",
+    moment: "while-it-works",
+    file: "pinned-output.tsx",
+    summary: "Freeze a step's output so later steps can run without running this one again.",
+    question: "How do later steps keep moving when you do not want to run this step again?",
+    decisions: [
+      "Pinned means a person supplied the output. Live means the step produced it. The badge says which.",
+      "Later steps read the pinned output as if the step had just run.",
+      "Using the live output drops the pin. The mock stays available to supply again.",
+    ],
+    usage: `<PinnedOutput
+  step="Compare line items"
+  summary="Amounts differ by the €38.00 delivery."
+  source="live"
+  onPin={pin}
+  onUseLive={useLive}
+  onSupplyMock={setMock}
+/>`,
+    props: [
+      { name: "step", type: "string", note: "The step this output belongs to, for people." },
+      { name: "summary", type: "string", note: "What later steps will read." },
+      { name: "source", type: '"pinned" | "live"', note: "Who the output belongs to." },
+      { name: "onPin", type: "() => void", note: "Keep the current summary and stop re-running this step." },
+      { name: "onUseLive", type: "() => void", note: "Drop the pin and read the last run again." },
+      { name: "onSupplyMock", type: "(summary) => void", note: "Replace the output with mock data, and pin that." },
+      { name: "defaultEditing", type: "boolean", note: "Open the mock field on first render. Default false." },
+    ],
+    a11y: [
+      "The badge is the word pinned or live, with the person or agent mark. Colour is not the only signal.",
+      "Escape while supplying a mock cancels and returns focus to Supply mock.",
+      "Enter in the mock field saves it. A change of source is announced through a polite live region.",
+    ],
+    notBuilt: [
+      "Pinning several items. One step, one output.",
+      "Re-running the step. Use live output reads the last run. Running again belongs to the step.",
+    ],
   },
   {
     slug: "agent-decision-card",
@@ -202,11 +612,93 @@ export const COMPONENTS: ComponentDoc[] = [
     props: [
       { name: "decision", type: "AgentDecision", note: "title, effect, confidence, reasons, evidence, alternatives, reversible." },
       { name: "status", type: '"proposed" | "approved" | "rejected"', note: "Replaces the buttons with who decided." },
-      { name: "onApprove / onReject", type: "() => void", note: "Required." },
+      { name: "onApprove", type: "() => void", note: "Required." },
+      { name: "onReject", type: "() => void", note: "Required." },
       { name: "decidedBy", type: "string", note: "Name shown after a decision. Default \"You\"." },
     ],
     a11y: ["The outcome is announced through a polite live region.", "The fold is a button with aria-expanded."],
     notBuilt: ["Editing the decision before approving. Combine with HumanOverride for that."],
+  },
+  {
+    slug: "wait-for-person",
+    name: "WaitForPerson",
+    moment: "where-you-step-in",
+    file: "wait-for-person.tsx",
+    summary: "A paused run that is waiting for you: the question, then a reply or an approval that lets it continue.",
+    question: "When a run stops for a person, what do they need in front of them to let it continue?",
+    decisions: [
+      "The run is paused, and it says so. The agent is not still working, and this is not a scored proposal.",
+      "The question comes first. A reply sends the words back. An approval is Approve or Send back. Either answer resumes the run.",
+      "Until you answer, nothing continues. After you answer, the card is a receipt: what you said, and that the run continues.",
+    ],
+    usage: `<WaitForPerson
+  task="The agent stopped while matching this invoice to PO-7718."
+  prompt="Which cost centre takes the €38.00 delivery on INV-2041?"
+  mode="reply"
+  status={status}
+  answer={answer}
+  onRespond={(next) => { setAnswer(next); setStatus("resumed") }}
+/>`,
+    props: [
+      { name: "task", type: "string", note: "What the run was doing when it stopped." },
+      { name: "prompt", type: "string", note: "The question, in one sentence. Labels the reply field." },
+      { name: "mode", type: '"reply" | "approval"', note: "A written reply, or Approve and Send back." },
+      { name: "status", type: '"waiting" | "resumed"', note: "Waiting holds the run. Resumed shows the receipt." },
+      { name: "answer", type: "string", note: "What the person sent. Shown once the run resumes." },
+      { name: "onRespond", type: "(answer: string) => void", note: "The reply text, or \"Approved\", or \"Sent back\"." },
+    ],
+    a11y: [
+      "The question labels the reply field.",
+      "Pause and resume are announced through a polite live region.",
+      "Escape clears an unsent reply and leaves focus in the field. The run stays paused.",
+      "The waiting mark pulses, and holds still when reduced motion is on. The resume check morphs, or swaps.",
+    ],
+    notBuilt: [
+      "A timer or a reminder. The run waits. It does not nag.",
+      "Editing a value the agent already filled in. That is HumanOverride. Signing off a scored action is AgentDecisionCard.",
+    ],
+  },
+  {
+    slug: "connection-picker",
+    name: "ConnectionPicker",
+    moment: "where-you-step-in",
+    file: "connection-picker.tsx",
+    summary: "Pick a connected account, or sign in, or set one up by hand. A key is never shown.",
+    question: "How does a person give the agent an account without the secret ever sitting on screen?",
+    decisions: [
+      "Existing accounts are a choice of name and who it belongs to. The key is not part of the account.",
+      "The other path is written out: Sign in or set up manually. Sign-in never hands this component a token.",
+      "A manual key is typed into a concealed field, passed on once, and dropped. Nothing here can reveal it.",
+    ],
+    usage: `<ConnectionPicker
+  purpose="The agent needs the ERP to read INV-2041."
+  accounts={accounts}
+  selectedId={selectedId}
+  mode={mode}
+  onSelect={setSelectedId}
+  onSignIn={signIn}
+  onModeChange={setMode}
+  onManual={({ name }) => saveAccount(name)}
+/>`,
+    props: [
+      { name: "purpose", type: "string", note: "Why the agent needs an account." },
+      { name: "accounts", type: "ConnectionAccount[]", note: "id, name, holder. Names and holders only. Never a key." },
+      { name: "selectedId", type: "string", note: "The account chosen for this step, if one is connected." },
+      { name: "onSelect", type: "(id: string) => void", note: "Chooses an existing account." },
+      { name: "onSignIn", type: "() => void", note: "Starts sign-in. The component never receives a token." },
+      { name: "mode", type: '"pick" | "manual"', note: "The account list, or the manual setup form." },
+      { name: "onModeChange", type: "(mode) => void", note: "Switches between the list and manual setup." },
+      { name: "onManual", type: "({ name, secret }) => void", note: "The key is passed once, then the field is cleared. Do not render secret." },
+    ],
+    a11y: [
+      "Accounts are a radio group. Arrows move the selection. One account is in the tab order.",
+      "The key field is labelled and concealed. Escape closes manual setup, drops the unsent key, and returns focus to Set up manually.",
+      "Connected is a word and a check, not only a colour.",
+    ],
+    notBuilt: [
+      "A control that reveals the key.",
+      "Remembering the key, or testing that it works. The parent does that where the value is not rendered.",
+    ],
   },
   {
     slug: "fallback-boundary",
@@ -231,6 +723,7 @@ export const COMPONENTS: ComponentDoc[] = [
 </FallbackBoundary>`,
     props: [
       { name: "status", type: '"running" | "slow" | "ok" | "failed"', note: "The parent decides when running becomes slow." },
+      { name: "children", type: "ReactNode", note: "Agent output, shown when status is \"ok\"." },
       { name: "task", type: "string", note: "What the agent was asked to do, as a verb phrase." },
       { name: "manual", type: "{ label, onClick }", note: "The path without the agent." },
       { name: "onRetry", type: "() => void", note: "Shown on failure." },
@@ -238,6 +731,41 @@ export const COMPONENTS: ComponentDoc[] = [
     ],
     a11y: ["role=\"alert\" on failure, role=\"status\" while waiting."],
     notBuilt: ["Timers. When \"running\" becomes \"slow\" depends on the task; the parent decides."],
+  },
+  {
+    slug: "step-error",
+    name: "StepError",
+    moment: "when-it-fails",
+    file: "step-error.tsx",
+    summary: "One step failed: what broke, which value was wrong, and a retry for that step.",
+    question: "When one step fails, what exactly was wrong with the data?",
+    decisions: [
+      "The step name, a plain-words reason, and the values that were involved are the whole message.",
+      "The wrong value is labelled Wrong, and the neighbouring values stay so the mismatch can be read.",
+      "Retry runs that step again. It does not offer another way to do the whole task.",
+      "Nothing after this step ran. That is said in words.",
+    ],
+    usage: `<StepError
+  step="Compare line items"
+  message="The invoice total doesn't match the purchase order."
+  facts={[
+    { label: "Purchase order PO-7718", value: "€12,480.00" },
+    { label: "Invoice INV-2041", value: "€12,518.00", wrong: true },
+  ]}
+  onRetry={retryStep}
+/>`,
+    props: [
+      { name: "step", type: "string", note: "The step that failed, in words." },
+      { name: "message", type: "string", note: "What broke, in plain words." },
+      { name: "facts", type: "StepErrorFact[]", note: "label, value, and wrong on the value that failed the check." },
+      { name: "onRetry", type: "() => void", note: "Runs this step again." },
+    ],
+    a11y: [
+      "role=\"alert\", so the failure is announced.",
+      "The wrong value says Wrong, not only by colour.",
+      "Retry this step is a button.",
+    ],
+    notBuilt: ["A manual path for the whole task. That is FallbackBoundary.", "Editing the bad value in place. That is HumanOverride."],
   },
 ];
 

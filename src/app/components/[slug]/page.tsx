@@ -6,8 +6,12 @@ import { isNewComponent, utcToday } from "@/lib/changelog";
 import { demoSource } from "@/lib/demo-source";
 import { filesToCopy } from "@/lib/copy-files";
 import { keyboardFor } from "@/lib/keyboard-interactions";
+import { componentMarkdown } from "@/lib/page-markdown";
+import { shadcnInstallCommand } from "@/lib/registry-url";
 import { SITE_TITLE } from "@/lib/site";
+import { Anatomy } from "@/components/site/anatomy";
 import { CodeBlock } from "@/components/site/code-block";
+import { CopyPageMarkdown } from "@/components/site/copy-page-markdown";
 import { FilesToCopy } from "@/components/site/files-to-copy";
 import { KeyboardTable } from "@/components/site/keyboard-table";
 import { WhenToUse } from "@/components/site/when-to-use";
@@ -40,6 +44,7 @@ export default async function ComponentPage({ params }: { params: Promise<{ slug
   const source = demoSource(c.slug);
   const copy = filesToCopy(c.file, c.name);
   const today = utcToday();
+  const markdown = componentMarkdown(c);
 
   return (
     <div className="mx-auto grid max-w-6xl grid-cols-[minmax(0,1fr)] gap-8 px-4 py-10 md:grid-cols-[220px_minmax(0,1fr)] md:gap-12">
@@ -66,7 +71,10 @@ export default async function ComponentPage({ params }: { params: Promise<{ slug
 
       <main className="flex min-w-0 flex-col gap-10">
         <header className="flex flex-col gap-3">
-          <h1 className="font-[family-name:var(--mono)] text-[28px] font-semibold tracking-tight">{c.name}</h1>
+          <div className="flex flex-wrap items-start justify-between gap-3">
+            <h1 className="font-[family-name:var(--mono)] text-[28px] font-semibold tracking-tight">{c.name}</h1>
+            <CopyPageMarkdown markdown={markdown} />
+          </div>
           <p className="text-[17px] leading-relaxed text-[var(--fg-muted)]">{c.summary}</p>
         </header>
 
@@ -93,6 +101,8 @@ export default async function ComponentPage({ params }: { params: Promise<{ slug
           </ul>
         </section>
 
+        <Anatomy slug={c.slug} />
+
         <WhenToUse slug={c.slug} />
 
         <section aria-labelledby="usage" className="flex flex-col gap-3">
@@ -110,10 +120,10 @@ export default async function ComponentPage({ params }: { params: Promise<{ slug
           </a>
         </section>
 
-        <FilesToCopy manifest={copy} />
+        <FilesToCopy manifest={copy} installCommand={shadcnInstallCommand(c.slug)} />
 
         <section aria-labelledby="props" className="flex flex-col gap-3">
-          <h2 id="props" className="text-[18px] font-semibold">
+          <h2 id="props" className="scroll-mt-16 text-[18px] font-semibold">
             Props
           </h2>
           <div className="overflow-x-auto rounded-[var(--radius)] border border-[var(--border)]">

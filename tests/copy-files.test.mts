@@ -31,18 +31,88 @@ const EXPECTED: Record<string, { files: string[]; packages: string[] }> = {
     ],
     packages: [],
   },
+  "agent-harness": {
+    files: [
+      TOKENS,
+      "src/components/agentic/agent-harness.tsx",
+      "src/components/agentic/marks.tsx",
+      "src/components/agentic/status-morph.tsx",
+      "src/components/agentic/stroke-morph.ts",
+    ],
+    packages: ["react"],
+  },
   "thinking-state": {
     files: [
       TOKENS,
       "src/components/agentic/format.ts",
       "src/components/agentic/marks.tsx",
+      "src/components/agentic/status-morph.tsx",
+      "src/components/agentic/stroke-morph.ts",
       "src/components/agentic/thinking-state.tsx",
+    ],
+    packages: ["react"],
+  },
+  "run-log": {
+    files: [
+      TOKENS,
+      "src/components/agentic/format.ts",
+      "src/components/agentic/keyboard.ts",
+      "src/components/agentic/marks.tsx",
+      "src/components/agentic/run-log.tsx",
+      "src/components/agentic/status-morph.tsx",
+      "src/components/agentic/stroke-morph.ts",
+    ],
+    packages: ["react"],
+  },
+  "run-history": {
+    files: [
+      TOKENS,
+      "src/components/agentic/format.ts",
+      "src/components/agentic/keyboard.ts",
+      "src/components/agentic/run-history.tsx",
+      "src/components/agentic/status-morph.tsx",
+      "src/components/agentic/stroke-morph.ts",
+    ],
+    packages: ["react"],
+  },
+  "run-chat": {
+    files: [
+      TOKENS,
+      "src/components/agentic/format.ts",
+      "src/components/agentic/marks.tsx",
+      "src/components/agentic/run-chat.tsx",
+      "src/components/agentic/status-morph.tsx",
+      "src/components/agentic/stroke-morph.ts",
     ],
     packages: ["react"],
   },
   "confidence-bar": {
     files: [TOKENS, "src/components/agentic/confidence-bar.tsx", "src/components/agentic/format.ts"],
     packages: [],
+  },
+  "step-inspector": {
+    files: [
+      TOKENS,
+      "src/components/agentic/keyboard.ts",
+      "src/components/agentic/marks.tsx",
+      "src/components/agentic/status-morph.tsx",
+      "src/components/agentic/step-inspector.tsx",
+      "src/components/agentic/stroke-morph.ts",
+    ],
+    packages: ["react"],
+  },
+  "expression-field": {
+    files: [
+      TOKENS,
+      "src/components/agentic/expression-field.tsx",
+      "src/components/agentic/keyboard.ts",
+      "src/components/agentic/marks.tsx",
+    ],
+    packages: ["react"],
+  },
+  "pinned-output": {
+    files: [TOKENS, "src/components/agentic/marks.tsx", "src/components/agentic/pinned-output.tsx"],
+    packages: ["react"],
   },
   "human-override": {
     files: [TOKENS, "src/components/agentic/human-override.tsx", "src/components/agentic/marks.tsx"],
@@ -54,7 +124,39 @@ const EXPECTED: Record<string, { files: string[]; packages: string[] }> = {
       "src/components/agentic/format.ts",
       "src/components/agentic/keyboard.ts",
       "src/components/agentic/marks.tsx",
+      "src/components/agentic/status-morph.tsx",
+      "src/components/agentic/stroke-morph.ts",
       "src/components/agentic/tool-call-feed.tsx",
+    ],
+    packages: ["react"],
+  },
+  "run-node": {
+    files: [
+      TOKENS,
+      "src/components/agentic/marks.tsx",
+      "src/components/agentic/run-node.tsx",
+      "src/components/agentic/status-morph.tsx",
+      "src/components/agentic/stroke-morph.ts",
+    ],
+    packages: ["react"],
+  },
+  "run-graph": {
+    files: [
+      TOKENS,
+      "src/components/agentic/marks.tsx",
+      "src/components/agentic/run-graph.tsx",
+      "src/components/agentic/run-node.tsx",
+      "src/components/agentic/status-morph.tsx",
+      "src/components/agentic/stroke-morph.ts",
+    ],
+    packages: ["react"],
+  },
+  "step-picker": {
+    files: [
+      TOKENS,
+      "src/components/agentic/keyboard.ts",
+      "src/components/agentic/marks.tsx",
+      "src/components/agentic/step-picker.tsx",
     ],
     packages: ["react"],
   },
@@ -68,8 +170,39 @@ const EXPECTED: Record<string, { files: string[]; packages: string[] }> = {
     ],
     packages: ["react"],
   },
+  "wait-for-person": {
+    files: [
+      TOKENS,
+      "src/components/agentic/marks.tsx",
+      "src/components/agentic/status-morph.tsx",
+      "src/components/agentic/stroke-morph.ts",
+      "src/components/agentic/wait-for-person.tsx",
+    ],
+    packages: ["react"],
+  },
+  "connection-picker": {
+    files: [
+      TOKENS,
+      "src/components/agentic/connection-picker.tsx",
+      "src/components/agentic/keyboard.ts",
+      "src/components/agentic/marks.tsx",
+      "src/components/agentic/status-morph.tsx",
+      "src/components/agentic/stroke-morph.ts",
+    ],
+    packages: ["react"],
+  },
   "fallback-boundary": {
     files: [TOKENS, "src/components/agentic/fallback-boundary.tsx", "src/components/agentic/marks.tsx"],
+    packages: ["react"],
+  },
+  "step-error": {
+    files: [
+      TOKENS,
+      "src/components/agentic/marks.tsx",
+      "src/components/agentic/status-morph.tsx",
+      "src/components/agentic/step-error.tsx",
+      "src/components/agentic/stroke-morph.ts",
+    ],
     packages: ["react"],
   },
 };
@@ -261,7 +394,7 @@ describe("component page", () => {
   it("renders the computed manifest between usage and props", () => {
     const page = read("src/app/components/[slug]/page.tsx");
     const usage = page.indexOf('id="usage"');
-    const files = page.indexOf("<FilesToCopy manifest={copy} />");
+    const files = page.indexOf("<FilesToCopy manifest={copy} installCommand={shadcnInstallCommand(c.slug)} />");
     const props = page.indexOf('id="props"');
     assert.ok(usage > -1 && files > usage && props > files);
     assert.match(page, /const copy = filesToCopy\(c\.file, c\.name\);/);

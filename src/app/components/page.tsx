@@ -2,10 +2,11 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { COMPONENTS, MOMENTS, componentsIn } from "@/lib/registry";
 import { SITE_TITLE } from "@/lib/site";
+import { componentsIndexDescription } from "@/lib/site-pages";
 import { Preview } from "../previews";
 
 const title = "Components";
-const description = `All ${COMPONENTS.length} agentic-ui components, grouped by the moment they cover: ${MOMENTS.map((m) => m.label.toLowerCase()).join(", ")}.`;
+const description = componentsIndexDescription();
 
 export const metadata: Metadata = {
   title,
@@ -49,7 +50,7 @@ export default function ComponentsPage() {
                     <div
                       aria-hidden="true"
                       inert
-                      className={`pointer-events-none flex h-44 overflow-hidden bg-[var(--bg)] p-4 ${c.slug === "agent-decision-card" ? "items-start" : "items-center"}`}
+                      className={`pointer-events-none flex h-44 overflow-hidden bg-[var(--bg)] p-4 ${c.slug === "agent-decision-card" || c.slug === "agent-harness" || c.slug === "wait-for-person" || c.slug === "connection-picker" || c.slug === "step-inspector" ? "items-start" : "items-center"}`}
                     >
                       <div className="w-full min-w-0">
                         <Preview slug={c.slug} />

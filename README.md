@@ -1,10 +1,16 @@
 # agentic-ui
 
-React components for products where an agent does part of the work: streaming text, thinking states, confidence, human override, tool calls, decisions and fallbacks.
+[![CI](https://github.com/sergushkincom/agentic-ui/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/sergushkincom/agentic-ui/actions/workflows/ci.yml)
+[![MIT License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![Live docs](https://img.shields.io/badge/Live-agentic--ui--docs.vercel.app-000000?logo=vercel)](https://agentic-ui-docs.vercel.app)
+
+React components for products where an agent does part of the work: streaming text, thinking states, confidence, step inspection, expressions, pinned output, human override, tool calls, decisions and fallbacks.
 
 Every component answers one question people actually ask when software acts for them: **what is it doing, how sure is it, and where can I step in?**
 
 **Live docs:** [agentic-ui-docs.vercel.app](https://agentic-ui-docs.vercel.app)
+
+![Agentic UI live docs homepage with component cards and implementation guidance](docs/agentic-ui-home.png)
 
 ## Components
 
@@ -13,8 +19,14 @@ Every component answers one question people actually ask when software acts for 
 | `StreamingText` | How do you show an answer that is still being written, without making people read a moving target? |
 | `ThinkingState` | What does a person need to see to decide whether to keep waiting? |
 | `ConfidenceBar` | What does 72% mean to someone who has to act on it? |
+| `StepInspector` | When a step in the agent's work is wrong, where do you look? |
+| `ExpressionField` | How do you point a step at an earlier field without hiding the link in syntax? |
+| `PinnedOutput` | How do later steps keep moving when you do not want to run this step again? |
 | `HumanOverride` | When a person corrects the agent, how do they know the correction will stick? |
 | `ToolCallFeed` | How do you show what an agent did in other systems without dumping JSON on everyone? |
+| `RunNode` | What does a person need on a single step to see whether it is waiting, working, finished, or stuck? |
+| `RunGraph` | How do you show a few connected steps without pretending to be an editor? |
+| `StepPicker` | When someone adds a step, how do they find the one a person has to do, not only the ones the agent can run? |
 | `AgentDecisionCard` | What does a person need to read, in what order, to approve an agent's action responsibly? |
 | `FallbackBoundary` | What happens to the person's task when the agent doesn't come back? |
 
@@ -46,10 +58,14 @@ Next.js 15 (App Router), React 19, TypeScript strict, Tailwind CSS 4. Fake data 
 
 ## Layout
 
-- `src/components/agentic/` — the library. One file per component, `format.ts` for pure logic, `marks.tsx` for shared marks and buttons.
+- `src/components/agentic/` — the library. One file per component, `format.ts` for pure logic, `marks.tsx` for shared marks and buttons, `stroke-morph.ts` for the working-status stroke morph.
 - `src/lib/registry.ts` — every docs page renders from this list.
 - `src/app/components/demos.tsx` — the live demos.
 - `COMPONENTS.md` — the component list.
+
+## Credits
+
+The spinner on `ThinkingState` and `ToolCallFeed` draws itself into a check or a warning. That stroke morph is adapted from [morphicons](https://github.com/guillermolg00/morphicons) by [Guillermo](https://guillermolg.com) (MIT): resample the stroke, align it with a closed-form rotation and scale, then interpolate. People who prefer reduced motion get an instant swap.
 
 ## License
 

@@ -1,6 +1,8 @@
 import Link from "next/link";
-import { COMPONENTS, REPO } from "@/lib/registry";
+import { COMPONENTS } from "@/lib/registry";
 import { CodeBlock } from "@/components/site/code-block";
+import { HeroHandoff } from "@/components/site/hero-handoff";
+import { HeroLegend } from "@/components/site/hero-legend";
 import { Preview } from "./previews";
 
 const PRINCIPLES = [
@@ -12,31 +14,44 @@ const PRINCIPLES = [
 export default function Home() {
   return (
     <main className="mx-auto flex max-w-6xl flex-col gap-16 px-4 py-14 sm:py-20">
-      <section className="flex max-w-2xl flex-col gap-5">
-        <p className="text-[13px] font-medium text-[var(--agent)]">React components · MIT</p>
-        <h1 className="text-[32px] leading-tight font-semibold tracking-tight sm:text-[44px]">
-          Components for products where an agent does part of the work.
-        </h1>
-        <p className="text-[17px] leading-relaxed text-[var(--fg-muted)]">
-          Seven pieces of UI for the moments people actually worry about: what is the agent doing, how sure is it,
-          and where can I step in. Every one is live on this site. Copy them into your project.
-        </p>
-        <div className="flex flex-wrap gap-2">
-          <Link
-            href="/components"
-            className="inline-flex h-9 items-center rounded-lg bg-[var(--fg)] px-4 text-[14px] font-medium text-[var(--bg)] hover:opacity-90"
-          >
-            Browse components
-          </Link>
-          <a
-            href={REPO}
-            target="_blank"
-            rel="noreferrer"
-            className="inline-flex h-9 items-center rounded-lg border border-[var(--border)] bg-[var(--surface)] px-4 text-[14px] font-medium hover:bg-[var(--surface-2)]"
-          >
-            View on GitHub
-          </a>
+      <section className="grid items-start gap-10 lg:grid-cols-[minmax(0,1.05fr)_minmax(18rem,0.95fr)] lg:gap-14">
+        <div className="flex max-w-2xl flex-col gap-5">
+          <HeroLegend />
+          <h1 className="text-[32px] leading-tight font-semibold tracking-tight sm:text-[44px]">
+            Components for products where an agent does part of the work.
+          </h1>
+          <p className="text-[17px] leading-relaxed text-[var(--fg-muted)]">
+            {COMPONENTS.length} pieces of UI for the moments people actually worry about: what is the agent doing, how sure is it,
+            and where can I step in. Every one is live on this site. Copy them into your project.
+          </p>
+          <div className="flex flex-wrap gap-2">
+            <Link
+              href="/components"
+              className="inline-flex h-9 items-center rounded-lg bg-[var(--fg)] px-4 text-[14px] font-medium text-[var(--bg)] hover:opacity-90"
+            >
+              Browse components
+            </Link>
+            <Link
+              href="/examples/agent-run"
+              className="group inline-flex h-9 items-center gap-2 rounded-lg border border-[var(--border)] bg-[var(--surface)] px-4 text-[14px] font-medium hover:bg-[var(--surface-2)]"
+            >
+              See an agent run
+              <svg
+                viewBox="0 0 16 16"
+                aria-hidden="true"
+                className="aui-nudge size-3.5"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1.75"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <path d="M3 8h10M9 4.5 12.5 8 9 11.5" />
+              </svg>
+            </Link>
+          </div>
         </div>
+        <HeroHandoff />
       </section>
 
       <section aria-labelledby="principles" className="flex flex-col gap-3">
@@ -71,7 +86,7 @@ export default function Home() {
                 href={`/components/${c.slug}`}
                 className="group flex h-full flex-col overflow-hidden rounded-[var(--radius)] border border-[var(--border)] bg-[var(--surface)] hover:border-[var(--fg-muted)]"
               >
-                <div aria-hidden="true" inert className={`pointer-events-none flex h-44 overflow-hidden bg-[var(--bg)] p-4 ${c.slug === "agent-decision-card" ? "items-start" : "items-center"}`}>
+                <div aria-hidden="true" inert className={`pointer-events-none flex h-44 overflow-hidden bg-[var(--bg)] p-4 ${c.slug === "agent-decision-card" || c.slug === "agent-harness" || c.slug === "wait-for-person" || c.slug === "connection-picker" || c.slug === "step-inspector" ? "items-start" : "items-center"}`}>
                   <div className="w-full">
                     <Preview slug={c.slug} />
                   </div>

@@ -22,10 +22,42 @@ describe("changelog entries", () => {
     assert.equal(launch.date, "2026-11-11");
     assert.equal(launch.id, "2026-11-11");
     assert.equal(formatChangelogDate(launch.date), "11 Nov 2026");
+    assert.deepEqual(launch.components, [
+      "streaming-text",
+      "thinking-state",
+      "confidence-bar",
+      "human-override",
+      "tool-call-feed",
+      "agent-decision-card",
+      "fallback-boundary",
+    ]);
+  });
+
+  it("covers the thirteen run components on 21 Nov 2026 with pull requests 54 through 57", () => {
+    const added = byNumber.get(54);
+    assert.ok(added);
+    assert.equal(added.date, "2026-11-21");
+    assert.equal(added.id, "2026-11-21");
+    assert.equal(formatChangelogDate(added.date), "21 Nov 2026");
     assert.deepEqual(
-      launch.components,
-      COMPONENTS.map((component) => component.slug),
+      added.pulls.map((pull) => pull.number),
+      [57, 56, 55, 54],
     );
+    assert.deepEqual(added.components, [
+      "run-node",
+      "run-graph",
+      "step-picker",
+      "run-log",
+      "run-history",
+      "run-chat",
+      "agent-harness",
+      "step-inspector",
+      "expression-field",
+      "pinned-output",
+      "wait-for-person",
+      "connection-picker",
+      "step-error",
+    ]);
   });
 
   it("covers M1 on 12 Nov 2026 with pull requests 25 through 28", () => {
@@ -52,7 +84,10 @@ describe("changelog entries", () => {
 
   it("lists each pull request once, newest day first, and links it", () => {
     const numbers = CHANGELOG.flatMap((entry) => entry.pulls.map((pull) => pull.number));
-    assert.deepEqual(numbers.sort((a, b) => a - b), [4, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34]);
+    assert.deepEqual(
+      numbers.sort((a, b) => a - b),
+      [4, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 54, 55, 56, 57],
+    );
     assert.equal(new Set(numbers).size, numbers.length);
     const dates = CHANGELOG.map((entry) => entry.date);
     const newestFirst = [...dates].sort((a, b) => (a < b ? 1 : a > b ? -1 : 0));
@@ -91,10 +126,21 @@ describe("New badge window", () => {
     assert.equal(componentChangedOn("missing"), null);
     assert.equal(isNewComponent("missing", "2026-11-14"), false);
 
+    const addedOn21 = new Set(byNumber.get(54)?.components ?? []);
+    assert.equal(addedOn21.size, 13);
     // Launch components drop off on 11 Dec. The three edited on 12 Nov stay one more day.
+    // The thirteen added on 21 Nov are new from that day through 20 Dec.
     for (const component of COMPONENTS) {
-      assert.equal(isNewComponent(component.slug, "2026-11-14"), true);
-      assert.equal(isNewComponent(component.slug, "2026-12-10"), true);
+      if (addedOn21.has(component.slug)) {
+        assert.equal(componentChangedOn(component.slug), "2026-11-21");
+        assert.equal(isNewComponent(component.slug, "2026-11-14"), false);
+        assert.equal(isNewComponent(component.slug, "2026-11-21"), true);
+        assert.equal(isNewComponent(component.slug, "2026-12-20"), true);
+        assert.equal(isNewComponent(component.slug, "2026-12-21"), false);
+      } else {
+        assert.equal(isNewComponent(component.slug, "2026-11-14"), true);
+        assert.equal(isNewComponent(component.slug, "2026-12-10"), true);
+      }
     }
     assert.equal(isNewComponent("confidence-bar", "2026-12-11"), false);
     assert.equal(isNewComponent("streaming-text", "2026-12-11"), true);
