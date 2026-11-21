@@ -24,6 +24,9 @@ export function SiteHeader() {
           <Link href="/components" className="shrink-0 rounded-sm whitespace-nowrap hover:text-[var(--fg)]">
             Components
           </Link>
+          <Link href="/changelog" className="shrink-0 rounded-sm whitespace-nowrap hover:text-[var(--fg)]">
+            Changelog
+          </Link>
           <a href={REPO} target="_blank" rel="noreferrer" className="shrink-0 rounded-sm whitespace-nowrap hover:text-[var(--fg)]">
             GitHub
           </a>

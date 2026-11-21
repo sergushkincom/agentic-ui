@@ -2,7 +2,7 @@ import AxeBuilder from "@axe-core/playwright";
 import { expect, test } from "@playwright/test";
 import { COMPONENTS } from "../../src/lib/registry";
 
-const routes = ["/", ...COMPONENTS.map((component) => `/components/${component.slug}`)];
+const routes = ["/", "/changelog", ...COMPONENTS.map((component) => `/components/${component.slug}`)];
 
 test.describe("production docs accessibility", () => {
   for (const route of routes) {

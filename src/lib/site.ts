@@ -10,12 +10,13 @@ export const SITE_TITLE_TEMPLATE = `%s · ${SITE_TITLE}`;
 
 export const SITEMAP_URL = `${SITE_ORIGIN}/sitemap.xml`;
 
-/** Home, /why, the components index, then each component page, in registry order. */
+/** Home, /why, the components index, each component page in registry order, then /changelog. */
 export function sitemapUrls(slugs: readonly string[]): string[] {
   return [
     SITE_ORIGIN,
     `${SITE_ORIGIN}/why`,
     `${SITE_ORIGIN}/components`,
     ...slugs.map((slug) => `${SITE_ORIGIN}/components/${slug}`),
+    `${SITE_ORIGIN}/changelog`,
   ];
 }
