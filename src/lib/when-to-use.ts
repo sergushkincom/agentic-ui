@@ -70,6 +70,58 @@ export const WHEN_TO_USE: Record<string, WhenToUse> = {
       },
     ],
   },
+  "run-log": {
+    useWhen: [
+      "A person is inside one run and needs the steps, how long each took, and the input or output of the step they open.",
+      "That data should be a table, with the same payload as JSON, and a row that failed the check should say so. Clear removes the log.",
+    ],
+    instead: [
+      {
+        slug: "tool-call-feed",
+        when: "the record is a list of actions in sentences, with the tool name and the raw input folded under each row, and you do not need a table and JSON side by side.",
+      },
+      {
+        slug: "thinking-state",
+        when: "the person only needs the current step, the elapsed time, and a folded plan. They do not need the data that moved.",
+      },
+    ],
+  },
+  "run-history": {
+    useWhen: [
+      "Someone is choosing among past runs and needs to see which succeeded, which errored, which were canceled, and how long each took.",
+      "Selecting a row should highlight that run, so the rest of the screen can show it.",
+    ],
+    instead: [
+      {
+        slug: "run-log",
+        when: "they are already inside one run and need its steps and data, not the list of runs.",
+      },
+      {
+        slug: "tool-call-feed",
+        when: "the subject is the actions inside a run, in sentences, not which run this is.",
+      },
+    ],
+  },
+  "run-chat": {
+    useWhen: [
+      "A person starts the work by sending a message, and should see the answer and the live steps at the same time.",
+      "The answer can still be arriving while the steps advance. Sending is what starts the run.",
+    ],
+    instead: [
+      {
+        slug: "streaming-text",
+        when: "you only need the answer as it arrives, with a way to stop it, and not the steps beside the thread.",
+      },
+      {
+        slug: "run-log",
+        when: "the run is already going or finished, and someone is inspecting one step's table or JSON rather than talking to the agent.",
+      },
+      {
+        slug: "thinking-state",
+        when: "there is no thread. The person is only waiting on the current step and a folded plan.",
+      },
+    ],
+  },
   "confidence-bar": {
     useWhen: [
       "A person needs to read how sure the agent is: the words the bar uses (Sure, Fairly sure, Not sure, asks you), then the percentage.",
@@ -115,6 +167,54 @@ export const WHEN_TO_USE: Record<string, WhenToUse> = {
       {
         slug: "streaming-text",
         when: "the output is prose the person reads as it arrives, not a log of actions.",
+      },
+    ],
+  },
+  "run-node": {
+    useWhen: [
+      "You are showing one step of a run: its name, what it is doing now, and whether it is pending, running, done or failed.",
+      "The number of items that left the step matters, and it belongs on the output port, as \"1 item\" or \"5 items\".",
+    ],
+    instead: [
+      {
+        slug: "run-graph",
+        when: "those steps are a chain, and the person needs the edges between them plus a way to start the run or add the next step.",
+      },
+      {
+        slug: "tool-call-feed",
+        when: "the record is calls into other systems, with a tool name and raw input and output folded under each sentence.",
+      },
+    ],
+  },
+  "run-graph": {
+    useWhen: [
+      "A person should see a short chain of steps, how many items moved along each edge, and whether the run can start, is running, or is waiting on them.",
+      "You want the shape of the run without an editor. Adding the next step is one button at the end of the chain.",
+    ],
+    instead: [
+      {
+        slug: "run-node",
+        when: "one step is the whole story, and a chain, an edge label, or a start pill would be extra.",
+      },
+      {
+        slug: "step-picker",
+        when: "the person is choosing what comes next. The graph shows the chain they already have.",
+      },
+    ],
+  },
+  "step-picker": {
+    useWhen: [
+      "The person is adding a step and needs to search a grouped list, including a group of steps only a person can do.",
+      "Human in the loop has to stay visible as its own group, not turn up as one more row among the agent's calls.",
+    ],
+    instead: [
+      {
+        slug: "run-graph",
+        when: "the chain is already chosen and you are showing the run: the steps, the items that moved, and whether it is waiting.",
+      },
+      {
+        slug: "human-override",
+        when: "the person should correct one field the agent filled in, not choose the next step in a run.",
       },
     ],
   },
@@ -179,6 +279,22 @@ export const WHEN_TO_USE: Record<string, WhenToUse> = {
       {
         slug: "tool-call-feed",
         when: "one call failed and that failure belongs in the row, in plain words, rather than a boundary around the whole task.",
+      },
+    ],
+  },
+  "step-error": {
+    useWhen: [
+      "One step failed, and the person needs the step name, what broke, and which value was wrong.",
+      "Retry should run that step again. Later steps did not run, and there is no second path for the whole task.",
+    ],
+    instead: [
+      {
+        slug: "fallback-boundary",
+        when: "the whole task ran long, failed, or crashed, and the person needs a way to do it themselves. This is not one bad value inside a step.",
+      },
+      {
+        slug: "run-log",
+        when: "the failure is one step in a log they are inspecting, and they need the surrounding steps and payloads rather than a retry for this step.",
       },
     ],
   },

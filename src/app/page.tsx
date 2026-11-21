@@ -21,7 +21,7 @@ export default function Home() {
             Components for products where an agent does part of the work.
           </h1>
           <p className="text-[17px] leading-relaxed text-[var(--fg-muted)]">
-            Seven pieces of UI for the moments people actually worry about: what is the agent doing, how sure is it,
+            {COMPONENTS.length} pieces of UI for the moments people actually worry about: what is the agent doing, how sure is it,
             and where can I step in. Every one is live on this site. Copy them into your project.
           </p>
           <div className="flex flex-wrap gap-2">

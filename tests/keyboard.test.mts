@@ -56,13 +56,20 @@ const HANDLED: Record<string, string[]> = {
   "streaming-text": ["Enter", "Space", "Escape"],
   "agent-harness": ["None"],
   "thinking-state": ["Enter", "Space"],
+  "run-log": ["Enter", "Space", "Arrow Down", "Arrow Up", "Home", "End", "Tab", "Shift + Tab"],
+  "run-history": ["Enter", "Space", "Arrow Down", "Arrow Up", "Home", "End", "Tab", "Shift + Tab"],
+  "run-chat": ["Enter", "Space"],
   "confidence-bar": ["None"],
   "human-override": ["Enter", "Space", "Escape"],
   "tool-call-feed": ["Enter", "Space", "Arrow Down", "Arrow Up", "Home", "End", "Tab", "Shift + Tab"],
+  "run-node": ["None"],
+  "run-graph": ["Enter", "Space"],
+  "step-picker": ["Arrow Down", "Arrow Up", "Home", "End", "Enter", "Escape"],
   "agent-decision-card": ["Enter", "Space"],
   "wait-for-person": ["Enter", "Space", "Escape"],
   "connection-picker": ["Enter", "Space", "Escape", "Arrow Down", "Arrow Up", "Home", "End", "Tab", "Shift + Tab"],
   "fallback-boundary": ["Enter", "Space"],
+  "step-error": ["Enter", "Space"],
 };
 
 describe("keyboard interactions table", () => {

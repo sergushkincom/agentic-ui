@@ -13,10 +13,10 @@ describe("component moments", () => {
     assert.deepEqual(
       MOMENTS.map((m) => [m.label, componentsIn(m.id).map((c) => c.name)]),
       [
-        ["While it works", ["StreamingText", "AgentHarness", "ThinkingState", "ToolCallFeed"]],
+        ["While it works", ["StreamingText", "ThinkingState", "ToolCallFeed", "RunNode", "RunGraph", "StepPicker", "RunLog", "RunHistory", "RunChat", "AgentHarness"]],
         ["How sure it is", ["ConfidenceBar"]],
         ["Where you step in", ["HumanOverride", "AgentDecisionCard", "WaitForPerson", "ConnectionPicker"]],
-        ["When it fails", ["FallbackBoundary"]],
+        ["When it fails", ["FallbackBoundary", "StepError"]],
       ],
     );
   });
