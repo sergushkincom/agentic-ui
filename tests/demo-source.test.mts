@@ -14,6 +14,9 @@ const MARKER: Record<string, string> = {
   "confidence-bar": "<ConfidenceBar",
   "human-override": "<HumanOverride",
   "tool-call-feed": "<ToolCallFeed",
+  "run-node": "<RunNode",
+  "run-graph": "<RunGraph",
+  "step-picker": "<StepPicker",
   "agent-decision-card": "<AgentDecisionCard",
   "fallback-boundary": "<FallbackBoundary",
 };
