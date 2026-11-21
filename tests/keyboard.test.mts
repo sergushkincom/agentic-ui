@@ -55,11 +55,15 @@ const KEYS = new Set(["Enter", "Space", "Escape", "Arrow Up", "Arrow Down", "Hom
 const HANDLED: Record<string, string[]> = {
   "streaming-text": ["Enter", "Space", "Escape"],
   "thinking-state": ["Enter", "Space"],
+  "run-log": ["Enter", "Space", "Arrow Down", "Arrow Up", "Home", "End", "Tab", "Shift + Tab"],
+  "run-history": ["Enter", "Space", "Arrow Down", "Arrow Up", "Home", "End", "Tab", "Shift + Tab"],
+  "run-chat": ["Enter", "Space"],
   "confidence-bar": ["None"],
   "human-override": ["Enter", "Space", "Escape"],
   "tool-call-feed": ["Enter", "Space", "Arrow Down", "Arrow Up", "Home", "End", "Tab", "Shift + Tab"],
   "agent-decision-card": ["Enter", "Space"],
   "fallback-boundary": ["Enter", "Space"],
+  "step-error": ["Enter", "Space"],
 };
 
 describe("keyboard interactions table", () => {

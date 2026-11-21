@@ -9,11 +9,15 @@ import { join } from "node:path";
 export const DEMO_SOURCE_FILES: Record<string, { file: string; exportName: string }> = {
   "streaming-text": { file: "src/app/components/demos/streaming-text.tsx", exportName: "StreamingTextStoppable" },
   "thinking-state": { file: "src/app/components/demos/thinking-state.tsx", exportName: "ThinkingStateDemo" },
+  "run-log": { file: "src/app/components/demos/run-log.tsx", exportName: "RunLogDemo" },
+  "run-history": { file: "src/app/components/demos/run-history.tsx", exportName: "RunHistoryDemo" },
+  "run-chat": { file: "src/app/components/demos/run-chat.tsx", exportName: "RunChatDemo" },
   "confidence-bar": { file: "src/app/components/demos/confidence-bar.tsx", exportName: "ConfidenceBarDemo" },
   "human-override": { file: "src/app/components/demos/human-override.tsx", exportName: "HumanOverrideDemo" },
   "tool-call-feed": { file: "src/app/components/demos/tool-call-feed.tsx", exportName: "ToolCallFeedDemo" },
   "agent-decision-card": { file: "src/app/components/demos/agent-decision-card.tsx", exportName: "AgentDecisionCardDemo" },
   "fallback-boundary": { file: "src/app/components/demos/fallback-boundary.tsx", exportName: "FallbackBoundaryDemo" },
+  "step-error": { file: "src/app/components/demos/step-error.tsx", exportName: "StepErrorDemo" },
 };
 
 /** File name shown above the code, relative to `src/app/components`. */

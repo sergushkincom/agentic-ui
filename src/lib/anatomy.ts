@@ -13,6 +13,93 @@ export type AnatomyNode = {
 };
 
 export const ANATOMY: Record<string, readonly AnatomyNode[]> = {
+  "run-log": [
+    {
+      name: "RunLog",
+      answers: "What did this run do, and what data did the open step take in or send out?",
+      children: [
+        { name: "title", answers: "What is this log called?" },
+        { name: "onClear", answers: "Can the person wipe the log?" },
+        {
+          name: "StepTree",
+          answers: "Which steps ran, in what order, and which one is open?",
+          children: [
+            {
+              name: "StepRow",
+              answers: "What happened in this step, and how long did it take?",
+              children: [
+                {
+                  name: "StatusIcon",
+                  answers: "Did this step succeed, fail, get canceled, or is it still running?",
+                  children: [{ name: "StatusMorph", answers: "Does the running mark turn into a check or a warning?" }],
+                },
+                { name: "label", answers: "What did this step do?" },
+                { name: "durationMs", answers: "How long did this step take?" },
+                { name: "Chevron", answers: "Does this step contain other steps?" },
+              ],
+            },
+          ],
+        },
+        {
+          name: "DataPane",
+          answers: "What data did the open step receive, and what did it send on?",
+          children: [
+            { name: "input", answers: "Is the input of this step showing?" },
+            { name: "output", answers: "Is the output of this step showing?" },
+            { name: "DataTable", answers: "Can the rows be read as a table?" },
+            { name: "DataJson", answers: "Can the same payload be read as JSON?" },
+          ],
+        },
+      ],
+    },
+  ],
+  "run-chat": [
+    {
+      name: "RunChat",
+      answers: "What was asked, and what is the run doing beside that thread?",
+      children: [
+        { name: "title", answers: "What task is this thread for?" },
+        {
+          name: "Message",
+          answers: "Who wrote this turn, the person or the agent?",
+          children: [
+            { name: "AgentMark", answers: "Is this turn from the agent?" },
+            { name: "HumanMark", answers: "Is this turn from the person?" },
+          ],
+        },
+        { name: "stream", answers: "Is an answer still being written in the thread?" },
+        {
+          name: "Composer",
+          answers: "What will the next message say, and will sending it start the run?",
+          children: [
+            { name: "draft", answers: "What is in the field?" },
+            { name: "onDraftChange", answers: "Did the field change?" },
+            { name: "onSend", answers: "Did the person send, and so start the run?" },
+          ],
+        },
+        {
+          name: "Log",
+          answers: "What is this run doing right now?",
+          children: [
+            { name: "plan", answers: "What is the one-line plan above the steps?" },
+            {
+              name: "StepList",
+              answers: "Which steps have run, and how long did each take?",
+              children: [
+                {
+                  name: "StepMark",
+                  answers: "Is this step waiting, running, done, or failed?",
+                  children: [{ name: "StatusMorph", answers: "Does the running mark turn into a check or a warning?" }],
+                },
+                { name: "label", answers: "What is this step called?" },
+                { name: "durationMs", answers: "How long did a finished step take?" },
+              ],
+            },
+          ],
+        },
+      ],
+    },
+  ],
   "tool-call-feed": [
     {
       name: "ToolCallFeed",
