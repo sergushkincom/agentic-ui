@@ -187,6 +187,40 @@ export const ANATOMY: Record<string, readonly AnatomyNode[]> = {
       ],
     },
   ],
+  "agent-harness": [
+    {
+      name: "AgentHarness",
+      answers: "What step is this, and can it run?",
+      children: [
+        { name: "AgentMark", answers: "Who is this step?" },
+        { name: "title", answers: "What is the step called?" },
+        { name: "task", answers: "What is the step trying to do?" },
+        { name: "missing", answers: "Is a required socket still open?" },
+        {
+          name: "SocketList",
+          answers: "Which sockets does this step expose?",
+          children: [
+            {
+              name: "Socket",
+              answers: "What is plugged into this socket?",
+              children: [
+                {
+                  name: "SocketMark",
+                  answers: "Is this socket connected, optional, or blocking the step?",
+                  children: [
+                    { name: "StatusMorph", answers: "Does a connected socket show a check, or a missing requirement show a warning?" },
+                  ],
+                },
+                { name: "kind", answers: "Is this the model, the memory, or a tool?" },
+                { name: "value", answers: "What is connected, in words a person can read?" },
+                { name: "required", answers: "Will the step refuse to run without this?" },
+              ],
+            },
+          ],
+        },
+      ],
+    },
+  ],
 };
 
 /** Preorder list. Throws if a name is repeated, so the diagram and the legend cannot disagree. */

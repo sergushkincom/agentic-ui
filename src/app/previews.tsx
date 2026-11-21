@@ -3,7 +3,9 @@
 
 import {
   AgentDecisionCard,
+  AgentHarness,
   ConfidenceBar,
+  ConnectionPicker,
   FallbackBoundary,
   StepError,
   HumanOverride,
@@ -16,6 +18,7 @@ import {
   RunNode,
   RunGraph,
   StepPicker,
+  WaitForPerson,
 } from "@/components/agentic";
 
 /** Static states for the home grid. The live versions are on each component's page. */
@@ -24,6 +27,17 @@ const noop = () => {};
 const PREVIEWS: Record<string, React.ReactNode> = {
   "streaming-text": (
     <StreamingText text="INV-2041 from Acme Fasteners matches purchase order PO-7718. All three lines agree on" status="streaming" onStop={noop} />
+  ),
+  "agent-harness": (
+    <AgentHarness
+      title="Match the invoice"
+      task="Match INV-2041 to PO-7718 before anyone is paid."
+      sockets={[
+        { id: "model", kind: "model", required: true },
+        { id: "memory", kind: "memory", value: "Last 6 Acme invoices" },
+        { id: "invoice", kind: "tool", value: "Read invoice INV-2041" },
+      ]}
+    />
   ),
   "thinking-state": (
     <ThinkingState
@@ -132,6 +146,30 @@ const PREVIEWS: Record<string, React.ReactNode> = {
         onReject={noop}
       />
     </div>
+  ),
+  "wait-for-person": (
+    <WaitForPerson
+      task="The agent stopped while matching this invoice to PO-7718."
+      prompt="Which cost centre takes the €38.00 delivery on INV-2041?"
+      mode="reply"
+      status="waiting"
+      onRespond={noop}
+    />
+  ),
+  "connection-picker": (
+    <ConnectionPicker
+      purpose="The agent needs the ERP to read INV-2041."
+      accounts={[
+        { id: "acme", name: "Acme ERP", holder: "ap@acme.example" },
+        { id: "northwind", name: "Northwind purchasing", holder: "buyer@northwind.example" },
+      ]}
+      selectedId="acme"
+      mode="pick"
+      onSelect={noop}
+      onSignIn={noop}
+      onModeChange={noop}
+      onManual={noop}
+    />
   ),
   "fallback-boundary": (
     <FallbackBoundary status="slow" task="match this invoice" manual={{ label: "Match it myself", onClick: noop }} onRetry={noop}>
