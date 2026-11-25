@@ -12,6 +12,10 @@ Every component answers one question people actually ask when software acts for 
 
 ![Agentic UI live docs homepage with component cards and implementation guidance](docs/agentic-ui-home.png)
 
+![RunGraph steps advance, WaitForPerson asks for approval, then RunLog fills](docs/agentic-ui-run.gif)
+
+RunGraph steps advance one by one, WaitForPerson asks for approval, then RunLog fills.
+
 ## Components
 
 | Component | The design question |
