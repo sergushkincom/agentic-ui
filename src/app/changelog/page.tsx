@@ -21,8 +21,8 @@ export default function ChangelogPage() {
           <h1 className="text-[32px] leading-tight font-semibold tracking-tight">Changelog</h1>
           <p className="text-[17px] leading-relaxed text-[var(--fg-muted)]">
             What changed in the library and the docs, newest first. Each date is the day the pull request merged.
-            A component shows <span className="text-[var(--fg)]">New</span> in the sidebar for 30 days after its
-            source changes. A docs-only note does not reset that.
+            The two most recently changed components show <span className="text-[var(--fg)]">New</span> in the
+            sidebar, for up to 30 days after their source changes. A docs-only note does not reset that.
           </p>
         </header>
 

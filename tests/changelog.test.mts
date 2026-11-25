@@ -8,6 +8,8 @@ import {
   formatChangelogDate,
   isNew,
   isNewComponent,
+  NEW_BADGE_LIMIT,
+  newBadgeSlugs,
   pullRequestUrl,
   utcToday,
 } from "../src/lib/changelog.ts";
@@ -145,6 +147,20 @@ describe("New badge window", () => {
     assert.equal(isNewComponent("confidence-bar", "2026-12-11"), false);
     assert.equal(isNewComponent("streaming-text", "2026-12-11"), true);
     assert.equal(isNewComponent("streaming-text", "2026-12-12"), false);
+  });
+
+  it("badges at most two components, the newest, later in the sidebar first on a tie", () => {
+    const order = COMPONENTS.map((component) => component.slug);
+    assert.equal(NEW_BADGE_LIMIT, 2);
+    // Thirteen components changed on 21 Nov; only the last two of them in the sidebar keep the badge.
+    const latest = order.filter((slug) => componentChangedOn(slug) === "2026-11-21");
+    assert.deepEqual([...newBadgeSlugs(order, "2026-11-25")].sort(), latest.slice(-2).sort());
+    // Before 21 Nov the 12 Nov edits are the newest.
+    const on14 = newBadgeSlugs(order, "2026-11-14");
+    assert.equal(on14.size, 2);
+    for (const slug of on14) assert.equal(componentChangedOn(slug), "2026-11-12");
+    // Nothing left after every window closes.
+    assert.equal(newBadgeSlugs(order, "2027-01-01").size, 0);
   });
 
   it("formats today as a UTC calendar day", () => {

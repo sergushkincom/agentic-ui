@@ -27,6 +27,9 @@ export type ChangelogEntry = {
 /** How long a sidebar "New" badge stays up after the component's source changes, counting the change day. */
 export const NEW_BADGE_DAYS = 30;
 
+/** At most this many sidebar items carry "New" at once, so the badge still points at something. */
+export const NEW_BADGE_LIMIT = 2;
+
 const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"] as const;
 
 export const CHANGELOG: readonly ChangelogEntry[] = [
@@ -165,6 +168,25 @@ export function isNewComponent(slug: string, asOf: string): boolean {
   const changedOn = componentChangedOn(slug);
   if (!changedOn) return false;
   return isNew(changedOn, asOf);
+}
+
+/**
+ * Slugs that carry the sidebar "New" badge on `asOf`: the most recently changed components still inside the window,
+ * at most `limit`. On a tie the one later in `order` (the sidebar order, where new components are appended) wins.
+ */
+export function newBadgeSlugs(
+  order: readonly string[],
+  asOf: string,
+  limit = NEW_BADGE_LIMIT,
+  entries: readonly ChangelogEntry[] = CHANGELOG,
+): Set<string> {
+  const ranked = order
+    .map((slug, index) => ({ slug, index, changedOn: componentChangedOn(slug, entries) }))
+    .filter((item): item is { slug: string; index: number; changedOn: string } => {
+      return item.changedOn !== null && isNew(item.changedOn, asOf);
+    })
+    .sort((a, b) => (a.changedOn === b.changedOn ? b.index - a.index : a.changedOn < b.changedOn ? 1 : -1));
+  return new Set(ranked.slice(0, limit).map((item) => item.slug));
 }
 
 /** UTC calendar day for `now`, matching the dates stored on changelog entries. */
