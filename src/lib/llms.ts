@@ -12,10 +12,13 @@ export function llmsTxt(): string {
   const pages = sitePages()
     .map((page) => `- [${page.title}](${pageUrl(page.path)}): ${page.description}`)
     .join("\n");
-  const registry = COMPONENTS.map(
-    (component) =>
-      `- [${component.name}](${SITE_ORIGIN}/r/${component.slug}.json): shadcn registry item. ${component.summary}`,
-  ).join("\n");
+  const registry = [
+    `- [Registry](${SITE_ORIGIN}/r/registry.json): shadcn registry index. Every component, from the same list as the docs.`,
+    ...COMPONENTS.map(
+      (component) =>
+        `- [${component.name}](${SITE_ORIGIN}/r/${component.slug}.json): shadcn registry item. ${component.summary}`,
+    ),
+  ].join("\n");
 
   return [
     "# agentic-ui",

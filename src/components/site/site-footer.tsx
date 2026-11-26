@@ -11,7 +11,7 @@ const link =
 /** Who made this and where the code is. One thin row pinned to the bottom of the screen, so it shows without scrolling. */
 export function SiteFooter() {
   return (
-    <footer className="sticky bottom-0 z-20 flex h-[var(--footer-h)] shrink-0 items-center justify-between gap-3 border-t border-[var(--border)] bg-[var(--surface-strong)] px-4 text-xs text-[var(--fg-muted)]">
+    <footer className="sticky bottom-0 z-20 flex h-[var(--footer-h)] shrink-0 items-center justify-between gap-3 border-t border-[var(--border)] bg-[var(--surface)] px-4 text-xs text-[var(--fg-muted)]">
       <p className="truncate max-sm:hidden">MIT licensed · Copy, adapt, ship</p>
       <nav
         aria-label="About this project"

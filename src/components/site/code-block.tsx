@@ -27,37 +27,55 @@ function copyText(text: string): boolean {
   return ok;
 }
 
-export function CodeBlock({ code, label = "Code" }: { code: string; label?: string }) {
+function CopyButton({ code, label, className }: { code: string; label: string; className: string }) {
   const [copied, setCopied] = useState(false);
   function showCopied() {
     setCopied(true);
     window.setTimeout(() => setCopied(false), 1500);
   }
   return (
+    <button
+      type="button"
+      onKeyDown={(event) => {
+        if (event.key !== "Enter" && event.key !== " ") return;
+        event.preventDefault();
+      }}
+      onKeyUp={(event) => {
+        if (event.key !== "Enter" && event.key !== " ") return;
+        event.preventDefault();
+        event.currentTarget.click();
+      }}
+      onClick={() => {
+        if (copyText(code)) {
+          showCopied();
+          return;
+        }
+        void navigator.clipboard?.writeText(code).then(showCopied).catch(() => {});
+      }}
+      className={className}
+    >
+      <span aria-live="polite">{copied ? "Copied" : "Copy"}</span>
+      <span className="sr-only"> {label}</span>
+    </button>
+  );
+}
+
+const copyButtonClass = "rounded-md bg-[var(--surface)] px-2 py-1 text-[11px] font-medium text-[var(--fg-muted)] hover:text-[var(--fg)]";
+
+export function CodeBlock({ code, label = "Code", layout = "block" }: { code: string; label?: string; layout?: "block" | "command" }) {
+  if (layout === "command") {
+    return (
+      <div className="flex min-w-0 items-center gap-2 rounded-[var(--radius)] border border-[var(--border)] bg-[var(--surface-2)] py-1.5 pr-1.5 pl-3">
+        <pre aria-label={label} className="min-w-0 flex-1 overflow-x-auto font-[family-name:var(--mono)] text-[12px] leading-5 break-all whitespace-pre-wrap">
+          <code>{code}</code>
+        </pre>
+        <CopyButton code={code} label={label} className={`shrink-0 ${copyButtonClass}`} />
+      </div>
+    );
+  }
+  return (
     <div className="relative min-w-0 rounded-[var(--radius)] border border-[var(--border)] bg-[var(--surface-2)]">
-      <button
-        type="button"
-        onKeyDown={(event) => {
-          if (event.key !== "Enter" && event.key !== " ") return;
-          event.preventDefault();
-        }}
-        onKeyUp={(event) => {
-          if (event.key !== "Enter" && event.key !== " ") return;
-          event.preventDefault();
-          event.currentTarget.click();
-        }}
-        onClick={() => {
-          if (copyText(code)) {
-            showCopied();
-            return;
-          }
-          void navigator.clipboard?.writeText(code).then(showCopied).catch(() => {});
-        }}
-        className="absolute top-2 right-2 rounded-md bg-[var(--surface)] px-2 py-1 text-[11px] font-medium text-[var(--fg-muted)] hover:text-[var(--fg)]"
-      >
-        <span aria-live="polite">{copied ? "Copied" : "Copy"}</span>
-        <span className="sr-only"> {label}</span>
-      </button>
+      <CopyButton code={code} label={label} className={`absolute top-2 right-2 ${copyButtonClass}`} />
       <pre aria-label={label} className="overflow-x-auto p-4 pr-16 font-[family-name:var(--mono)] text-[12px] leading-relaxed">
         <code>{code}</code>
       </pre>

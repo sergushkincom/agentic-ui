@@ -769,8 +769,26 @@ export const COMPONENTS: ComponentDoc[] = [
   },
 ];
 
+/** Homepage "Start here" row, in that order. */
+export const START_HERE = [
+  "run-graph",
+  "wait-for-person",
+  "agent-decision-card",
+  "thinking-state",
+  "tool-call-feed",
+  "run-chat",
+] as const;
+
 export function getComponent(slug: string) {
   return COMPONENTS.find((c) => c.slug === slug);
+}
+
+export function startHere(): ComponentDoc[] {
+  return START_HERE.map((slug) => {
+    const component = getComponent(slug);
+    if (!component) throw new Error(`Start here lists an unknown component: ${slug}`);
+    return component;
+  });
 }
 
 /** Components in one moment, in registry order. That order is the index reading order. */
