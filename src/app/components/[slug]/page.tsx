@@ -12,6 +12,7 @@ import { SITE_TITLE } from "@/lib/site";
 import { Anatomy } from "@/components/site/anatomy";
 import { CodeBlock } from "@/components/site/code-block";
 import { CopyPageMarkdown } from "@/components/site/copy-page-markdown";
+import { PlatformBadges } from "@/components/site/platform-badges";
 import { FilesToCopy } from "@/components/site/files-to-copy";
 import { KeyboardTable } from "@/components/site/keyboard-table";
 import { WhenToUse } from "@/components/site/when-to-use";
@@ -80,6 +81,8 @@ export default async function ComponentPage({ params }: { params: Promise<{ slug
             <CopyPageMarkdown markdown={markdown} />
           </div>
           <p className="text-[17px] leading-relaxed text-[var(--fg-muted)]">{c.summary}</p>
+          <PlatformBadges />
+          <CodeBlock layout="command" code={shadcnInstallCommand(c.slug)} label={`${c.name} install`} />
         </header>
 
         <section aria-labelledby="demo" className="flex min-w-0 flex-col gap-3">

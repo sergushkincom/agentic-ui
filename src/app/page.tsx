@@ -1,9 +1,32 @@
 import Link from "next/link";
-import { COMPONENTS } from "@/lib/registry";
+import { COMPONENTS, startHere, type ComponentDoc } from "@/lib/registry";
+import { shadcnInstallCommand } from "@/lib/registry-url";
 import { CodeBlock } from "@/components/site/code-block";
 import { HeroHandoff } from "@/components/site/hero-handoff";
 import { HeroLegend } from "@/components/site/hero-legend";
 import { Preview } from "./previews";
+
+const TOP_ALIGNED = new Set(["agent-decision-card", "agent-harness", "wait-for-person", "connection-picker", "step-inspector"]);
+
+function ComponentCard({ component }: { component: ComponentDoc }) {
+  const align = TOP_ALIGNED.has(component.slug) ? "items-start" : "items-center";
+  return (
+    <Link
+      href={`/components/${component.slug}`}
+      className="group flex h-full min-w-0 flex-col overflow-hidden rounded-[var(--radius)] border border-[var(--border)] bg-[var(--surface)] hover:border-[var(--fg-muted)]"
+    >
+      <div aria-hidden="true" inert className={`pointer-events-none flex h-44 overflow-hidden bg-[var(--bg)] p-4 ${align}`}>
+        <div className="w-full min-w-0">
+          <Preview slug={component.slug} />
+        </div>
+      </div>
+      <div className="flex flex-col gap-1 border-t border-[var(--border)] p-4">
+        <h3 className="font-[family-name:var(--mono)] text-[13px] font-medium">{component.name}</h3>
+        <p className="text-[13px] leading-relaxed text-[var(--fg-muted)]">{component.summary}</p>
+      </div>
+    </Link>
+  );
+}
 
 const PRINCIPLES = [
   { title: "Show what it's doing", body: "Steps, actions and elapsed time, so waiting has a reason and the work can be audited." },
@@ -13,7 +36,7 @@ const PRINCIPLES = [
 
 export default function Home() {
   return (
-    <main className="mx-auto flex max-w-6xl flex-col gap-16 px-4 py-14 sm:py-20">
+    <main className="mx-auto flex w-full min-w-0 max-w-6xl flex-col gap-16 px-4 py-14 sm:py-20">
       <section className="grid items-start gap-10 lg:grid-cols-[minmax(0,1.05fr)_minmax(18rem,0.95fr)] lg:gap-14">
         <div className="flex max-w-2xl flex-col gap-5">
           <HeroLegend />
@@ -72,6 +95,19 @@ export default function Home() {
         </Link>
       </section>
 
+      <section aria-labelledby="start-here" className="flex flex-col gap-5">
+        <h2 id="start-here" className="text-[20px] font-semibold">
+          Start here
+        </h2>
+        <ul className="grid min-w-0 grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
+          {startHere().map((component) => (
+            <li key={component.slug} className="min-w-0">
+              <ComponentCard component={component} />
+            </li>
+          ))}
+        </ul>
+      </section>
+
       <section aria-labelledby="components" className="flex flex-col gap-5">
         <div className="flex items-baseline justify-between gap-4">
           <h2 id="components" className="text-[20px] font-semibold">
@@ -79,23 +115,10 @@ export default function Home() {
           </h2>
           <span className="text-[13px] text-[var(--fg-muted)]">{COMPONENTS.length} components</span>
         </div>
-        <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-          {COMPONENTS.map((c) => (
-            <li key={c.slug}>
-              <Link
-                href={`/components/${c.slug}`}
-                className="group flex h-full flex-col overflow-hidden rounded-[var(--radius)] border border-[var(--border)] bg-[var(--surface)] hover:border-[var(--fg-muted)]"
-              >
-                <div aria-hidden="true" inert className={`pointer-events-none flex h-44 overflow-hidden bg-[var(--bg)] p-4 ${c.slug === "agent-decision-card" || c.slug === "agent-harness" || c.slug === "wait-for-person" || c.slug === "connection-picker" || c.slug === "step-inspector" ? "items-start" : "items-center"}`}>
-                  <div className="w-full">
-                    <Preview slug={c.slug} />
-                  </div>
-                </div>
-                <div className="flex flex-col gap-1 border-t border-[var(--border)] p-4">
-                  <h3 className="font-[family-name:var(--mono)] text-[13px] font-medium">{c.name}</h3>
-                  <p className="text-[13px] leading-relaxed text-[var(--fg-muted)]">{c.summary}</p>
-                </div>
-              </Link>
+        <ul className="grid min-w-0 grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
+          {COMPONENTS.map((component) => (
+            <li key={component.slug} className="min-w-0">
+              <ComponentCard component={component} />
             </li>
           ))}
         </ul>
@@ -107,24 +130,12 @@ export default function Home() {
             How to use it
           </h2>
           <p className="text-[14px] leading-relaxed text-[var(--fg-muted)]">
-            It isn&apos;t an npm package on purpose. Copy <code className="font-[family-name:var(--mono)] text-[13px]">src/components/agentic</code>{" "}
-            and the tokens into your project and change them like your own code. Needs React 19 and Tailwind CSS 4. The components read
-            colours from CSS variables, so restyling is overriding a few tokens.
+            It isn&apos;t an npm package on purpose. The shadcn CLI copies the source into your project, and you change it like your own
+            code. The command below adds ConfidenceBar. Every component page has the command for that component. Needs React 19 and
+            Tailwind CSS 4. The components read colours from CSS variables, so restyling is overriding a few tokens.
           </p>
         </div>
-        <CodeBlock
-          label="Install"
-          code={`# 1. Copy the components and tokens
-cp -r agentic-ui/src/components/agentic  your-app/src/components/
-cp agentic-ui/src/app/tokens.css          your-app/src/app/
-
-# 2. Import the tokens next to Tailwind in globals.css
-@import "tailwindcss";
-@import "./tokens.css";
-
-# 3. Use them
-import { ConfidenceBar } from "@/components/agentic"`}
-        />
+        <CodeBlock layout="command" label="Install with shadcn" code={shadcnInstallCommand("confidence-bar")} />
       </section>
     </main>
   );
