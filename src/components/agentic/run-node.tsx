@@ -43,10 +43,10 @@ export function RunNode({ name, subtitle, status, items, actor = "agent" }: RunN
   const rail = status === "error" ? "bg-[var(--risk)]" : human ? "bg-[var(--human)]" : "bg-[var(--agent)]";
 
   return (
-    <article className="relative flex h-full min-h-[6.75rem] w-full max-w-[18rem] min-w-0 flex-col gap-1 overflow-visible rounded-[var(--radius)] border border-[var(--border)] bg-[var(--surface)] px-2.5 py-2">
+    <article className="relative flex h-full min-h-[6.75rem] w-full max-w-[18rem] min-w-0 flex-col gap-1 overflow-visible rounded-[var(--radius-lg)] border border-[var(--border)] bg-[var(--surface)] px-2.5 py-2">
       <span
         aria-hidden="true"
-        className={`absolute top-2 bottom-2 left-0 w-[3px] rounded-full ${rail} ${status === "pending" ? "opacity-35" : ""} ${
+        className={`absolute top-2 bottom-2 left-0 w-[3px] rounded-[var(--radius-sm)] ${rail} ${status === "pending" ? "opacity-35" : ""} ${
           status === "running" ? "aui-pulse" : ""
         }`}
       />
@@ -75,7 +75,7 @@ function StatusIcon({ status, glyph }: { status: RunNodeStatus; glyph: StatusGly
       {glyph ? (
         <StatusMorph glyph={glyph} className="size-3.5" />
       ) : (
-        <span aria-hidden="true" className="size-3 rounded-full border border-dashed border-[var(--fg-muted)]" />
+        <span aria-hidden="true" className="size-3 rounded-[var(--radius-sm)] border border-dashed border-[var(--fg-muted)]" />
       )}
     </span>
   );
@@ -87,7 +87,7 @@ function PortDot({ status }: { status: RunNodeStatus }) {
   return (
     <span
       aria-hidden="true"
-      className={`size-2.5 translate-x-1/2 rounded-full ${
+      className={`size-2.5 translate-x-1/2 rounded-[var(--radius-sm)] ${
         status === "pending"
           ? "border border-dashed border-[var(--fg-muted)] bg-[var(--surface)]"
           : `border-2 border-[var(--surface)] ${tone}`
@@ -115,7 +115,7 @@ function PortCount({ label }: { label: string }) {
   return (
     <span
       ref={ref}
-      className="rounded-full bg-[var(--fg)] px-1.5 py-px text-[10px] leading-4 font-medium whitespace-nowrap text-[var(--bg)] tabular-nums"
+      className="rounded-[var(--radius-sm)] bg-[var(--fg)] px-1.5 py-px text-[10px] leading-4 font-medium whitespace-nowrap text-[var(--bg)] tabular-nums"
     >
       {label}
     </span>

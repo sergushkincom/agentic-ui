@@ -33,7 +33,7 @@ export function ToolCallFeed({ calls, title = "Actions" }: ToolCallFeedProps) {
   const activeIndex = hasDetail(calls[active]) ? active : calls.findIndex(hasDetail);
 
   return (
-    <section className="rounded-[var(--radius)] border border-[var(--border)] bg-[var(--surface)]">
+    <section className="rounded-[var(--radius-lg)] border border-[var(--border)] bg-[var(--surface)]">
       <header className="flex items-center justify-between border-b border-[var(--border)] px-3 py-2 text-xs text-[var(--fg-muted)]">
         <h3 className="font-medium text-[var(--fg)]">{title}</h3>
         <span className="tabular-nums">
@@ -104,7 +104,7 @@ function Row({ call, tabIndex, onFocus }: { call: ToolCall; tabIndex?: number; o
         )}
       </button>
       {open && canOpen && (
-        <div className="mx-3 mb-3 flex flex-col gap-2 rounded-lg bg-[var(--surface-2)] p-2.5 font-[family-name:var(--mono)] text-[11px] leading-relaxed">
+        <div className="mx-3 mb-3 flex flex-col gap-2 rounded-[var(--radius-sm)] bg-[var(--surface-2)] p-2.5 font-[family-name:var(--mono)] text-[11px] leading-relaxed">
           {call.input && (
             <div>
               <div className="mb-0.5 font-sans text-[10px] tracking-wide text-[var(--fg-muted)] uppercase">Input</div>
@@ -132,7 +132,7 @@ function StatusIcon({ status }: { status: ToolCall["status"] }) {
       {glyph ? (
         <StatusMorph glyph={glyph} />
       ) : (
-        <span aria-hidden="true" className="size-3 rounded-full border border-dashed border-[var(--fg-muted)]" />
+        <span aria-hidden="true" className="size-3 rounded-[var(--radius-sm)] border border-dashed border-[var(--fg-muted)]" />
       )}
     </span>
   );

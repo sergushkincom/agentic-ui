@@ -60,12 +60,13 @@ function CopyButton({ code, label, className }: { code: string; label: string; c
   );
 }
 
-const copyButtonClass = "rounded-md bg-[var(--surface)] px-2 py-1 text-[11px] font-medium text-[var(--fg-muted)] hover:text-[var(--fg)]";
+const copyButtonClass =
+  "rounded-[var(--radius-md)] bg-[var(--surface)] px-2 py-1 text-[12px] font-medium text-[var(--fg-muted)] transition-colors duration-150 ease-[cubic-bezier(0.16,1,0.3,1)] hover:text-[var(--fg)] motion-reduce:transition-none";
 
 export function CodeBlock({ code, label = "Code", layout = "block" }: { code: string; label?: string; layout?: "block" | "command" }) {
   if (layout === "command") {
     return (
-      <div className="flex min-w-0 items-center gap-2 rounded-[var(--radius)] border border-[var(--border)] bg-[var(--surface-2)] py-1.5 pr-1.5 pl-3">
+      <div className="flex min-w-0 items-center gap-2 overflow-hidden rounded-[var(--radius-lg)] border border-[var(--border)] bg-[var(--surface-2)] py-1.5 pr-1.5 pl-3">
         <pre aria-label={label} className="min-w-0 flex-1 overflow-x-auto font-[family-name:var(--mono)] text-[12px] leading-5 break-all whitespace-pre-wrap">
           <code>{code}</code>
         </pre>
@@ -74,7 +75,7 @@ export function CodeBlock({ code, label = "Code", layout = "block" }: { code: st
     );
   }
   return (
-    <div className="relative min-w-0 rounded-[var(--radius)] border border-[var(--border)] bg-[var(--surface-2)]">
+    <div className="relative min-w-0 overflow-hidden rounded-[var(--radius-lg)] border border-[var(--border)] bg-[var(--surface-2)]">
       <CopyButton code={code} label={label} className={`absolute top-2 right-2 ${copyButtonClass}`} />
       <pre aria-label={label} className="overflow-x-auto p-4 pr-16 font-[family-name:var(--mono)] text-[12px] leading-relaxed">
         <code>{code}</code>

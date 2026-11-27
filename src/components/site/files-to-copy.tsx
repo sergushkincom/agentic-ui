@@ -4,8 +4,8 @@ import { REACT_TAILWIND_NOTE, type CopyManifest } from "@/lib/copy-files";
 /** Manual install for one component: the file tree, the import, and the CSS it reads. */
 export function FilesToCopy({ manifest, installCommand }: { manifest: CopyManifest; installCommand: string }) {
   return (
-    <section aria-labelledby="files" className="flex min-w-0 flex-col gap-3">
-      <h2 id="files" className="text-[18px] font-semibold">
+    <section aria-labelledby="files" className="flex min-w-0 flex-col gap-3 border-t border-[var(--border)] py-8">
+      <h2 id="files" className="site-h2">
         Files to copy
       </h2>
       <p className="text-[14px] leading-relaxed text-[var(--fg-muted)]">

@@ -23,9 +23,9 @@ export const metadata: Metadata = {
 
 export default function ComponentsPage() {
   return (
-    <main className="mx-auto flex max-w-6xl flex-col gap-14 px-4 py-14 sm:gap-16 sm:py-20">
+    <main className="mx-auto flex max-w-6xl flex-col gap-12 px-4 py-12 sm:py-16">
       <header className="flex max-w-2xl flex-col gap-3">
-        <h1 className="text-[32px] leading-tight font-semibold tracking-tight">Components</h1>
+        <h1 className="site-display">Components</h1>
         <p className="text-[17px] leading-relaxed text-[var(--fg-muted)]">
           {COMPONENTS.length} pieces, grouped by the moment they belong to: {MOMENTS.map((m) => m.label.toLowerCase()).join(" · ")}.
         </p>
@@ -36,7 +36,7 @@ export default function ComponentsPage() {
         if (items.length === 0) return null;
         return (
           <section key={moment.id} aria-labelledby={moment.id} className="flex min-w-0 flex-col gap-5">
-            <h2 id={moment.id} className="text-[20px] font-semibold">
+            <h2 id={moment.id} className="site-h2">
               {moment.label}
             </h2>
             <ul className="grid min-w-0 grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
@@ -45,7 +45,7 @@ export default function ComponentsPage() {
                   <Link
                     href={`/components/${c.slug}`}
                     aria-label={`${c.name}. ${c.summary}`}
-                    className="flex h-full min-w-0 scroll-mt-16 scroll-mb-12 flex-col overflow-hidden rounded-[var(--radius)] border border-[var(--border)] bg-[var(--surface)] hover:border-[var(--fg-muted)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--accent)]"
+                    className="flex h-full min-w-0 scroll-mt-20 scroll-mb-12 flex-col overflow-hidden rounded-[var(--radius-lg)] border border-[var(--border)] bg-[var(--surface)] transition-colors duration-150 ease-[cubic-bezier(0.16,1,0.3,1)] hover:border-[color-mix(in_srgb,var(--fg)_35%,var(--border))] motion-reduce:transition-none"
                   >
                     <div
                       aria-hidden="true"
@@ -57,7 +57,7 @@ export default function ComponentsPage() {
                       </div>
                     </div>
                     <div className="flex flex-col gap-1 border-t border-[var(--border)] p-4">
-                      <h3 className="font-[family-name:var(--mono)] text-[13px] font-medium">{c.name}</h3>
+                      <h3 className="font-[family-name:var(--mono)] text-[14px] font-medium tracking-[-0.03em]">{c.name}</h3>
                       <p className="text-[13px] leading-relaxed text-[var(--fg-muted)]">{c.summary}</p>
                     </div>
                   </Link>

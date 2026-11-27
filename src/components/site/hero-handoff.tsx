@@ -80,23 +80,12 @@ export function HeroHandoff() {
 
   return (
     <aside aria-label="Live example of confidence and override" className="aui-hero-in relative hidden lg:block">
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute -inset-x-8 -inset-y-10 -z-10"
-        style={{
-          background:
-            "radial-gradient(closest-side at 18% 18%, var(--agent-soft), transparent 74%), radial-gradient(closest-side at 88% 88%, var(--human-soft), transparent 72%)",
-        }}
-      />
-      <div className="aui-beam relative overflow-hidden rounded-[var(--radius)] border border-[var(--border)] bg-[var(--surface)] shadow-[0_28px_60px_-32px_color-mix(in_srgb,var(--fg)_50%,transparent)]" data-handoff={source}>
-        <span aria-hidden="true" className="aui-beam-rotor" />
-        <div className="relative z-[1] m-px flex flex-col gap-3 rounded-[inherit] bg-[var(--surface)] p-4">
-          <div className="flex items-baseline justify-between gap-3">
-            <p className="font-[family-name:var(--mono)] text-[12px] text-[var(--fg-muted)]">INV-2041 · Acme Fasteners</p>
-            <p className="text-[12px] text-[var(--fg-muted)]">Sample</p>
-          </div>
+      <div className="relative flex flex-col gap-3 overflow-hidden rounded-[var(--radius-lg)] border border-[var(--border)] bg-[var(--surface)] p-4">
+        <div className="flex items-baseline justify-between gap-3">
+          <p className="font-[family-name:var(--mono)] text-[12px] text-[var(--fg-muted)]">INV-2041 · Acme Fasteners</p>
+        </div>
 
-          <div className="aui-hero-meter flex flex-col gap-3">
+        <div className="aui-hero-meter flex flex-col gap-3">
             <p className="text-[12px] font-medium text-[var(--agent)]">How sure</p>
             <ApproachingConfidence />
             <div className="aui-seam" aria-hidden="true">
@@ -115,9 +104,8 @@ export function HeroHandoff() {
                 setSource(nextSource);
               }}
             />
-          </div>
-          <p className="text-[12px] leading-relaxed text-[var(--fg-muted)]">Nothing is sent. A change stays in this card.</p>
         </div>
+        <p className="text-[12px] leading-relaxed text-[var(--fg-muted)]">Nothing is sent. A change stays in this card.</p>
       </div>
     </aside>
   );

@@ -35,7 +35,7 @@ export function ThemeToggle() {
   const Glyph = GLYPH[choice];
 
   return (
-    <label className="inline-flex h-8 shrink-0 items-center gap-1 rounded-md border border-[var(--border)] bg-[var(--surface)] pr-1 pl-1.5 text-[12px] text-[var(--fg)]">
+    <label className="inline-flex h-9 shrink-0 items-center gap-1 rounded-[var(--radius-md)] border border-[var(--border)] bg-[var(--surface)] pr-1 pl-1.5 text-[13px] text-[var(--fg)] transition-[background-color,border-color] duration-150 ease-[cubic-bezier(0.16,1,0.3,1)] hover:border-[color-mix(in_srgb,var(--fg)_32%,var(--border))] hover:bg-[var(--surface-2)] motion-reduce:transition-none sm:gap-1.5 sm:pr-1.5 sm:pl-2">
       <span className="sr-only">Theme</span>
       <Glyph />
       <select
@@ -51,7 +51,7 @@ export function ThemeToggle() {
           applyTheme(next);
           setChoice(next);
         }}
-        className="max-w-[5.5rem] bg-transparent text-[12px] text-[var(--fg)] outline-none"
+        className="max-w-[5.5rem] cursor-pointer bg-transparent text-[13px] text-[var(--fg)] outline-none"
       >
         <option value="system">System</option>
         <option value="light">Light</option>

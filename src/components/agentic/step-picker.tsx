@@ -62,7 +62,7 @@ export function StepPicker({ steps, query, onQueryChange, onSelect }: StepPicker
   };
 
   return (
-    <section aria-label="Choose the next step" className="flex flex-col gap-2 rounded-[var(--radius)] border border-[var(--border)] bg-[var(--surface)] p-2.5">
+    <section aria-label="Choose the next step" className="flex flex-col gap-2 rounded-[var(--radius-lg)] border border-[var(--border)] bg-[var(--surface)] p-2.5">
       <label htmlFor={inputId} className="sr-only">
         Search next steps
       </label>
@@ -91,7 +91,7 @@ export function StepPicker({ steps, query, onQueryChange, onSelect }: StepPicker
           autoComplete="off"
           onChange={(event) => onQueryChange(event.target.value)}
           onKeyDown={onKeyDown}
-          className="h-8 w-full rounded-lg border border-[var(--border)] bg-[var(--bg)] pr-2 pl-7 text-[13px] text-[var(--fg)] outline-none placeholder:text-[var(--fg-muted)]"
+          className="h-8 w-full rounded-[var(--radius-sm)] border border-[var(--border)] bg-[var(--bg)] pr-2 pl-7 text-[13px] text-[var(--fg)] outline-none placeholder:text-[var(--fg-muted)]"
         />
       </div>
 
@@ -124,17 +124,17 @@ export function StepPicker({ steps, query, onQueryChange, onSelect }: StepPicker
                       tabIndex={-1}
                       onMouseEnter={() => setCursor(visible.findIndex((item) => item.id === step.id))}
                       onClick={() => onSelect(step.id)}
-                      className={`relative flex w-full items-start gap-2 rounded-lg px-2 py-1.5 text-left transition-colors duration-150 motion-reduce:transition-none ${
+                      className={`relative flex w-full items-start gap-2 rounded-[var(--radius-md)] px-2 py-1.5 text-left transition-colors duration-150 motion-reduce:transition-none ${
                         selected ? "bg-[var(--surface-2)]" : "hover:bg-[var(--surface-2)]"
                       }`}
                     >
                       <span
                         aria-hidden="true"
-                        className={`absolute top-1.5 bottom-1.5 left-0 w-0.5 rounded-full transition-opacity duration-150 motion-reduce:transition-none ${
+                        className={`absolute top-1.5 bottom-1.5 left-0 w-0.5 rounded-[var(--radius-sm)] transition-opacity duration-150 motion-reduce:transition-none ${
                           selected ? "opacity-100" : "opacity-0"
                         } ${step.actor === "human" ? "bg-[var(--human)]" : "bg-[var(--agent)]"}`}
                       />
-                      <span className="rounded-full bg-[var(--surface)]">
+                      <span className="rounded-[var(--radius-sm)] bg-[var(--surface)]">
                         {step.actor === "human" ? <HumanMark label="You" /> : <AgentMark label="Agent" />}
                       </span>
                       <span className="min-w-0 flex-1">

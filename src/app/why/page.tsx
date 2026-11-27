@@ -100,14 +100,14 @@ const NOT_BUILT: { slug: string; name: string; note: string }[] = [
   },
 ];
 
-const link = "rounded-sm text-[var(--accent)] underline-offset-2 hover:underline";
+const link = "rounded-[var(--radius-sm)] text-[var(--accent)] underline-offset-2 hover:underline";
 
 export default function WhyPage() {
   return (
     <main className="mx-auto flex max-w-6xl flex-col px-4 py-10 sm:py-14">
       <div className="flex max-w-2xl flex-col gap-14">
         <header className="flex flex-col gap-4">
-          <h1 className="text-[32px] leading-tight font-semibold tracking-tight">Why this exists</h1>
+          <h1 className="site-display">Why this exists</h1>
           <p className="text-[17px] leading-relaxed text-[var(--fg-muted)]">
             The library&apos;s edge is its design reasoning. {COMPONENTS.length} components, for the moments people actually worry
             about when software acts for them: what is it doing, how sure is it, and where can I step in.
@@ -116,7 +116,7 @@ export default function WhyPage() {
 
         <section aria-labelledby="principles" className="flex flex-col gap-8">
           <div className="flex flex-col gap-2">
-            <h2 id="principles" className="text-[20px] font-semibold">
+            <h2 id="principles" className="site-h2">
               Three principles
             </h2>
             <p className="text-[15px] leading-relaxed text-[var(--fg-muted)]">
@@ -136,7 +136,7 @@ export default function WhyPage() {
         </section>
 
         <section aria-labelledby="not-built" className="flex flex-col gap-3">
-          <h2 id="not-built" className="text-[20px] font-semibold">
+          <h2 id="not-built" className="site-h2">
             Deliberately not built
           </h2>
           <p className="text-[15px] leading-relaxed text-[var(--fg-muted)]">
@@ -162,7 +162,7 @@ export default function WhyPage() {
         </section>
 
         <section aria-labelledby="coverage" className="flex flex-col gap-3">
-          <h2 id="coverage" className="text-[20px] font-semibold">
+          <h2 id="coverage" className="site-h2">
             Different from a coverage-led kit
           </h2>
           <p className="text-[15px] leading-relaxed text-[var(--fg-muted)]">
@@ -184,7 +184,7 @@ export default function WhyPage() {
         </section>
 
         <section aria-labelledby="author" className="flex flex-col gap-3 border-t border-[var(--border)] pt-8">
-          <h2 id="author" className="text-[20px] font-semibold">
+          <h2 id="author" className="site-h2">
             Author
           </h2>
           <p className="text-[15px] leading-relaxed text-[var(--fg-muted)]">

@@ -76,7 +76,7 @@ export function StepInspector({
   onRun,
 }: StepInspectorProps) {
   return (
-    <section className="overflow-hidden rounded-[var(--radius)] border border-[var(--border)] bg-[var(--surface)]">
+    <section className="overflow-hidden rounded-[var(--radius-lg)] border border-[var(--border)] bg-[var(--surface)]">
       <header className="flex flex-wrap items-start justify-between gap-3 border-b border-[var(--border)] px-3 py-2.5">
         <div className="flex min-w-0 flex-1 flex-col gap-1">
           <div className="flex min-w-0 flex-wrap items-center gap-2">
@@ -217,7 +217,7 @@ function OutputPane({
           {pinned ? (
             <HumanMark label="pinned" />
           ) : status === "idle" ? (
-            <span aria-hidden="true" className="size-3.5 rounded-full border border-dashed border-[var(--fg-muted)]" />
+            <span aria-hidden="true" className="size-3.5 rounded-[var(--radius-sm)] border border-dashed border-[var(--fg-muted)]" />
           ) : (
             <StatusMorph glyph={status === "running" ? "spinner" : status === "failed" ? "alert" : "check"} />
           )}

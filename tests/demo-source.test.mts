@@ -56,7 +56,7 @@ describe("demo source", () => {
   it("is what the component page renders, beside the unchanged usage snippet", () => {
     const page = read("src/app/components/[slug]/page.tsx");
     assert.match(page, /const source = demoSource\(c\.slug\);/);
-    assert.match(page, /<DemoPanel slug=\{c\.slug\} filename=\{source\.filename\} code=\{source\.code\} \/>/);
+    assert.match(page, /<DemoPanel slug=\{c\.slug\} name=\{c\.name\} filename=\{source\.filename\} code=\{source\.code\} \/>/);
     assert.match(
       page,
       /<CodeBlock code=\{`import \{ \$\{c\.name\} \} from "@\/components\/agentic"\\n\\n\$\{c\.usage\}`\} label=\{`\$\{c\.name\} usage`\} \/>/,

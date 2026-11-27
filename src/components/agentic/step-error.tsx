@@ -29,7 +29,7 @@ export type StepErrorProps = {
  */
 export function StepError({ step, message, facts, onRetry }: StepErrorProps) {
   return (
-    <div role="alert" className="flex flex-col gap-3 rounded-[var(--radius)] border border-[var(--risk)] bg-[var(--risk-soft)] p-4">
+    <div role="alert" className="flex flex-col gap-3 rounded-[var(--radius-lg)] border border-[var(--risk)] bg-[var(--risk-soft)] p-4">
       <div className="flex items-start gap-2.5">
         <span className="pt-0.5">
           <StatusMorph glyph="alert" />
@@ -40,7 +40,7 @@ export function StepError({ step, message, facts, onRetry }: StepErrorProps) {
           <p className="text-[12px] text-[var(--fg)]">Nothing after this step ran.</p>
         </div>
       </div>
-      <dl className="overflow-hidden rounded-lg border border-[var(--border)] bg-[var(--surface)]">
+      <dl className="overflow-hidden rounded-[var(--radius-sm)] border border-[var(--border)] bg-[var(--surface)]">
         {facts.map((fact) => (
           <div
             key={fact.label}

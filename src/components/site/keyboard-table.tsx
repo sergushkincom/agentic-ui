@@ -3,7 +3,7 @@ import type { KeyboardRow } from "@/lib/keyboard-interactions";
 /** Key → action table. Same chrome as the props table, so the docs pages stay one system. */
 export function KeyboardTable({ rows }: { rows: KeyboardRow[] }) {
   return (
-    <div className="overflow-x-auto rounded-[var(--radius)] border border-[var(--border)]">
+    <div className="overflow-x-auto rounded-[var(--radius-lg)] border border-[var(--border)]">
       <table aria-labelledby="keyboard" className="w-full text-left text-[13px]">
         <thead className="bg-[var(--surface-2)] text-xs text-[var(--fg-muted)]">
           <tr>
@@ -38,7 +38,7 @@ function KeyCaps({ label }: { label: string }) {
       {parts.map((part, index) => (
         <span key={part} className="inline-flex items-center gap-1">
           {index > 0 && <span className="text-[var(--fg-muted)]">+</span>}
-          <kbd className="inline-flex rounded-md border border-[var(--border)] bg-[var(--surface-2)] px-1.5 py-0.5 font-[family-name:var(--mono)] text-[12px] font-medium text-[var(--fg)]">
+          <kbd className="site-kbd inline-flex">
             {part}
           </kbd>
         </span>

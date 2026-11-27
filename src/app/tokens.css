@@ -28,7 +28,11 @@
   --risk: #c4314b;
   --risk-soft: rgba(196, 49, 75, 0.1);
 
-  --radius: 12px;
+  /* shadcn/ui radius: one base, then 0.8 and 0.6, so a control inset by 2px or 4px meets the corner. */
+  --radius: 0.625rem;
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
   --footer-h: 2rem;
   --mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
 }

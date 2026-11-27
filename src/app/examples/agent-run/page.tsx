@@ -22,8 +22,8 @@ export default function AgentRunPage() {
   return (
     <main className="mx-auto flex max-w-6xl flex-col gap-8 px-4 py-10 sm:py-14">
       <header className="mx-auto flex w-full max-w-xl flex-col gap-3">
-        <p className="text-[13px] font-medium text-[var(--agent)]">Example</p>
-        <h1 className="text-[28px] leading-tight font-semibold tracking-tight sm:text-[32px]">One agent run</h1>
+        <p className="font-[family-name:var(--mono)] text-[12px] text-[var(--fg-muted)]">Example</p>
+        <h1 className="site-display">One agent run</h1>
         <p className="text-[15px] leading-relaxed text-[var(--fg-muted)] sm:text-[17px]">
           An agent matches supplier invoice INV-2041 to purchase order PO-7718. It shows its work, stops where it is
           unsure, and waits for you to approve the payment. Switch to ERP fails to see the same run stop and hand the
@@ -45,7 +45,7 @@ export default function AgentRunPage() {
             {i > 0 && ", "}
             <Link
               href={`/components/${c.slug}`}
-              className="rounded-sm text-[var(--accent)] underline-offset-2 hover:underline"
+              className="rounded-[var(--radius-sm)] text-[var(--accent)] underline-offset-2 hover:underline"
             >
               {c.name}
             </Link>

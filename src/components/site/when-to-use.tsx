@@ -3,16 +3,16 @@ import { getComponent } from "@/lib/registry";
 import { whenFor } from "@/lib/when-to-use";
 
 const linkClass =
-  "rounded-sm font-[family-name:var(--mono)] text-[13px] text-[var(--accent)] underline-offset-2 hover:underline";
+  "rounded-[var(--radius-sm)] font-[family-name:var(--mono)] text-[13px] text-[var(--accent)] underline-offset-2 hover:underline";
 
 /** "Use when" and "Use {Name} instead when…" for one component page. */
 export function WhenToUse({ slug }: { slug: string }) {
   const guide = whenFor(slug);
 
   return (
-    <section aria-labelledby="when-to-use" className="flex flex-col gap-6">
+    <section aria-labelledby="when-to-use" className="flex flex-col gap-6 border-t border-[var(--border)] py-8">
       <div className="flex flex-col gap-3">
-        <h2 id="when-to-use" className="text-[18px] font-semibold">
+        <h2 id="when-to-use" className="site-h2">
           When to use
         </h2>
         <h3 className="text-[15px] font-semibold">Use when</h3>

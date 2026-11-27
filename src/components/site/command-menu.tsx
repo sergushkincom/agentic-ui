@@ -35,6 +35,7 @@ export function CommandMenu() {
 
   useEffect(() => {
     function onKey(event: globalThis.KeyboardEvent) {
+      if (document.documentElement.hasAttribute("data-expanded-preview")) return;
       if (!(event.metaKey || event.ctrlKey) || event.key.toLowerCase() !== "k") return;
       event.preventDefault();
       if (openRef.current) {
@@ -124,11 +125,11 @@ export function CommandMenu() {
           setActive(0);
           setOpen(true);
         }}
-        className="inline-flex h-8 shrink-0 items-center gap-1.5 rounded-md border border-[var(--border)] bg-[var(--surface)] px-2 text-[12px] text-[var(--fg-muted)] hover:text-[var(--fg)]"
+        className="group inline-flex h-9 w-9 shrink-0 items-center justify-center gap-2 rounded-[var(--radius-md)] border border-[var(--border)] bg-[var(--surface)] text-[13px] text-[var(--fg-muted)] transition-[color,background-color,border-color] duration-150 ease-[cubic-bezier(0.16,1,0.3,1)] hover:border-[color-mix(in_srgb,var(--fg)_32%,var(--border))] hover:bg-[var(--surface-2)] hover:text-[var(--fg)] focus-visible:border-[var(--fg)] focus-visible:text-[var(--fg)] motion-reduce:transition-none sm:w-56 sm:justify-start sm:px-3 md:w-64"
       >
         <SearchIcon />
-        <span className="hidden sm:inline">Search</span>
-        <kbd className="hidden font-[family-name:var(--mono)] text-[10px] lg:inline">⌘K</kbd>
+        <span className="hidden min-w-0 flex-1 truncate text-left sm:inline">Search</span>
+        <kbd className="site-kbd pointer-events-none hidden sm:inline-flex">⌘K</kbd>
       </button>
       {open
         ? createPortal(
@@ -140,7 +141,7 @@ export function CommandMenu() {
                 aria-modal="true"
                 aria-labelledby="search-title"
                 onKeyDown={onDialogKeyDown}
-                className="relative z-10 flex max-h-[min(32rem,80dvh)] w-full max-w-lg flex-col overflow-hidden rounded-[var(--radius)] border border-[var(--border)] bg-[var(--surface)] shadow-lg"
+                className="relative z-10 flex max-h-[min(32rem,80dvh)] w-full max-w-xl flex-col overflow-hidden rounded-[var(--radius-lg)] border border-[var(--border)] bg-[var(--surface)] shadow-[0_24px_48px_-28px_color-mix(in_srgb,var(--fg)_50%,transparent)]"
               >
                 <h2 id="search-title" className="sr-only">
                   Search
@@ -162,10 +163,10 @@ export function CommandMenu() {
                       setQuery(event.target.value);
                       setActive(0);
                     }}
-                    className="h-11 min-w-0 flex-1 bg-transparent text-[14px] text-[var(--fg)] outline-none placeholder:text-[var(--fg-muted)]"
+                    className="h-12 min-w-0 flex-1 bg-transparent text-[15px] text-[var(--fg)] outline-none placeholder:text-[var(--fg-muted)]"
                   />
-                  <button type="button" onClick={() => setOpen(false)} className="shrink-0 rounded-sm text-[12px] text-[var(--fg-muted)] hover:text-[var(--fg)]">
-                    Close
+                  <button type="button" aria-label="Close" onClick={() => setOpen(false)} className="site-kbd inline-flex shrink-0 hover:bg-[var(--surface-2)]">
+                    Esc
                   </button>
                 </div>
                 <div className="sr-only" aria-live="polite">
@@ -212,7 +213,7 @@ export function CommandMenu() {
 
 function SearchIcon() {
   return (
-    <svg viewBox="0 0 16 16" aria-hidden="true" className="size-3.5 shrink-0" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round">
+    <svg viewBox="0 0 16 16" aria-hidden="true" className="size-4 shrink-0" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round">
       <circle cx="7" cy="7" r="4.25" />
       <path d="m10.5 10.5 3 3" />
     </svg>

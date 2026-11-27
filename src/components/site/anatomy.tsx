@@ -7,8 +7,8 @@ export function Anatomy({ slug }: { slug: string }) {
   const parts = flattenAnatomy(nodes);
 
   return (
-    <section aria-labelledby="anatomy" className="flex min-w-0 flex-col gap-3">
-      <h2 id="anatomy" className="text-[18px] font-semibold">
+    <section aria-labelledby="anatomy" className="flex min-w-0 flex-col gap-3 border-t border-[var(--border)] py-8">
+      <h2 id="anatomy" className="site-h2">
         Anatomy
       </h2>
       <p className="text-[14px] leading-relaxed text-[var(--fg-muted)]">
@@ -24,7 +24,7 @@ export function Anatomy({ slug }: { slug: string }) {
           <ol className="flex flex-col gap-2.5">
             {parts.map((part, index) => (
               <li key={part.name} className="flex min-w-0 gap-2 text-[13px] leading-relaxed">
-                <span className="inline-flex size-5 shrink-0 items-center justify-center rounded-full bg-[var(--fg)] text-[11px] font-medium text-[var(--bg)]">
+                <span className="inline-flex size-5 shrink-0 items-center justify-center rounded-[var(--radius-sm)] bg-[var(--fg)] text-[11px] font-medium text-[var(--bg)]">
                   {index + 1}
                 </span>
                 <span className="min-w-0">
@@ -55,12 +55,12 @@ function AnatomyRegion({
     <div
       className={
         depth === 0
-          ? "min-w-0 rounded-[var(--radius)] border border-[var(--border)] bg-[var(--surface)] p-3"
+          ? "min-w-0 border border-[var(--border)] bg-[var(--surface)] p-3"
           : "min-w-0 border-l border-[var(--border)] pl-2.5"
       }
     >
       <div className="flex min-w-0 items-center gap-2">
-        <span className="inline-flex size-5 shrink-0 items-center justify-center rounded-full bg-[var(--fg)] text-[11px] font-medium text-[var(--bg)]">
+        <span className="inline-flex size-5 shrink-0 items-center justify-center rounded-[var(--radius-sm)] bg-[var(--fg)] text-[11px] font-medium text-[var(--bg)]">
           {index + 1}
         </span>
         <span className="min-w-0 font-[family-name:var(--mono)] text-[12px] break-words">{node.name}</span>

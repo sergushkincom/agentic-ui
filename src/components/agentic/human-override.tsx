@@ -46,7 +46,7 @@ export function HumanOverride({ label, agentValue, value, source, onChange, reas
 
   return (
     <div
-      className="flex flex-col gap-2 rounded-[var(--radius)] border bg-[var(--surface)] p-3"
+      className="flex flex-col gap-2 rounded-[var(--radius-lg)] border bg-[var(--surface)] p-3"
       style={{ borderColor: isHuman ? "var(--human)" : "var(--border)" }}
     >
       <div className="flex items-center justify-between gap-2">
@@ -75,7 +75,7 @@ export function HumanOverride({ label, agentValue, value, source, onChange, reas
             onFocus={(e) => e.currentTarget.select()}
             value={draft}
             onChange={(e) => setDraft(e.target.value)}
-            className="h-8 min-w-0 flex-1 rounded-lg border border-[var(--border)] bg-[var(--bg)] px-2.5 text-[15px] outline-none focus:border-[var(--human)]"
+            className="h-8 min-w-0 flex-1 rounded-[var(--radius-sm)] border border-[var(--border)] bg-[var(--bg)] px-2.5 text-[15px] outline-none focus:border-[var(--human)]"
           />
           <button type="submit" className={buttonClass.primary}>
             Save
@@ -103,7 +103,7 @@ export function HumanOverride({ label, agentValue, value, source, onChange, reas
           <button
             type="button"
             onClick={() => onChange(agentValue, "agent")}
-            className="rounded-sm text-[var(--accent)] underline-offset-2 hover:underline"
+            className="rounded-[var(--radius-sm)] text-[var(--accent)] underline-offset-2 hover:underline"
           >
             Use agent&apos;s value
           </button>

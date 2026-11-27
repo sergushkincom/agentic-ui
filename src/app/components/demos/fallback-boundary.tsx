@@ -47,7 +47,7 @@ export function FallbackBoundaryDemo() {
         {scenario === "crash" ? (
           <Crash />
         ) : (
-          <div className="rounded-[var(--radius)] border border-[var(--border)] bg-[var(--surface)] p-4 text-[14px]">
+          <div className="rounded-[var(--radius-lg)] border border-[var(--border)] bg-[var(--surface)] p-4 text-[14px]">
             INV-2041 matches PO-7718. Suggest paying on 14 Nov.
           </div>
         )}
