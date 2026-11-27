@@ -67,8 +67,10 @@ describe("theme", () => {
     assert.match(layout, /suppressHydrationWarning/);
     assert.match(layout, /dangerouslySetInnerHTML=\{\{ __html: THEME_BOOT_SCRIPT \}\}/);
     const scriptAt = layout.indexOf("THEME_BOOT_SCRIPT");
-    const headerAt = layout.indexOf("<SiteHeader />");
-    assert.ok(scriptAt > -1 && scriptAt < headerAt);
+    const frameAt = layout.indexOf("<SiteFrame>");
+    assert.ok(scriptAt > -1 && scriptAt < frameAt);
+    const frame = read("src/components/site/site-frame.tsx");
+    assert.match(frame, /<SiteHeader \/>/);
     const header = read("src/components/site/site-header.tsx");
     assert.match(header, /<ThemeToggle \/>/);
     const toggle = read("src/components/site/theme-toggle.tsx");

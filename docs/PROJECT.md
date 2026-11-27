@@ -16,6 +16,7 @@ Docs site for the agentic-ui components. The pages come first. Colour and motion
 - Each component page header shows the MIT license, React as available, and SwiftUI and React Native as soon. The shadcn install command sits in that header.
 - The home page installs with `npx shadcn add` and opens on a Start here row: RunGraph, WaitForPerson, AgentDecisionCard, ThinkingState, ToolCallFeed, RunChat.
 - `/r/registry.json` lists every component from `src/lib/registry.ts`.
+- Each component page opens its live preview large, at `/preview/<slug>` or with `?view=full`, for a clean recording. Escape and Close leave it.
 
 ## Next
 

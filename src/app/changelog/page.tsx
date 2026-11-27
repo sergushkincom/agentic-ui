@@ -18,7 +18,7 @@ export default function ChangelogPage() {
     <main className="mx-auto flex max-w-6xl flex-col px-4 py-10 sm:py-14">
       <div className="flex max-w-2xl flex-col gap-12">
         <header className="flex flex-col gap-4">
-          <h1 className="text-[32px] leading-tight font-semibold tracking-tight">Changelog</h1>
+          <h1 className="site-display">Changelog</h1>
           <p className="text-[17px] leading-relaxed text-[var(--fg-muted)]">
             What changed in the library and the docs, newest first. Each date is the day the pull request merged.
             The two most recently changed components show <span className="text-[var(--fg)]">New</span> in the
@@ -32,7 +32,7 @@ export default function ChangelogPage() {
               <time dateTime={entry.date} className="text-xs tabular-nums text-[var(--fg-muted)]">
                 {formatChangelogDate(entry.date)}
               </time>
-              <h2 className="text-[20px] font-semibold">{entry.title}</h2>
+              <h2 className="text-[1.25rem] font-medium tracking-[-0.02em]">{entry.title}</h2>
               <p className="text-[15px] leading-relaxed text-[var(--fg-muted)]">{entry.summary}</p>
               <ul className="flex list-disc flex-col gap-1.5 pl-4 text-[14px] leading-relaxed">
                 {entry.pulls.map((pull) => (

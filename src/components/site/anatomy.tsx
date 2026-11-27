@@ -7,8 +7,8 @@ export function Anatomy({ slug }: { slug: string }) {
   const parts = flattenAnatomy(nodes);
 
   return (
-    <section aria-labelledby="anatomy" className="flex min-w-0 flex-col gap-3">
-      <h2 id="anatomy" className="text-[18px] font-semibold">
+    <section aria-labelledby="anatomy" className="flex min-w-0 flex-col gap-3 border-t border-[var(--border)] py-8">
+      <h2 id="anatomy" className="site-h2">
         Anatomy
       </h2>
       <p className="text-[14px] leading-relaxed text-[var(--fg-muted)]">
@@ -55,7 +55,7 @@ function AnatomyRegion({
     <div
       className={
         depth === 0
-          ? "min-w-0 rounded-[var(--radius)] border border-[var(--border)] bg-[var(--surface)] p-3"
+          ? "min-w-0 border border-[var(--border)] bg-[var(--surface)] p-3"
           : "min-w-0 border-l border-[var(--border)] pl-2.5"
       }
     >

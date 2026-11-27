@@ -13,7 +13,7 @@ function ComponentCard({ component }: { component: ComponentDoc }) {
   return (
     <Link
       href={`/components/${component.slug}`}
-      className="group flex h-full min-w-0 flex-col overflow-hidden rounded-[var(--radius)] border border-[var(--border)] bg-[var(--surface)] hover:border-[var(--fg-muted)]"
+      className="group flex h-full min-w-0 flex-col overflow-hidden border border-[var(--border)] bg-[var(--surface)] transition-colors duration-150 ease-[cubic-bezier(0.16,1,0.3,1)] hover:border-[color-mix(in_srgb,var(--fg)_35%,var(--border))] motion-reduce:transition-none"
     >
       <div aria-hidden="true" inert className={`pointer-events-none flex h-44 overflow-hidden bg-[var(--bg)] p-4 ${align}`}>
         <div className="w-full min-w-0">
@@ -21,7 +21,7 @@ function ComponentCard({ component }: { component: ComponentDoc }) {
         </div>
       </div>
       <div className="flex flex-col gap-1 border-t border-[var(--border)] p-4">
-        <h3 className="font-[family-name:var(--mono)] text-[13px] font-medium">{component.name}</h3>
+        <h3 className="font-[family-name:var(--mono)] text-[14px] font-medium tracking-[-0.03em]">{component.name}</h3>
         <p className="text-[13px] leading-relaxed text-[var(--fg-muted)]">{component.summary}</p>
       </div>
     </Link>
@@ -36,11 +36,11 @@ const PRINCIPLES = [
 
 export default function Home() {
   return (
-    <main className="mx-auto flex w-full min-w-0 max-w-6xl flex-col gap-16 px-4 py-14 sm:py-20">
-      <section className="grid items-start gap-10 lg:grid-cols-[minmax(0,1.05fr)_minmax(18rem,0.95fr)] lg:gap-14">
+    <main className="mx-auto flex w-full min-w-0 max-w-6xl flex-col gap-14 px-4 py-12 sm:py-16">
+      <section className="grid items-start gap-10 lg:grid-cols-[minmax(0,1.05fr)_minmax(18rem,0.95fr)] lg:gap-12">
         <div className="flex max-w-2xl flex-col gap-5">
           <HeroLegend />
-          <h1 className="text-[32px] leading-tight font-semibold tracking-tight sm:text-[44px]">
+          <h1 className="site-display">
             Components for products where an agent does part of the work.
           </h1>
           <p className="text-[17px] leading-relaxed text-[var(--fg-muted)]">
@@ -50,13 +50,13 @@ export default function Home() {
           <div className="flex flex-wrap gap-2">
             <Link
               href="/components"
-              className="inline-flex h-9 items-center rounded-lg bg-[var(--fg)] px-4 text-[14px] font-medium text-[var(--bg)] hover:opacity-90"
+              className="inline-flex h-10 items-center rounded-[4px] bg-[var(--fg)] px-4 text-[14px] font-medium text-[var(--bg)] transition-opacity duration-150 ease-[cubic-bezier(0.16,1,0.3,1)] hover:opacity-90 motion-reduce:transition-none"
             >
               Browse components
             </Link>
             <Link
               href="/examples/agent-run"
-              className="group inline-flex h-9 items-center gap-2 rounded-lg border border-[var(--border)] bg-[var(--surface)] px-4 text-[14px] font-medium hover:bg-[var(--surface-2)]"
+              className="group inline-flex h-10 items-center gap-2 rounded-[4px] border border-[var(--border)] bg-[var(--surface)] px-4 text-[14px] font-medium transition-colors duration-150 ease-[cubic-bezier(0.16,1,0.3,1)] hover:bg-[var(--surface-2)] motion-reduce:transition-none"
             >
               See an agent run
               <svg
@@ -81,11 +81,11 @@ export default function Home() {
         <h2 id="principles" className="sr-only">
           Principles
         </h2>
-        <div className="grid gap-3 sm:grid-cols-3">
+        <div className="grid border border-[var(--border)] sm:grid-cols-3 sm:divide-x sm:divide-[var(--border)]">
           {PRINCIPLES.map((p, i) => (
-            <div key={p.title} className="flex flex-col gap-1.5 rounded-[var(--radius)] border border-[var(--border)] bg-[var(--surface)] p-4">
-              <span className="text-xs tabular-nums text-[var(--fg-muted)]">0{i + 1}</span>
-              <h3 className="text-[15px] font-semibold">{p.title}</h3>
+            <div key={p.title} className="flex flex-col gap-2 border-b border-[var(--border)] p-5 last:border-b-0 sm:border-b-0">
+              <span className="font-[family-name:var(--mono)] text-[12px] tabular-nums text-[var(--fg-muted)]">0{i + 1}</span>
+              <h3 className="text-[15px] font-medium tracking-[-0.015em]">{p.title}</h3>
               <p className="text-[13px] leading-relaxed text-[var(--fg-muted)]">{p.body}</p>
             </div>
           ))}
@@ -96,7 +96,7 @@ export default function Home() {
       </section>
 
       <section aria-labelledby="start-here" className="flex flex-col gap-5">
-        <h2 id="start-here" className="text-[20px] font-semibold">
+        <h2 id="start-here" className="site-h2">
           Start here
         </h2>
         <ul className="grid min-w-0 grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
@@ -110,7 +110,7 @@ export default function Home() {
 
       <section aria-labelledby="components" className="flex flex-col gap-5">
         <div className="flex items-baseline justify-between gap-4">
-          <h2 id="components" className="text-[20px] font-semibold">
+          <h2 id="components" className="site-h2">
             Components
           </h2>
           <span className="text-[13px] text-[var(--fg-muted)]">{COMPONENTS.length} components</span>
@@ -126,7 +126,7 @@ export default function Home() {
 
       <section aria-labelledby="use" className="grid grid-cols-[minmax(0,1fr)] gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.4fr)]">
         <div className="flex flex-col gap-3">
-          <h2 id="use" className="text-[20px] font-semibold">
+          <h2 id="use" className="site-h2">
             How to use it
           </h2>
           <p className="text-[14px] leading-relaxed text-[var(--fg-muted)]">

@@ -52,8 +52,8 @@ export default async function ComponentPage({ params }: { params: Promise<{ slug
   );
 
   return (
-    <div className="mx-auto grid max-w-6xl grid-cols-[minmax(0,1fr)] gap-8 px-4 py-10 md:grid-cols-[220px_minmax(0,1fr)] md:gap-12">
-      <nav aria-label="Components" className="min-w-0 md:sticky md:top-20 md:self-start">
+    <div className="mx-auto grid max-w-6xl grid-cols-[minmax(0,1fr)] gap-8 px-4 py-8 md:grid-cols-[15rem_minmax(0,1fr)] md:gap-10 md:py-10">
+      <nav aria-label="Components" className="min-w-0 md:sticky md:top-16 md:self-start">
         <ul className="flex gap-1 overflow-x-auto [scrollbar-width:none] md:flex-col md:overflow-visible md:pb-0">
           {COMPONENTS.map((item) => {
             const on = item.slug === slug;
@@ -63,7 +63,7 @@ export default async function ComponentPage({ params }: { params: Promise<{ slug
                 <Link
                   href={`/components/${item.slug}`}
                   aria-current={on ? "page" : undefined}
-                  className={`flex items-center gap-1.5 rounded-md md:justify-between px-2.5 py-1.5 font-[family-name:var(--mono)] text-[12.5px] ${on ? "bg-[var(--surface-2)] text-[var(--fg)]" : "text-[var(--fg-muted)] hover:text-[var(--fg)]"}`}
+                  className={`relative flex items-center gap-3 py-1.5 pr-2 pl-3 font-[family-name:var(--mono)] text-[14px] leading-5 transition-colors duration-150 ease-[cubic-bezier(0.16,1,0.3,1)] motion-reduce:transition-none md:justify-between ${on ? "text-[var(--fg)] before:absolute before:top-2 before:bottom-2 before:left-0 before:w-px before:bg-[var(--fg)]" : "text-[var(--fg-muted)] hover:text-[var(--fg)]"}`}
                 >
                   <span>{item.name}</span>
                   {showNew ? <NewBadge /> : null}
@@ -74,27 +74,29 @@ export default async function ComponentPage({ params }: { params: Promise<{ slug
         </ul>
       </nav>
 
-      <main className="flex min-w-0 flex-col gap-10">
-        <header className="flex flex-col gap-3">
+      <main className="flex min-w-0 flex-col">
+        <header className="flex flex-col gap-4 pb-8">
           <div className="flex flex-wrap items-start justify-between gap-3">
-            <h1 className="font-[family-name:var(--mono)] text-[28px] font-semibold tracking-tight">{c.name}</h1>
+            <h1 className="site-title">{c.name}</h1>
             <CopyPageMarkdown markdown={markdown} />
           </div>
-          <p className="text-[17px] leading-relaxed text-[var(--fg-muted)]">{c.summary}</p>
+          <p className="max-w-2xl text-[16px] leading-relaxed text-[var(--fg-muted)]">{c.summary}</p>
           <PlatformBadges />
           <CodeBlock layout="command" code={shadcnInstallCommand(c.slug)} label={`${c.name} install`} />
         </header>
 
-        <section aria-labelledby="demo" className="flex min-w-0 flex-col gap-3">
+        <section aria-labelledby="demo" className="flex min-w-0 flex-col gap-3 pb-8">
           <h2 id="demo" className="sr-only">
             Live demo
           </h2>
-          <DemoPanel slug={c.slug} filename={source.filename} code={source.code} />
-          <p className="text-xs text-[var(--fg-muted)]">Live demo. Fake data: an agent matching a supplier invoice to a purchase order.</p>
+          <DemoPanel slug={c.slug} name={c.name} filename={source.filename} code={source.code} />
+          <p className="font-[family-name:var(--mono)] text-[12px] leading-5 text-[var(--fg-muted)]">
+            Live demo. Fake data: an agent matching a supplier invoice to a purchase order.
+          </p>
         </section>
 
-        <section aria-labelledby="question" className="flex flex-col gap-3">
-          <h2 id="question" className="text-[18px] font-semibold">
+        <section aria-labelledby="question" className="flex flex-col gap-3 border-t border-[var(--border)] py-8">
+          <h2 id="question" className="site-h2">
             The design question
           </h2>
           <p className="text-[15px] leading-relaxed">{c.question}</p>
@@ -112,8 +114,8 @@ export default async function ComponentPage({ params }: { params: Promise<{ slug
 
         <WhenToUse slug={c.slug} />
 
-        <section aria-labelledby="usage" className="flex flex-col gap-3">
-          <h2 id="usage" className="text-[18px] font-semibold">
+        <section aria-labelledby="usage" className="flex flex-col gap-3 border-t border-[var(--border)] py-8">
+          <h2 id="usage" className="site-h2">
             Usage
           </h2>
           <CodeBlock code={`import { ${c.name} } from "@/components/agentic"\n\n${c.usage}`} label={`${c.name} usage`} />
@@ -129,11 +131,11 @@ export default async function ComponentPage({ params }: { params: Promise<{ slug
 
         <FilesToCopy manifest={copy} installCommand={shadcnInstallCommand(c.slug)} />
 
-        <section aria-labelledby="props" className="flex flex-col gap-3">
-          <h2 id="props" className="scroll-mt-16 text-[18px] font-semibold">
+        <section aria-labelledby="props" className="flex flex-col gap-3 border-t border-[var(--border)] py-8">
+          <h2 id="props" className="site-h2">
             Props
           </h2>
-          <div className="overflow-x-auto rounded-[var(--radius)] border border-[var(--border)]">
+          <div className="overflow-x-auto border border-[var(--border)]">
             <table className="w-full text-left text-[13px]">
               <thead className="bg-[var(--surface-2)] text-xs text-[var(--fg-muted)]">
                 <tr>
@@ -155,8 +157,8 @@ export default async function ComponentPage({ params }: { params: Promise<{ slug
           </div>
         </section>
 
-        <section aria-labelledby="a11y" className="flex flex-col gap-3">
-          <h2 id="a11y" className="text-[18px] font-semibold">
+        <section aria-labelledby="a11y" className="flex flex-col gap-3 border-t border-[var(--border)] py-8">
+          <h2 id="a11y" className="site-h2">
             Accessibility
           </h2>
           <ul className="flex list-disc flex-col gap-1.5 pl-4 text-[14px] leading-relaxed text-[var(--fg-muted)]">
@@ -170,8 +172,8 @@ export default async function ComponentPage({ params }: { params: Promise<{ slug
           <KeyboardTable rows={keyboardFor(c.slug)} />
         </section>
 
-        <section aria-labelledby="not-built" className="flex flex-col gap-3">
-          <h2 id="not-built" className="text-[18px] font-semibold">
+        <section aria-labelledby="not-built" className="flex flex-col gap-3 border-t border-[var(--border)] py-8">
+          <h2 id="not-built" className="site-h2">
             Deliberately not built
           </h2>
           <ul className="flex list-disc flex-col gap-1.5 pl-4 text-[14px] leading-relaxed text-[var(--fg-muted)]">
@@ -181,7 +183,7 @@ export default async function ComponentPage({ params }: { params: Promise<{ slug
           </ul>
         </section>
 
-        <nav aria-label="Previous and next" className="flex justify-between gap-4 border-t border-[var(--border)] pt-6 text-[13px]">
+        <nav aria-label="Previous and next" className="flex justify-between gap-4 border-t border-[var(--border)] py-8 text-[13px]">
           {prev ? (
             <Link href={`/components/${prev.slug}`} className="flex flex-col gap-0.5 rounded-sm">
               <span className="text-[var(--fg-muted)]">← Previous</span>
@@ -205,8 +207,6 @@ export default async function ComponentPage({ params }: { params: Promise<{ slug
 /** On the two most recently changed components, for 30 days after their library source changes. Sits on the row's right edge. */
 function NewBadge() {
   return (
-    <span className="shrink-0 rounded-full bg-[var(--accent)] px-1.5 text-[10px] leading-4 font-medium text-[var(--bg)]">
-      New
-    </span>
+    <span className="shrink-0 font-[family-name:var(--mono)] text-[11px] tracking-[-0.02em] text-[var(--fg-muted)]">New</span>
   );
 }
