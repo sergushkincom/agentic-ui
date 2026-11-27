@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 };
 
 const link =
-  "rounded-sm text-[var(--accent)] underline-offset-2 hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--accent)]";
+  "rounded-[var(--radius-sm)] text-[var(--accent)] underline-offset-2 hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--accent)]";
 
 export default function ChangelogPage() {
   return (

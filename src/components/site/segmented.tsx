@@ -13,7 +13,7 @@ export function Segmented<T extends string>({
   onChange: (v: T) => void;
 }) {
   return (
-    <div role="radiogroup" aria-label={label} className="inline-flex flex-wrap gap-0.5 rounded-[4px] bg-[var(--surface-2)] p-0.5">
+    <div role="radiogroup" aria-label={label} className="inline-flex flex-wrap gap-0.5 rounded-[var(--radius-md)] bg-[var(--surface-2)] p-0.5">
       {options.map((o, i) => {
         const on = o.value === value;
         return (
@@ -33,7 +33,7 @@ export function Segmented<T extends string>({
               const group = e.currentTarget.parentElement;
               requestAnimationFrame(() => (group?.querySelector('[aria-checked="true"]') as HTMLElement | null)?.focus());
             }}
-            className={`h-8 rounded-[3px] px-2.5 text-[13px] font-medium transition-colors duration-150 ease-[cubic-bezier(0.16,1,0.3,1)] motion-reduce:transition-none ${on ? "bg-[var(--surface)] text-[var(--fg)]" : "text-[var(--fg-muted)] hover:text-[var(--fg)]"}`}
+            className={`h-8 rounded-[var(--radius-sm)] px-2.5 text-[13px] font-medium transition-colors duration-150 ease-[cubic-bezier(0.16,1,0.3,1)] motion-reduce:transition-none ${on ? "bg-[var(--surface)] text-[var(--fg)]" : "text-[var(--fg-muted)] hover:text-[var(--fg)]"}`}
           >
             {o.label}
           </button>

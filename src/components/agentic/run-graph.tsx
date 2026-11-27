@@ -50,7 +50,7 @@ export function RunGraph({ steps, phase, onExecute, onAdd }: RunGraphProps) {
   return (
     <section
       aria-label="Run"
-      className="relative overflow-hidden rounded-[var(--radius)] border border-[var(--border)] bg-[var(--bg)]"
+      className="relative overflow-hidden rounded-[var(--radius-lg)] border border-[var(--border)] bg-[var(--bg)]"
     >
       <div
         aria-hidden="true"
@@ -101,7 +101,7 @@ function PhasePill({ phase, onExecute }: { phase: RunGraphPhase; onExecute?: () 
     return (
       <span
         role="status"
-        className="inline-flex h-7 items-center gap-1.5 self-start rounded-full bg-[var(--agent-soft)] pr-2.5 pl-1.5 text-[13px] font-medium text-[var(--agent)]"
+        className="inline-flex h-7 items-center gap-1.5 self-start rounded-[var(--radius-sm)] bg-[var(--agent-soft)] pr-2.5 pl-1.5 text-[13px] font-medium text-[var(--agent)]"
       >
         <StatusMorph glyph="spinner" className="size-3.5" />
         Running
@@ -120,7 +120,7 @@ function PhasePill({ phase, onExecute }: { phase: RunGraphPhase; onExecute?: () 
       type="button"
       onClick={onExecute}
       disabled={!onExecute}
-      className="inline-flex h-7 items-center self-start rounded-full bg-[var(--fg)] px-3 text-[13px] font-medium text-[var(--bg)] hover:opacity-90 disabled:opacity-40"
+      className="inline-flex h-7 items-center self-start rounded-[var(--radius-md)] bg-[var(--fg)] px-3 text-[13px] font-medium text-[var(--bg)] hover:opacity-90 disabled:opacity-40"
     >
       Execute
     </button>
@@ -170,13 +170,13 @@ function Edge({ items, active }: { items: number; active: boolean }) {
         <span
           ref={beadRef}
           aria-hidden="true"
-          className="absolute size-1.5 -translate-x-1/2 rounded-full bg-[var(--agent)] motion-reduce:hidden"
+          className="absolute size-1.5 -translate-x-1/2 rounded-[var(--radius-sm)] bg-[var(--agent)] motion-reduce:hidden"
           style={{ bottom: "12px", left: "0%" }}
         />
       )}
       {travelled && (
         <span
-          className="absolute left-1/2 -translate-x-1/2 rounded-full border border-[var(--border)] bg-[var(--surface)] px-1.5 py-px text-[10px] leading-4 font-medium whitespace-nowrap text-[var(--fg)] tabular-nums"
+          className="absolute left-1/2 -translate-x-1/2 rounded-[var(--radius-sm)] border border-[var(--border)] bg-[var(--surface)] px-1.5 py-px text-[10px] leading-4 font-medium whitespace-nowrap text-[var(--fg)] tabular-nums"
           style={{ bottom: "24px" }}
         >
           {label}
@@ -193,7 +193,7 @@ function AddStep({ onAdd }: { onAdd?: () => void }) {
       onClick={onAdd}
       disabled={!onAdd}
       aria-label="Add the next step"
-      className="inline-flex size-7 items-center justify-center rounded-full border border-dashed border-[var(--fg-muted)] bg-[var(--surface)] text-[var(--fg)] transition-transform duration-200 ease-[cubic-bezier(0.16,1,0.3,1)] hover:scale-105 hover:bg-[var(--surface-2)] disabled:opacity-40 disabled:hover:scale-100 motion-reduce:transition-none motion-reduce:hover:scale-100"
+      className="inline-flex size-7 items-center justify-center rounded-[var(--radius-md)] border border-dashed border-[var(--fg-muted)] bg-[var(--surface)] text-[var(--fg)] transition-transform duration-200 ease-[cubic-bezier(0.16,1,0.3,1)] hover:scale-105 hover:bg-[var(--surface-2)] disabled:opacity-40 disabled:hover:scale-100 motion-reduce:transition-none motion-reduce:hover:scale-100"
     >
       <svg viewBox="0 0 16 16" aria-hidden="true" className="size-3.5" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round">
         <path d="M8 3.25v9.5M3.25 8h9.5" />

@@ -13,7 +13,7 @@ function ComponentCard({ component }: { component: ComponentDoc }) {
   return (
     <Link
       href={`/components/${component.slug}`}
-      className="group flex h-full min-w-0 flex-col overflow-hidden border border-[var(--border)] bg-[var(--surface)] transition-colors duration-150 ease-[cubic-bezier(0.16,1,0.3,1)] hover:border-[color-mix(in_srgb,var(--fg)_35%,var(--border))] motion-reduce:transition-none"
+      className="group flex h-full min-w-0 flex-col overflow-hidden rounded-[var(--radius-lg)] border border-[var(--border)] bg-[var(--surface)] transition-colors duration-150 ease-[cubic-bezier(0.16,1,0.3,1)] hover:border-[color-mix(in_srgb,var(--fg)_35%,var(--border))] motion-reduce:transition-none"
     >
       <div aria-hidden="true" inert className={`pointer-events-none flex h-44 overflow-hidden bg-[var(--bg)] p-4 ${align}`}>
         <div className="w-full min-w-0">
@@ -50,13 +50,13 @@ export default function Home() {
           <div className="flex flex-wrap gap-2">
             <Link
               href="/components"
-              className="inline-flex h-10 items-center rounded-[4px] bg-[var(--fg)] px-4 text-[14px] font-medium text-[var(--bg)] transition-opacity duration-150 ease-[cubic-bezier(0.16,1,0.3,1)] hover:opacity-90 motion-reduce:transition-none"
+              className="inline-flex h-10 items-center rounded-[var(--radius-md)] bg-[var(--fg)] px-4 text-[14px] font-medium text-[var(--bg)] transition-opacity duration-150 ease-[cubic-bezier(0.16,1,0.3,1)] hover:opacity-90 motion-reduce:transition-none"
             >
               Browse components
             </Link>
             <Link
               href="/examples/agent-run"
-              className="group inline-flex h-10 items-center gap-2 rounded-[4px] border border-[var(--border)] bg-[var(--surface)] px-4 text-[14px] font-medium transition-colors duration-150 ease-[cubic-bezier(0.16,1,0.3,1)] hover:bg-[var(--surface-2)] motion-reduce:transition-none"
+              className="group inline-flex h-10 items-center gap-2 rounded-[var(--radius-md)] border border-[var(--border)] bg-[var(--surface)] px-4 text-[14px] font-medium transition-colors duration-150 ease-[cubic-bezier(0.16,1,0.3,1)] hover:bg-[var(--surface-2)] motion-reduce:transition-none"
             >
               See an agent run
               <svg
@@ -81,7 +81,7 @@ export default function Home() {
         <h2 id="principles" className="sr-only">
           Principles
         </h2>
-        <div className="grid border border-[var(--border)] sm:grid-cols-3 sm:divide-x sm:divide-[var(--border)]">
+        <div className="grid overflow-hidden rounded-[var(--radius-lg)] border border-[var(--border)] sm:grid-cols-3 sm:divide-x sm:divide-[var(--border)]">
           {PRINCIPLES.map((p, i) => (
             <div key={p.title} className="flex flex-col gap-2 border-b border-[var(--border)] p-5 last:border-b-0 sm:border-b-0">
               <span className="font-[family-name:var(--mono)] text-[12px] tabular-nums text-[var(--fg-muted)]">0{i + 1}</span>
@@ -90,7 +90,7 @@ export default function Home() {
             </div>
           ))}
         </div>
-        <Link href="/why" className="self-start rounded-sm text-[13px] text-[var(--accent)] underline-offset-2 hover:underline">
+        <Link href="/why" className="self-start rounded-[var(--radius-sm)] text-[13px] text-[var(--accent)] underline-offset-2 hover:underline">
           Why this exists
         </Link>
       </section>

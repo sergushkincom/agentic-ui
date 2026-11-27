@@ -45,7 +45,7 @@ export default function ComponentsPage() {
                   <Link
                     href={`/components/${c.slug}`}
                     aria-label={`${c.name}. ${c.summary}`}
-                    className="flex h-full min-w-0 scroll-mt-20 scroll-mb-12 flex-col overflow-hidden border border-[var(--border)] bg-[var(--surface)] transition-colors duration-150 ease-[cubic-bezier(0.16,1,0.3,1)] hover:border-[color-mix(in_srgb,var(--fg)_35%,var(--border))] motion-reduce:transition-none"
+                    className="flex h-full min-w-0 scroll-mt-20 scroll-mb-12 flex-col overflow-hidden rounded-[var(--radius-lg)] border border-[var(--border)] bg-[var(--surface)] transition-colors duration-150 ease-[cubic-bezier(0.16,1,0.3,1)] hover:border-[color-mix(in_srgb,var(--fg)_35%,var(--border))] motion-reduce:transition-none"
                   >
                     <div
                       aria-hidden="true"

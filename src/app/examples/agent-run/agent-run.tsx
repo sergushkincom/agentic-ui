@@ -49,7 +49,7 @@ export function AgentRun() {
       {view.skip && (
         <a
           href={`#${view.skip.id}`}
-          className="fixed top-16 left-4 z-30 -translate-y-40 rounded-lg bg-[var(--fg)] px-3 py-1.5 text-[13px] font-medium text-[var(--bg)] focus:translate-y-0"
+          className="fixed top-16 left-4 z-30 -translate-y-40 rounded-[var(--radius-md)] bg-[var(--fg)] px-3 py-1.5 text-[13px] font-medium text-[var(--bg)] focus:translate-y-0"
         >
           {view.skip.label}
         </a>
@@ -79,7 +79,7 @@ export function AgentRun() {
       <div
         key={state.runId}
         aria-busy={view.playing}
-        className="flex flex-col gap-4 rounded-[var(--radius)] border border-[var(--border)] bg-[var(--bg)] p-4 sm:p-6"
+        className="flex flex-col gap-4 rounded-[var(--radius-lg)] border border-[var(--border)] bg-[var(--bg)] p-4 sm:p-6"
       >
         <div className="flex flex-col gap-2">
           <HumanMark label="You" />
@@ -156,7 +156,7 @@ export function AgentRun() {
         )}
 
         {view.receipt && (
-          <div id="outcome" tabIndex={-1} className="scroll-mt-20 rounded-[var(--radius)] border border-[var(--border)] bg-[var(--surface)] p-4">
+          <div id="outcome" tabIndex={-1} className="scroll-mt-20 rounded-[var(--radius-lg)] border border-[var(--border)] bg-[var(--surface)] p-4">
             <div className="flex flex-col gap-2">
               <HumanMark label="You" />
               <p className="text-[15px] leading-relaxed">{view.receipt}</p>
@@ -184,9 +184,9 @@ function RunProgress({ steps }: { steps: ProgressStep[] }) {
           <li key={step.id} className="relative flex min-w-0 flex-1 flex-col items-center gap-2 text-center">
             {previous && (
               <span aria-hidden="true" className="absolute top-[3px] right-1/2 h-0.5 w-full">
-                <span className="absolute inset-0 rounded-full bg-[var(--fg-muted)] opacity-30" />
+                <span className="absolute inset-0 rounded-[var(--radius-sm)] bg-[var(--fg-muted)] opacity-30" />
                 <span
-                  className={`aui-track-fill absolute inset-y-0 left-0 rounded-full ${
+                  className={`aui-track-fill absolute inset-y-0 left-0 rounded-[var(--radius-sm)] ${
                     previous.state === "failed" ? "bg-[var(--risk)]" : "bg-[var(--fg)]"
                   }`}
                   style={{ width: filled ? "100%" : "0%" }}
@@ -218,7 +218,7 @@ function stepLabelClass(state: ProgressState): string {
 }
 
 function stepDotClass(state: ProgressState): string {
-  const base = "relative z-10 size-2 shrink-0 rounded-full";
+  const base = "relative z-10 size-2 shrink-0 rounded-[var(--radius-sm)]";
   if (state === "current") return `${base} bg-[var(--agent)] shadow-[0_0_0_3px_var(--agent-soft)]`;
   if (state === "done") return `${base} bg-[var(--fg)]`;
   if (state === "failed") return `${base} bg-[var(--risk)] shadow-[0_0_0_3px_var(--risk-soft)]`;

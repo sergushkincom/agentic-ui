@@ -30,7 +30,7 @@ export function AgentHarness({ title, task, sockets }: AgentHarnessProps) {
 
   return (
     <article
-      className="flex flex-col gap-3 rounded-[var(--radius)] border bg-[var(--surface)] p-4"
+      className="flex flex-col gap-3 rounded-[var(--radius-lg)] border bg-[var(--surface)] p-4"
       style={{ borderColor: missing.length > 0 ? "var(--warn)" : "var(--border)" }}
     >
       <header className="flex flex-col gap-1">
@@ -47,7 +47,7 @@ export function AgentHarness({ title, task, sockets }: AgentHarnessProps) {
       <SocketList sockets={sockets} />
 
       {missing.length > 0 && (
-        <p role="status" className="rounded-lg bg-[var(--warn-soft)] px-2.5 py-2 text-[13px] leading-relaxed text-[var(--fg)]">
+        <p role="status" className="rounded-[var(--radius-sm)] bg-[var(--warn-soft)] px-2.5 py-2 text-[13px] leading-relaxed text-[var(--fg)]">
           <span className="font-medium">Warning. </span>
           {missingSentence(missing)}
         </p>
@@ -73,7 +73,7 @@ function Socket({ socket }: { socket: HarnessSocket }) {
 
   return (
     <li
-      className={`grid grid-cols-[1rem_4.25rem_minmax(0,1fr)_auto] items-center gap-x-2.5 rounded-lg px-2 py-1.5 ${
+      className={`grid grid-cols-[1rem_4.25rem_minmax(0,1fr)_auto] items-center gap-x-2.5 rounded-[var(--radius-md)] px-2 py-1.5 ${
         warn ? "bg-[var(--warn-soft)]" : ""
       }`}
     >
@@ -91,7 +91,7 @@ function Socket({ socket }: { socket: HarnessSocket }) {
 
 function SocketMark({ open, warn }: { open: boolean; warn: boolean }) {
   if (warn || !open) return <StatusMorph glyph={warn ? "alert" : "check"} />;
-  return <span aria-hidden="true" className="size-3.5 rounded-full border border-dashed border-[var(--fg-muted)]" />;
+  return <span aria-hidden="true" className="size-3.5 rounded-[var(--radius-sm)] border border-dashed border-[var(--fg-muted)]" />;
 }
 
 function isOpen(socket: HarnessSocket) {

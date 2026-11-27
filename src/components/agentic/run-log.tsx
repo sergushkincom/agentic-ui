@@ -70,13 +70,13 @@ export function RunLog({ steps, title = "Log", onClear }: RunLogProps) {
   return (
     <section
       aria-label={title}
-      className="@container flex flex-col overflow-hidden rounded-[var(--radius)] border border-[var(--border)] bg-[var(--surface)]"
+      className="@container flex flex-col overflow-hidden rounded-[var(--radius-lg)] border border-[var(--border)] bg-[var(--surface)]"
     >
       <header className="flex items-center gap-2 border-b border-[var(--border)] bg-[var(--surface-2)] px-2.5 py-1.5">
         <h3 className="font-[family-name:var(--mono)] text-[11px] font-medium tracking-wide text-[var(--fg)] uppercase">{title}</h3>
         <p className="flex min-w-0 items-center gap-1.5 text-[12px] text-[var(--fg-muted)]" aria-live="polite">
           {summary.status === "canceled" ? (
-            <span aria-hidden="true" className="size-2 shrink-0 rounded-[2px] border border-[var(--fg-muted)]" />
+            <span aria-hidden="true" className="size-2 shrink-0 rounded-[var(--radius-sm)] border border-[var(--fg-muted)]" />
           ) : summary.status ? (
             <StatusMorph glyph={summary.status === "running" ? "spinner" : summary.status === "error" ? "alert" : "check"} />
           ) : null}
@@ -232,7 +232,7 @@ function StatusIcon({ status }: { status: RunLogStatus }) {
       {glyph ? (
         <StatusMorph glyph={glyph} />
       ) : (
-        <span aria-hidden="true" className="size-2 rounded-[2px] border border-[var(--fg-muted)]" />
+        <span aria-hidden="true" className="size-2 rounded-[var(--radius-sm)] border border-[var(--fg-muted)]" />
       )}
     </span>
   );
@@ -260,7 +260,7 @@ function DataPane({
           {step ? step.label : "No step open"}
           {side && !empty ? <span className="tabular-nums"> · {side.rows.length === 1 ? "1 row" : `${side.rows.length} rows`}</span> : null}
         </p>
-        <div className="inline-flex gap-0.5 rounded-lg bg-[var(--surface-2)] p-0.5">
+        <div className="inline-flex gap-0.5 rounded-[var(--radius-md)] bg-[var(--surface-2)] p-0.5">
           <button type="button" aria-pressed={pane === "input"} onClick={() => onPane("input")} className={pill(pane === "input")}>
             Input
           </button>
@@ -268,7 +268,7 @@ function DataPane({
             Output
           </button>
         </div>
-        <div className="inline-flex gap-0.5 rounded-lg bg-[var(--surface-2)] p-0.5">
+        <div className="inline-flex gap-0.5 rounded-[var(--radius-md)] bg-[var(--surface-2)] p-0.5">
           <button type="button" aria-pressed={view === "table"} onClick={() => onView("table")} className={pill(view === "table")}>
             Table
           </button>
@@ -293,7 +293,7 @@ function DataPane({
 }
 
 function pill(on: boolean) {
-  return `h-6 rounded-md px-2 text-[11px] font-medium ${on ? "bg-[var(--surface)] text-[var(--fg)] shadow-sm" : "text-[var(--fg-muted)] hover:text-[var(--fg)]"}`;
+  return `h-6 rounded-[var(--radius-sm)] px-2 text-[11px] font-medium ${on ? "bg-[var(--surface)] text-[var(--fg)] shadow-sm" : "text-[var(--fg-muted)] hover:text-[var(--fg)]"}`;
 }
 
 function DataTable({ side, caption }: { side: RunLogSide; caption: string }) {

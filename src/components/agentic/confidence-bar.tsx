@@ -35,9 +35,9 @@ export function ConfidenceBar({ value, askBelow = 0.7, basis, compact = false }:
         aria-valuemax={100}
         aria-valuenow={Math.round(v * 100)}
         aria-valuetext={`${BAND_LABEL[band]}, ${formatPercent(v)}`}
-        className={`relative w-full rounded-full bg-[var(--surface-2)] ${compact ? "h-1" : "h-1.5"}`}
+        className={`relative w-full rounded-[var(--radius-sm)] bg-[var(--surface-2)] ${compact ? "h-1" : "h-1.5"}`}
       >
-        <div className="h-full rounded-full transition-[width] duration-500 motion-reduce:transition-none" style={{ width: `${v * 100}%`, background: color }} />
+        <div className="h-full rounded-[var(--radius-sm)] transition-[width] duration-500 motion-reduce:transition-none" style={{ width: `${v * 100}%`, background: color }} />
         <span
           aria-hidden="true"
           className="absolute -top-1 -bottom-1 w-px bg-[var(--fg)] opacity-60"

@@ -25,7 +25,7 @@ export function SiteHeader() {
       <div className="mx-auto flex h-14 max-w-6xl items-center gap-2 px-3 sm:gap-5 sm:px-4">
         <Link
           href="/"
-          className="shrink-0 rounded-sm font-[family-name:var(--mono)] text-[14px] font-medium tracking-[-0.04em] text-[var(--fg)] sm:text-[15px]"
+          className="shrink-0 rounded-[var(--radius-sm)] font-[family-name:var(--mono)] text-[14px] font-medium tracking-[-0.04em] text-[var(--fg)] sm:text-[15px]"
         >
           agentic-ui
         </Link>
@@ -37,7 +37,7 @@ export function SiteHeader() {
                 key={item.href}
                 href={item.href}
                 aria-current={on ? "page" : undefined}
-                className={`shrink-0 rounded-sm px-1.5 py-1.5 whitespace-nowrap transition-colors duration-150 ease-[cubic-bezier(0.16,1,0.3,1)] motion-reduce:transition-none sm:px-2 ${
+                className={`shrink-0 rounded-[var(--radius-sm)] px-1.5 py-1.5 whitespace-nowrap transition-colors duration-150 ease-[cubic-bezier(0.16,1,0.3,1)] motion-reduce:transition-none sm:px-2 ${
                   on ? "font-medium text-[var(--fg)]" : "text-[var(--fg-muted)] hover:text-[var(--fg)]"
                 }`}
               >
@@ -56,7 +56,7 @@ export function SiteHeader() {
             href={REPO}
             target="_blank"
             rel="noreferrer"
-            className="shrink-0 rounded-sm px-1.5 py-1.5 whitespace-nowrap text-[var(--fg-muted)] transition-colors duration-150 ease-[cubic-bezier(0.16,1,0.3,1)] hover:text-[var(--fg)] motion-reduce:transition-none sm:px-2"
+            className="shrink-0 rounded-[var(--radius-sm)] px-1.5 py-1.5 whitespace-nowrap text-[var(--fg-muted)] transition-colors duration-150 ease-[cubic-bezier(0.16,1,0.3,1)] hover:text-[var(--fg)] motion-reduce:transition-none sm:px-2"
           >
             GitHub
           </a>

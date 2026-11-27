@@ -48,7 +48,7 @@ export class FallbackBoundary extends Component<FallbackBoundaryProps, BoundaryS
     return (
       <div
         role={failed ? "alert" : "status"}
-        className="flex flex-col gap-3 rounded-[var(--radius)] border p-4"
+        className="flex flex-col gap-3 rounded-[var(--radius-lg)] border p-4"
         style={{
           borderColor: failed ? "var(--risk)" : status === "slow" ? "var(--warn)" : "var(--border)",
           background: failed ? "var(--risk-soft)" : status === "slow" ? "var(--warn-soft)" : "var(--surface)",

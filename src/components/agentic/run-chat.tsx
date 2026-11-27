@@ -57,7 +57,7 @@ export function RunChat({
   return (
     <section
       aria-label={title}
-      className="@container overflow-hidden rounded-[var(--radius)] border border-[var(--border)] bg-[var(--surface)]"
+      className="@container overflow-hidden rounded-[var(--radius-lg)] border border-[var(--border)] bg-[var(--surface)]"
     >
       <div className="grid @md:grid-cols-[minmax(0,1.25fr)_minmax(13rem,0.75fr)]">
         <div className="flex min-h-80 flex-col @md:min-h-[24rem]">
@@ -89,7 +89,7 @@ function Message({ message }: { message: RunChatMessage }) {
     <li className={`flex flex-col gap-1 ${human ? "items-end" : "items-start"}`}>
       {human ? <HumanMark /> : <AgentMark />}
       <p
-        className={`max-w-[40ch] rounded-lg px-2.5 py-1.5 text-[13px] leading-relaxed ${human ? "bg-[var(--human-soft)]" : "bg-[var(--agent-soft)]"}`}
+        className={`max-w-[40ch] rounded-[var(--radius-sm)] px-2.5 py-1.5 text-[13px] leading-relaxed ${human ? "bg-[var(--human-soft)]" : "bg-[var(--agent-soft)]"}`}
       >
         {message.text}
       </p>
@@ -129,7 +129,7 @@ function Composer({
         value={draft}
         placeholder={placeholder}
         onChange={(event) => onDraftChange(event.target.value)}
-        className="h-8 min-w-0 flex-1 rounded-lg border border-[var(--border)] bg-[var(--bg)] px-2.5 text-[13px] outline-none focus:border-[var(--human)]"
+        className="h-8 min-w-0 flex-1 rounded-[var(--radius-sm)] border border-[var(--border)] bg-[var(--bg)] px-2.5 text-[13px] outline-none focus:border-[var(--human)]"
       />
       <button type="submit" className={buttonClass.primary} disabled={empty || busy}>
         Send
@@ -184,7 +184,7 @@ function StepMark({ status }: { status: RunChatStep["status"] }) {
       {glyph ? (
         <StatusMorph glyph={glyph} />
       ) : (
-        <span aria-hidden="true" className="size-1.5 rounded-full bg-[var(--fg-muted)] opacity-50" />
+        <span aria-hidden="true" className="size-1.5 rounded-[var(--radius-sm)] bg-[var(--fg-muted)] opacity-50" />
       )}
     </span>
   );

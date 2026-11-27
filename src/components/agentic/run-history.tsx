@@ -46,14 +46,14 @@ export function RunHistory({ runs, selectedId, onSelect }: RunHistoryProps) {
   );
 
   if (runs.length === 0) {
-    return <p className="rounded-[var(--radius)] border border-[var(--border)] bg-[var(--surface)] px-3 py-6 text-[13px] text-[var(--fg-muted)]">No runs yet.</p>;
+    return <p className="rounded-[var(--radius-lg)] border border-[var(--border)] bg-[var(--surface)] px-3 py-6 text-[13px] text-[var(--fg-muted)]">No runs yet.</p>;
   }
 
   return (
     <div
       role="listbox"
       aria-label="Past runs"
-      className="overflow-hidden rounded-[var(--radius)] border border-[var(--border)] bg-[var(--surface)]"
+      className="overflow-hidden rounded-[var(--radius-lg)] border border-[var(--border)] bg-[var(--surface)]"
       onKeyDown={(event) => {
         const buttons = [...event.currentTarget.querySelectorAll<HTMLButtonElement>('[role="option"]')];
         const current = buttons.findIndex((button) => button === event.target || button.contains(event.target as Node));
@@ -109,7 +109,7 @@ function RunMark({ status }: { status: RunHistoryStatus }) {
       {glyph ? (
         <StatusMorph glyph={glyph} />
       ) : (
-        <span aria-hidden="true" className="size-2 rounded-[2px] border border-[var(--fg-muted)]" />
+        <span aria-hidden="true" className="size-2 rounded-[var(--radius-sm)] border border-[var(--fg-muted)]" />
       )}
     </span>
   );

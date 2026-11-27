@@ -46,7 +46,7 @@ export function PinnedOutput({ step, summary, source, onPin, onUseLive, onSupply
   return (
     <section
       aria-label={`${step} output`}
-      className="flex flex-col gap-2.5 rounded-[var(--radius)] border bg-[var(--surface)] p-3 transition-[border-color] duration-200 motion-reduce:transition-none"
+      className="flex flex-col gap-2.5 rounded-[var(--radius-lg)] border bg-[var(--surface)] p-3 transition-[border-color] duration-200 motion-reduce:transition-none"
       style={{ borderColor: pinned ? "var(--human)" : "var(--border)" }}
     >
       <div className="flex items-center justify-between gap-2">
@@ -80,7 +80,7 @@ export function PinnedOutput({ step, summary, source, onPin, onUseLive, onSupply
             autoFocus
             value={draft}
             onChange={(event) => setDraft(event.target.value)}
-            className="h-9 w-full rounded-lg border border-[var(--border)] bg-[var(--bg)] px-2.5 text-[15px] outline-none focus:border-[var(--human)]"
+            className="h-9 w-full rounded-[var(--radius-sm)] border border-[var(--border)] bg-[var(--bg)] px-2.5 text-[15px] outline-none focus:border-[var(--human)]"
           />
           <div className="flex flex-wrap gap-2">
             <button type="submit" className={buttonClass.primary} disabled={!draft.trim()}>

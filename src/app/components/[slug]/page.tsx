@@ -103,7 +103,7 @@ export default async function ComponentPage({ params }: { params: Promise<{ slug
           <ul className="flex flex-col gap-2 text-[14px] leading-relaxed text-[var(--fg-muted)]">
             {c.decisions.map((d) => (
               <li key={d} className="flex gap-2.5">
-                <span aria-hidden="true" className="mt-[9px] size-1 shrink-0 rounded-full bg-[var(--agent)]" />
+                <span aria-hidden="true" className="mt-[9px] size-1 shrink-0 rounded-[var(--radius-sm)] bg-[var(--agent)]" />
                 {d}
               </li>
             ))}
@@ -123,7 +123,7 @@ export default async function ComponentPage({ params }: { params: Promise<{ slug
             href={`${REPO}/blob/main/src/components/agentic/${c.file}`}
             target="_blank"
             rel="noreferrer"
-            className="self-start rounded-sm text-[13px] text-[var(--accent)] underline-offset-2 hover:underline"
+            className="self-start rounded-[var(--radius-sm)] text-[13px] text-[var(--accent)] underline-offset-2 hover:underline"
           >
             Source: {c.file} ↗
           </a>
@@ -135,7 +135,7 @@ export default async function ComponentPage({ params }: { params: Promise<{ slug
           <h2 id="props" className="site-h2">
             Props
           </h2>
-          <div className="overflow-x-auto border border-[var(--border)]">
+          <div className="overflow-x-auto rounded-[var(--radius-lg)] border border-[var(--border)]">
             <table className="w-full text-left text-[13px]">
               <thead className="bg-[var(--surface-2)] text-xs text-[var(--fg-muted)]">
                 <tr>
@@ -185,7 +185,7 @@ export default async function ComponentPage({ params }: { params: Promise<{ slug
 
         <nav aria-label="Previous and next" className="flex justify-between gap-4 border-t border-[var(--border)] py-8 text-[13px]">
           {prev ? (
-            <Link href={`/components/${prev.slug}`} className="flex flex-col gap-0.5 rounded-sm">
+            <Link href={`/components/${prev.slug}`} className="flex flex-col gap-0.5 rounded-[var(--radius-sm)]">
               <span className="text-[var(--fg-muted)]">← Previous</span>
               <span className="font-[family-name:var(--mono)]">{prev.name}</span>
             </Link>
@@ -193,7 +193,7 @@ export default async function ComponentPage({ params }: { params: Promise<{ slug
             <span />
           )}
           {next && (
-            <Link href={`/components/${next.slug}`} className="flex flex-col items-end gap-0.5 rounded-sm">
+            <Link href={`/components/${next.slug}`} className="flex flex-col items-end gap-0.5 rounded-[var(--radius-sm)]">
               <span className="text-[var(--fg-muted)]">Next →</span>
               <span className="font-[family-name:var(--mono)]">{next.name}</span>
             </Link>

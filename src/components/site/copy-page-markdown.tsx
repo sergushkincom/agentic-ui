@@ -53,7 +53,7 @@ export function CopyPageMarkdown({ markdown }: { markdown: string }) {
         }
         void navigator.clipboard?.writeText(markdown).then(showCopied).catch(() => {});
       }}
-      className="inline-flex h-9 shrink-0 items-center rounded-[4px] border border-[var(--border)] bg-[var(--surface)] px-2.5 text-[13px] font-medium text-[var(--fg-muted)] transition-colors duration-150 ease-[cubic-bezier(0.16,1,0.3,1)] hover:border-[color-mix(in_srgb,var(--fg)_28%,var(--border))] hover:bg-[var(--surface-2)] hover:text-[var(--fg)] motion-reduce:transition-none"
+      className="inline-flex h-9 shrink-0 items-center rounded-[var(--radius-md)] border border-[var(--border)] bg-[var(--surface)] px-2.5 text-[13px] font-medium text-[var(--fg-muted)] transition-colors duration-150 ease-[cubic-bezier(0.16,1,0.3,1)] hover:border-[color-mix(in_srgb,var(--fg)_28%,var(--border))] hover:bg-[var(--surface-2)] hover:text-[var(--fg)] motion-reduce:transition-none"
     >
       <span aria-live="polite">{copied ? "Copied" : "Copy page as Markdown"}</span>
     </button>

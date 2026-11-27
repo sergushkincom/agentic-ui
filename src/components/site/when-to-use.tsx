@@ -3,7 +3,7 @@ import { getComponent } from "@/lib/registry";
 import { whenFor } from "@/lib/when-to-use";
 
 const linkClass =
-  "rounded-sm font-[family-name:var(--mono)] text-[13px] text-[var(--accent)] underline-offset-2 hover:underline";
+  "rounded-[var(--radius-sm)] font-[family-name:var(--mono)] text-[13px] text-[var(--accent)] underline-offset-2 hover:underline";
 
 /** "Use when" and "Use {Name} instead when…" for one component page. */
 export function WhenToUse({ slug }: { slug: string }) {

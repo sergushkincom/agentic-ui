@@ -91,7 +91,7 @@ export function ExpressionField({
         <div
           role="radiogroup"
           aria-label="Value kind"
-          className="inline-flex gap-0.5 rounded-lg bg-[var(--surface-2)] p-0.5"
+          className="inline-flex gap-0.5 rounded-[var(--radius-md)] bg-[var(--surface-2)] p-0.5"
           onKeyDown={(event) => {
             const buttons = [...event.currentTarget.querySelectorAll<HTMLButtonElement>('[role="radio"]')];
             const current = buttons.findIndex((button) => button === event.target);
@@ -117,7 +117,7 @@ export function ExpressionField({
                 aria-checked={selected}
                 tabIndex={selected ? 0 : -1}
                 onClick={() => onMode(item.id)}
-                className={`h-7 rounded-md px-2.5 text-xs font-medium ${selected ? (item.id === "expression" ? "bg-[var(--agent)] text-[var(--bg)] shadow-sm" : "bg-[var(--surface)] text-[var(--fg)] shadow-sm") : "text-[var(--fg-muted)] hover:text-[var(--fg)]"}`}
+                className={`h-7 rounded-[var(--radius-sm)] px-2.5 text-xs font-medium ${selected ? (item.id === "expression" ? "bg-[var(--agent)] text-[var(--bg)] shadow-sm" : "bg-[var(--surface)] text-[var(--fg)] shadow-sm") : "text-[var(--fg-muted)] hover:text-[var(--fg)]"}`}
               >
                 {item.label}
               </button>
@@ -133,10 +133,10 @@ export function ExpressionField({
           aria-describedby={hintId}
           value={fixedValue}
           onChange={(event) => onFixedValue(event.target.value)}
-          className="h-9 w-full rounded-lg border border-[var(--border)] bg-[var(--bg)] px-2.5 text-[15px] outline-none focus:border-[var(--accent)]"
+          className="h-9 w-full rounded-[var(--radius-sm)] border border-[var(--border)] bg-[var(--bg)] px-2.5 text-[15px] outline-none focus:border-[var(--accent)]"
         />
       ) : reference ? (
-        <div className="flex h-9 items-center justify-between gap-2 rounded-lg border border-[var(--agent)] bg-[var(--agent-soft)] px-2.5">
+        <div className="flex h-9 items-center justify-between gap-2 rounded-[var(--radius-sm)] border border-[var(--agent)] bg-[var(--agent-soft)] px-2.5">
           <span className="min-w-0 truncate text-[15px]">
             <span className="sr-only">
               {label}, from {reference.step}, {reference.field}.
@@ -156,7 +156,7 @@ export function ExpressionField({
             type="button"
             aria-describedby={hintId}
             onClick={() => onChoosing(true)}
-            className="inline-flex h-8 shrink-0 items-center justify-center rounded-lg px-2 text-[13px] font-medium text-[var(--fg)] hover:bg-[var(--bg)]"
+            className="inline-flex h-8 shrink-0 items-center justify-center rounded-[var(--radius-md)] px-2 text-[13px] font-medium text-[var(--fg)] hover:bg-[var(--bg)]"
           >
             Change
             <span className="sr-only">
@@ -171,7 +171,7 @@ export function ExpressionField({
           type="button"
           aria-describedby={hintId}
           onClick={() => onChoosing(true)}
-          className="flex h-9 w-full items-center rounded-lg border border-dashed border-[var(--agent)] bg-[var(--bg)] px-2.5 text-left text-[15px] text-[var(--fg-muted)]"
+          className="flex h-9 w-full items-center rounded-[var(--radius-sm)] border border-dashed border-[var(--agent)] bg-[var(--bg)] px-2.5 text-left text-[15px] text-[var(--fg-muted)]"
         >
           Choose a field from a previous step
           <span className="sr-only"> for {label}</span>
@@ -189,7 +189,7 @@ export function ExpressionField({
           role="listbox"
           aria-label={`Fields for ${label}`}
           tabIndex={fields.length === 0 ? 0 : undefined}
-          className="max-h-56 overflow-auto rounded-[var(--radius)] border border-[var(--border)] bg-[var(--surface)] py-1 outline-none"
+          className="max-h-56 overflow-auto rounded-[var(--radius-lg)] border border-[var(--border)] bg-[var(--surface)] py-1 outline-none"
           onKeyDown={(event) => {
             if (event.key === "Escape" && !event.repeat) {
               event.preventDefault();

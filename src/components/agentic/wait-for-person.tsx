@@ -30,7 +30,7 @@ export function WaitForPerson({ task, prompt, mode, status, answer, onRespond }:
 
   return (
     <article
-      className="flex flex-col gap-3 rounded-[var(--radius)] border bg-[var(--surface)] p-3"
+      className="flex flex-col gap-3 rounded-[var(--radius-lg)] border bg-[var(--surface)] p-3"
       style={{ borderColor: waiting ? "var(--human)" : "var(--ok)" }}
     >
       <header className="flex flex-wrap items-center justify-between gap-2">
@@ -80,7 +80,7 @@ export function WaitForPerson({ task, prompt, mode, status, answer, onRespond }:
               value={draft}
               onChange={(event) => setDraft(event.target.value)}
               placeholder="Your reply"
-              className="h-8 min-w-0 flex-1 rounded-lg border border-[var(--border)] bg-[var(--bg)] px-2.5 text-[14px] outline-none focus:border-[var(--human)]"
+              className="h-8 min-w-0 flex-1 rounded-[var(--radius-sm)] border border-[var(--border)] bg-[var(--bg)] px-2.5 text-[14px] outline-none focus:border-[var(--human)]"
             />
             <button type="submit" className={buttonClass.primary}>
               Reply

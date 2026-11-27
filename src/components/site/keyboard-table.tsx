@@ -3,7 +3,7 @@ import type { KeyboardRow } from "@/lib/keyboard-interactions";
 /** Key → action table. Same chrome as the props table, so the docs pages stay one system. */
 export function KeyboardTable({ rows }: { rows: KeyboardRow[] }) {
   return (
-    <div className="overflow-x-auto border border-[var(--border)]">
+    <div className="overflow-x-auto rounded-[var(--radius-lg)] border border-[var(--border)]">
       <table aria-labelledby="keyboard" className="w-full text-left text-[13px]">
         <thead className="bg-[var(--surface-2)] text-xs text-[var(--fg-muted)]">
           <tr>

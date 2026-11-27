@@ -45,7 +45,7 @@ export default function AgentRunPage() {
             {i > 0 && ", "}
             <Link
               href={`/components/${c.slug}`}
-              className="rounded-sm text-[var(--accent)] underline-offset-2 hover:underline"
+              className="rounded-[var(--radius-sm)] text-[var(--accent)] underline-offset-2 hover:underline"
             >
               {c.name}
             </Link>

@@ -34,7 +34,7 @@ function copyText(text: string) {
 }
 
 const action =
-  "inline-flex h-8 items-center rounded-sm px-2 font-[family-name:var(--mono)] text-[12px] transition-colors duration-150 ease-[cubic-bezier(0.16,1,0.3,1)] hover:bg-[var(--surface-2)] motion-reduce:transition-none";
+  "inline-flex h-8 items-center rounded-[var(--radius-md)] px-2 font-[family-name:var(--mono)] text-[12px] transition-colors duration-150 ease-[cubic-bezier(0.16,1,0.3,1)] hover:bg-[var(--surface-2)] motion-reduce:transition-none";
 const quiet = `${action} text-[var(--fg-muted)] hover:text-[var(--fg)]`;
 const closeAction = `${action} text-[var(--fg)]`;
 
@@ -148,7 +148,7 @@ export function PreviewStage({
       aria-labelledby={titleId}
       tabIndex={mode === "dialog" ? -1 : undefined}
       onKeyDown={onStageKeyDown}
-      className="preview-in relative z-10 flex h-[90vh] w-[90vw] max-w-[100%] flex-col border border-[var(--border)] bg-[var(--bg)]"
+      className="preview-in relative z-10 flex h-[90vh] w-[90vw] max-w-[100%] flex-col overflow-hidden rounded-[var(--radius-lg)] border border-[var(--border)] bg-[var(--bg)]"
     >
       <div className="flex h-11 shrink-0 items-center justify-between gap-3 border-b border-[var(--border)] px-3 sm:px-4">
         {title}

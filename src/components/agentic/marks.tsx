@@ -9,7 +9,7 @@ type MarkProps = { label?: string; size?: keyof typeof CHIP };
 
 export function AgentMark({ label = "Agent", size = "sm" }: MarkProps) {
   return (
-    <span className={`inline-flex items-center rounded-full bg-[var(--agent-soft)] font-medium text-[var(--agent)] ${CHIP[size]}`}>
+    <span className={`inline-flex items-center rounded-[var(--radius-sm)] bg-[var(--agent-soft)] font-medium text-[var(--agent)] ${CHIP[size]}`}>
       <svg viewBox="0 0 12 12" aria-hidden="true" fill="currentColor">
         <path d="M6 0l1.4 4.6L12 6l-4.6 1.4L6 12 4.6 7.4 0 6l4.6-1.4z" />
       </svg>
@@ -20,7 +20,7 @@ export function AgentMark({ label = "Agent", size = "sm" }: MarkProps) {
 
 export function HumanMark({ label = "You", size = "sm" }: MarkProps) {
   return (
-    <span className={`inline-flex items-center rounded-full bg-[var(--human-soft)] font-medium text-[var(--human)] ${CHIP[size]}`}>
+    <span className={`inline-flex items-center rounded-[var(--radius-sm)] bg-[var(--human-soft)] font-medium text-[var(--human)] ${CHIP[size]}`}>
       <svg viewBox="0 0 12 12" aria-hidden="true" fill="currentColor">
         <circle cx="6" cy="3.5" r="2.5" />
         <path d="M1 12a5 5 0 0 1 10 0z" />
@@ -58,9 +58,9 @@ export function Chevron({ open }: { open: boolean }) {
 
 export const buttonClass = {
   primary:
-    "inline-flex h-8 items-center justify-center gap-1.5 rounded-lg bg-[var(--fg)] px-3 text-[13px] font-medium text-[var(--bg)] hover:opacity-90 disabled:opacity-40",
+    "inline-flex h-8 items-center justify-center gap-1.5 rounded-[var(--radius-md)] bg-[var(--fg)] px-3 text-[13px] font-medium text-[var(--bg)] hover:opacity-90 disabled:opacity-40",
   secondary:
-    "inline-flex h-8 items-center justify-center gap-1.5 rounded-lg border border-[var(--border)] bg-[var(--surface)] px-3 text-[13px] font-medium text-[var(--fg)] hover:bg-[var(--surface-2)] disabled:opacity-40",
+    "inline-flex h-8 items-center justify-center gap-1.5 rounded-[var(--radius-md)] border border-[var(--border)] bg-[var(--surface)] px-3 text-[13px] font-medium text-[var(--fg)] hover:bg-[var(--surface-2)] disabled:opacity-40",
   ghost:
-    "inline-flex h-8 items-center justify-center gap-1.5 rounded-lg px-2 text-[13px] font-medium text-[var(--fg-muted)] hover:bg-[var(--surface-2)] hover:text-[var(--fg)]",
+    "inline-flex h-8 items-center justify-center gap-1.5 rounded-[var(--radius-md)] px-2 text-[13px] font-medium text-[var(--fg-muted)] hover:bg-[var(--surface-2)] hover:text-[var(--fg)]",
 } as const;

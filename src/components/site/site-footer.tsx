@@ -6,7 +6,7 @@ const LINKS = [
 ];
 
 const link =
-  "rounded-sm underline-offset-2 hover:text-[var(--fg)] hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--accent)]";
+  "rounded-[var(--radius-sm)] underline-offset-2 hover:text-[var(--fg)] hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--accent)]";
 
 /** Who made this and where the code is. One thin row pinned to the bottom of the screen, so it shows without scrolling. */
 export function SiteFooter() {

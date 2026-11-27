@@ -80,7 +80,7 @@ export function HeroHandoff() {
 
   return (
     <aside aria-label="Live example of confidence and override" className="aui-hero-in relative hidden lg:block">
-      <div className="relative flex flex-col gap-3 border border-[var(--border)] bg-[var(--surface)] p-4">
+      <div className="relative flex flex-col gap-3 overflow-hidden rounded-[var(--radius-lg)] border border-[var(--border)] bg-[var(--surface)] p-4">
         <div className="flex items-baseline justify-between gap-3">
           <p className="font-[family-name:var(--mono)] text-[12px] text-[var(--fg-muted)]">INV-2041 · Acme Fasteners</p>
         </div>

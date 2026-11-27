@@ -125,7 +125,7 @@ export function CommandMenu() {
           setActive(0);
           setOpen(true);
         }}
-        className="group inline-flex h-9 w-9 shrink-0 items-center justify-center gap-2 rounded-[4px] border border-[var(--border)] bg-[var(--surface)] text-[13px] text-[var(--fg-muted)] transition-[color,background-color,border-color] duration-150 ease-[cubic-bezier(0.16,1,0.3,1)] hover:border-[color-mix(in_srgb,var(--fg)_32%,var(--border))] hover:bg-[var(--surface-2)] hover:text-[var(--fg)] focus-visible:border-[var(--fg)] focus-visible:text-[var(--fg)] motion-reduce:transition-none sm:w-56 sm:justify-start sm:px-3 md:w-64"
+        className="group inline-flex h-9 w-9 shrink-0 items-center justify-center gap-2 rounded-[var(--radius-md)] border border-[var(--border)] bg-[var(--surface)] text-[13px] text-[var(--fg-muted)] transition-[color,background-color,border-color] duration-150 ease-[cubic-bezier(0.16,1,0.3,1)] hover:border-[color-mix(in_srgb,var(--fg)_32%,var(--border))] hover:bg-[var(--surface-2)] hover:text-[var(--fg)] focus-visible:border-[var(--fg)] focus-visible:text-[var(--fg)] motion-reduce:transition-none sm:w-56 sm:justify-start sm:px-3 md:w-64"
       >
         <SearchIcon />
         <span className="hidden min-w-0 flex-1 truncate text-left sm:inline">Search</span>
@@ -141,7 +141,7 @@ export function CommandMenu() {
                 aria-modal="true"
                 aria-labelledby="search-title"
                 onKeyDown={onDialogKeyDown}
-                className="relative z-10 flex max-h-[min(32rem,80dvh)] w-full max-w-xl flex-col overflow-hidden rounded-[4px] border border-[var(--border)] bg-[var(--surface)] shadow-[0_24px_48px_-28px_color-mix(in_srgb,var(--fg)_50%,transparent)]"
+                className="relative z-10 flex max-h-[min(32rem,80dvh)] w-full max-w-xl flex-col overflow-hidden rounded-[var(--radius-lg)] border border-[var(--border)] bg-[var(--surface)] shadow-[0_24px_48px_-28px_color-mix(in_srgb,var(--fg)_50%,transparent)]"
               >
                 <h2 id="search-title" className="sr-only">
                   Search

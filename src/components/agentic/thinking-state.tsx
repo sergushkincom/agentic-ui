@@ -33,12 +33,12 @@ export function ThinkingState({ state, steps, elapsedMs, defaultOpen = false }: 
         : `Thought for ${formatDuration(elapsedMs)} · ${doneCount} steps`;
 
   return (
-    <div className="rounded-[var(--radius)] border border-[var(--border)] bg-[var(--surface)]">
+    <div className="rounded-[var(--radius-lg)] border border-[var(--border)] bg-[var(--surface)]">
       <button
         type="button"
         aria-expanded={open}
         onClick={() => setOpen((o) => !o)}
-        className="flex w-full items-center gap-2 rounded-[var(--radius)] px-3 py-2.5 text-left text-[13px]"
+        className="flex w-full items-center gap-2 rounded-[var(--radius-lg)] px-3 py-2.5 text-left text-[13px]"
       >
         <span className="flex size-4 items-center justify-center">
           <StatusMorph glyph={state === "thinking" ? "spinner" : state === "failed" ? "alert" : "check"} className="size-4" />
@@ -87,7 +87,7 @@ function StepIcon({ status }: { status: ThinkingStep["status"] }) {
       {glyph ? (
         <StatusMorph glyph={glyph} />
       ) : (
-        <span aria-hidden="true" className="size-1.5 rounded-full bg-[var(--fg-muted)] opacity-50" />
+        <span aria-hidden="true" className="size-1.5 rounded-[var(--radius-sm)] bg-[var(--fg-muted)] opacity-50" />
       )}
     </span>
   );

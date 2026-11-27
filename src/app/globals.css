@@ -56,7 +56,7 @@ summary {
   padding: 0 0.4rem;
   border: 1px solid color-mix(in srgb, var(--fg) 18%, var(--border));
   border-bottom-width: 2px;
-  border-radius: 4px;
+  border-radius: var(--radius-sm);
   background: var(--bg);
   color: var(--fg);
   font-family: var(--mono), ui-monospace, monospace;
@@ -174,7 +174,7 @@ summary {
   height: 9px;
   margin-top: -4.5px;
   border: 2px solid var(--agent);
-  border-radius: 999px;
+  border-radius: var(--radius-sm);
   background: var(--surface);
   animation: aui-seam-bead 1.15s cubic-bezier(0.16, 1, 0.3, 1) 180ms forwards;
 }

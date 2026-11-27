@@ -72,14 +72,14 @@ export function DemoPanel({ slug, name, filename, code }: { slug: string; name: 
           aria-haspopup="dialog"
           aria-expanded={open}
           onClick={openPreview}
-          className="inline-flex h-8 shrink-0 items-center gap-1.5 rounded-[4px] border border-[var(--border)] bg-[var(--surface)] px-2.5 font-[family-name:var(--mono)] text-[12px] text-[var(--fg)] transition-[background-color,border-color] duration-150 ease-[cubic-bezier(0.16,1,0.3,1)] hover:border-[color-mix(in_srgb,var(--fg)_28%,var(--border))] hover:bg-[var(--surface-2)] motion-reduce:transition-none"
+          className="inline-flex h-8 shrink-0 items-center gap-1.5 rounded-[var(--radius-md)] border border-[var(--border)] bg-[var(--surface)] px-2.5 font-[family-name:var(--mono)] text-[12px] text-[var(--fg)] transition-[background-color,border-color] duration-150 ease-[cubic-bezier(0.16,1,0.3,1)] hover:border-[color-mix(in_srgb,var(--fg)_28%,var(--border))] hover:bg-[var(--surface-2)] motion-reduce:transition-none"
         >
           <ExpandIcon />
           Expand
         </button>
       </div>
       {view === "preview" ? (
-        <div className="border border-[var(--border)] bg-[var(--bg)] px-5 py-8 sm:px-8 sm:py-10">
+        <div className="overflow-hidden rounded-[var(--radius-lg)] border border-[var(--border)] bg-[var(--bg)] px-5 py-8 sm:px-8 sm:py-10">
           <div className="mx-auto max-w-xl">{open ? null : <Demo slug={slug} />}</div>
         </div>
       ) : (

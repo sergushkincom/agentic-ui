@@ -77,7 +77,7 @@ export function ConnectionPicker({
   };
 
   return (
-    <section className="flex flex-col gap-3 rounded-[var(--radius)] border border-[var(--border)] bg-[var(--surface)] p-3">
+    <section className="flex flex-col gap-3 rounded-[var(--radius-lg)] border border-[var(--border)] bg-[var(--surface)] p-3">
       <header className="flex flex-col gap-1.5">
         <div className="flex flex-wrap items-center gap-2">
           {mode === "manual" ? (
@@ -166,7 +166,7 @@ function AccountList({
             aria-checked={on}
             tabIndex={index === activeIndex ? 0 : -1}
             onClick={() => onSelect(account.id)}
-            className={`flex w-full items-center gap-2.5 rounded-lg border px-2.5 py-2 text-left ${
+            className={`flex w-full items-center gap-2.5 rounded-[var(--radius-md)] border px-2.5 py-2 text-left ${
               on ? "border-[var(--ok)] bg-[var(--surface)]" : "border-transparent bg-[var(--surface-2)] hover:border-[var(--border)]"
             }`}
           >
@@ -174,7 +174,7 @@ function AccountList({
               {on ? (
                 <StatusMorph glyph="check" />
               ) : (
-                <span aria-hidden="true" className="size-3.5 rounded-full border border-[var(--border)]" />
+                <span aria-hidden="true" className="size-3.5 rounded-[var(--radius-sm)] border border-[var(--border)]" />
               )}
             </span>
             <span className="min-w-0 flex-1">
@@ -236,7 +236,7 @@ function ManualSetup({
           value={name}
           autoComplete="off"
           onChange={(event) => setName(event.target.value)}
-          className="h-8 rounded-lg border border-[var(--border)] bg-[var(--bg)] px-2.5 text-[14px] outline-none focus:border-[var(--human)]"
+          className="h-8 rounded-[var(--radius-sm)] border border-[var(--border)] bg-[var(--bg)] px-2.5 text-[14px] outline-none focus:border-[var(--human)]"
         />
       </div>
       <div className="flex flex-col gap-1">
@@ -252,7 +252,7 @@ function ManualSetup({
           spellCheck={false}
           aria-describedby={hintId}
           onChange={(event) => setSecret(event.target.value)}
-          className="h-8 rounded-lg border border-[var(--border)] bg-[var(--bg)] px-2.5 text-[14px] outline-none focus:border-[var(--human)]"
+          className="h-8 rounded-[var(--radius-sm)] border border-[var(--border)] bg-[var(--bg)] px-2.5 text-[14px] outline-none focus:border-[var(--human)]"
         />
         <p id={hintId} className="text-xs text-[var(--fg-muted)]">
           Concealed while you type. Passed on once, then dropped. Never shown.

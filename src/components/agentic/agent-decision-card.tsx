@@ -40,12 +40,12 @@ export function AgentDecisionCard({ decision, status, onApprove, onReject, decid
   const final = status !== "proposed";
 
   return (
-    <article className="flex flex-col gap-4 rounded-[var(--radius)] border border-[var(--border)] bg-[var(--surface)] p-4">
+    <article className="flex flex-col gap-4 rounded-[var(--radius-lg)] border border-[var(--border)] bg-[var(--surface)] p-4">
       <header className="flex flex-col gap-1.5">
         <div className="flex flex-wrap items-center gap-2">
           <AgentMark label="Agent proposes" />
           <span
-            className="rounded-full px-1.5 py-px text-[11px] font-medium"
+            className="rounded-[var(--radius-sm)] px-1.5 py-px text-[11px] font-medium"
             style={
               d.reversible.ok
                 ? { background: "var(--surface-2)", color: "var(--fg-muted)" }
@@ -66,7 +66,7 @@ export function AgentDecisionCard({ decision, status, onApprove, onReject, decid
         <ul className="flex flex-col gap-1 text-[13px]">
           {d.reasons.map((r) => (
             <li key={r} className="flex gap-2">
-              <span aria-hidden="true" className="mt-[7px] size-1 shrink-0 rounded-full bg-[var(--agent)]" />
+              <span aria-hidden="true" className="mt-[7px] size-1 shrink-0 rounded-[var(--radius-sm)] bg-[var(--agent)]" />
               {r}
             </li>
           ))}
@@ -79,7 +79,7 @@ export function AgentDecisionCard({ decision, status, onApprove, onReject, decid
             type="button"
             aria-expanded={showMore}
             onClick={() => setShowMore((s) => !s)}
-            className="flex items-center gap-1 rounded-sm text-xs font-medium text-[var(--fg-muted)] hover:text-[var(--fg)]"
+            className="flex items-center gap-1 rounded-[var(--radius-sm)] text-xs font-medium text-[var(--fg-muted)] hover:text-[var(--fg)]"
           >
             <Chevron open={showMore} />
             Evidence and what else it considered
@@ -87,7 +87,7 @@ export function AgentDecisionCard({ decision, status, onApprove, onReject, decid
           {showMore && (
             <div className="mt-2 flex flex-col gap-3">
               {d.evidence && (
-                <dl className="grid grid-cols-[auto_1fr] gap-x-4 gap-y-1 rounded-lg bg-[var(--surface-2)] p-2.5 text-[13px]">
+                <dl className="grid grid-cols-[auto_1fr] gap-x-4 gap-y-1 rounded-[var(--radius-sm)] bg-[var(--surface-2)] p-2.5 text-[13px]">
                   {d.evidence.map((e) => (
                     <div key={e.label} className="contents">
                       <dt className="text-[var(--fg-muted)]">{e.label}</dt>

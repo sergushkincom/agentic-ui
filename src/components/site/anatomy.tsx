@@ -24,7 +24,7 @@ export function Anatomy({ slug }: { slug: string }) {
           <ol className="flex flex-col gap-2.5">
             {parts.map((part, index) => (
               <li key={part.name} className="flex min-w-0 gap-2 text-[13px] leading-relaxed">
-                <span className="inline-flex size-5 shrink-0 items-center justify-center rounded-full bg-[var(--fg)] text-[11px] font-medium text-[var(--bg)]">
+                <span className="inline-flex size-5 shrink-0 items-center justify-center rounded-[var(--radius-sm)] bg-[var(--fg)] text-[11px] font-medium text-[var(--bg)]">
                   {index + 1}
                 </span>
                 <span className="min-w-0">
@@ -60,7 +60,7 @@ function AnatomyRegion({
       }
     >
       <div className="flex min-w-0 items-center gap-2">
-        <span className="inline-flex size-5 shrink-0 items-center justify-center rounded-full bg-[var(--fg)] text-[11px] font-medium text-[var(--bg)]">
+        <span className="inline-flex size-5 shrink-0 items-center justify-center rounded-[var(--radius-sm)] bg-[var(--fg)] text-[11px] font-medium text-[var(--bg)]">
           {index + 1}
         </span>
         <span className="min-w-0 font-[family-name:var(--mono)] text-[12px] break-words">{node.name}</span>

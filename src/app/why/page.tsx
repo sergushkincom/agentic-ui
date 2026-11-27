@@ -100,7 +100,7 @@ const NOT_BUILT: { slug: string; name: string; note: string }[] = [
   },
 ];
 
-const link = "rounded-sm text-[var(--accent)] underline-offset-2 hover:underline";
+const link = "rounded-[var(--radius-sm)] text-[var(--accent)] underline-offset-2 hover:underline";
 
 export default function WhyPage() {
   return (
